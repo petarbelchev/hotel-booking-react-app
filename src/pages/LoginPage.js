@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useUser } from "../hooks/useUser";
+import { AuthContext } from "../contexts/AuthContext";
 import { login } from "../services/authService";
 
 export function LoginPage() {
-    const { addUser } = useUser();
+    const { addUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     async function onLoginSubmit(e) {

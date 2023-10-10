@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
+import { AuthContext } from "../../contexts/AuthContext";
 import { LogoutLink } from "../LogoutLink";
-import { useUser } from "../../hooks/useUser";
 
 import "./Header.css";
 
 export function Header() {
-    const { user } = useUser();
+    const { user } = useContext(AuthContext);
 
     return (
         <header>
