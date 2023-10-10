@@ -1,10 +1,9 @@
 import { createContext, useState } from "react";
-import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(localStorage.getItem('user'));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
     function addUser(user) {
         setUser(user);
@@ -14,7 +13,6 @@ export function AuthProvider({ children }) {
     function removeUser() {
         setUser(null);
         localStorage.removeItem('user');
-        return <Navigate to={'/'} />
     };
 
     const context = {

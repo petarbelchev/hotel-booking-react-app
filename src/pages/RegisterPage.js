@@ -14,43 +14,45 @@ export function RegisterPage() {
             navigate('/login');
         } catch (error) {
             // TODO: Render the validation errors in the register form.
-            console.log(error);
+            alert(`${error.status} ${error.title}`);
         }
     }
 
     return (
-        <>
-            <h1>Register Page</h1>
+        <main>
+            <section>
+                <h1>Register Page</h1>
 
-            <form onSubmit={onRegisterSubmit}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" />
-                </div>
-                <div>
-                    <label htmlFor="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" />
-                </div>
-                <div>
-                    <label htmlFor="lastName">First Name:</label>
-                    <input type="text" id="lastName" name="lastName" />
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" />
-                </div>
-                <div>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" />
-                </div>
-                <div>
-                    <label htmlFor="phoneNumber">Phone Number:</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber" />
-                </div>
-                <div>
-                    <button type="submit">Register</button>
-                </div>
-            </form>
-        </>
+                <form onSubmit={onRegisterSubmit}>
+                    <div>
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" id="email" name="email" />
+                    </div>
+                    <div>
+                        <label htmlFor="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" />
+                    </div>
+                    <div>
+                        <label htmlFor="lastName">First Name:</label>
+                        <input type="text" id="lastName" name="lastName" />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
+                    <div>
+                        <label htmlFor="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" />
+                    </div>
+                    <div>
+                        <label htmlFor="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" name="phoneNumber" />
+                    </div>
+                    <div>
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+            </section>
+        </main>
     );
 };

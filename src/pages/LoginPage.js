@@ -18,27 +18,29 @@ export function LoginPage() {
             navigate('/');
         } catch (error) {
             // TODO: Render the validation errors in the login form.
-            console.log(error);
+            alert(`${error.status} ${error.title}`);
         }
     };
 
     return (
-        <>
-            <h1>Login Page</h1>
+        <main>
+            <section>
+                <h1>Login Page</h1>
 
-            <form onSubmit={onLoginSubmit}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" />
-                </div>
-                <div>
-                    <button type="submit">Login</button>
-                </div>
-            </form>
-        </>
+                <form onSubmit={onLoginSubmit}>
+                    <div>
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" id="email" name="email" />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
+                    <div>
+                        <button type="submit">Login</button>
+                    </div>
+                </form>
+            </section>
+        </main>
     );
 };
