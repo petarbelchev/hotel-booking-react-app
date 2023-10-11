@@ -1,23 +1,30 @@
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-const baseUrl = 'https://localhost:7247/api/rooms';
+import { getHotelsWithAvailableRooms } from "../services/searchService";
+import { HotelWithRoomsDiv } from "../components/HotelWithRoomsDiv";
 
 export function SearchResultPage() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams([]);
+    const [hotelsWithAvailableRooms, setHotelsWithAvailableRooms] = useState([]);
 
-    fetch(`${baseUrl}?${searchParams.toString()}`)
-        .then(response => {
-            if (response.status === 200) {
-                return response.json()
-            } else {
-                return 'You are not authorized!';
-            }
-        })
-        .then(data => console.log(data))
+    useEffect(() => {
+        async function fetchData() {
+            return await getHotelsWithAvailableRooms(searchParams);
+        }
+
+        fetchData()
+            .then(hotels => setHotelsWithAvailableRooms(hotels))
+            // TODO: Render the validation errors in the search form.
+            .catch(error => alert(`${error.status} ${error.title}`));
+    }, [searchParams]);
 
     return (
-        <>
-            <h1>Search Page</h1>
-        </>
+        <main>
+            <section>
+                <h1>Here what we have</h1>
+                {hotelsWithAvailableRooms.map(hotel => <HotelWithRoomsDiv key={hotel.id} hotel={hotel} />)}
+            </section>
+        </main>
     );
 }

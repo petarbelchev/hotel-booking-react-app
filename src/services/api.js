@@ -32,6 +32,11 @@ async function responseHandler(response) {
 
         throw responseWithoutBody;
     } else {
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.startsWith('image/')) {
+            return await response.blob();
+        }
+
         const responseBody = await response.json();
 
         if (response.ok) {
