@@ -16,10 +16,13 @@ export function Header() {
                     <li><NavLink to={"/"}>Home</NavLink></li>
                     {
                         user
-                            ? <li><LogoutLink /></li>
+                            ? <>
+                                <li><NavLink to={'/user-profile'}>{user.firstName} {user.lastName}</NavLink></li>
+                                <li><LogoutLink /></li>
+                            </>
                             : <>
-                                <li><NavLink to={'/register'}>Register</NavLink></li>
                                 <li><NavLink to={'/login'}>Login</NavLink></li>
+                                <li><NavLink to={'/register'}>Register</NavLink></li>
                             </>
                     }
                 </ul>

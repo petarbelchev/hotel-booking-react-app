@@ -6,6 +6,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SearchResultPage } from "./pages/SearchResultPage";
 import { AuthProvider } from "./contexts/AuthContext";
+import { UserProfilePage } from "./pages/UserProfilePage/UserProfilePage";
 
 export default function App() {
     return (
@@ -16,6 +17,7 @@ export default function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/search-result" element={<SearchResultPage />} />
+                <Route path="/user-profile" element={<UserProfilePage />} />
             </Routes>
         </AuthProvider>
     );
