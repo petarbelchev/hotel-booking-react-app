@@ -1,28 +1,26 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import { LogoutLink } from "../LogoutLink";
-
-import "./Header.css";
+import styles from "./Header.module.css";
 
 export function Header() {
-    const { user } = useContext(AuthContext);
+    const { user, removeUser } = useContext(AuthContext);
 
     return (
         <header>
             <nav>
-                <ul>
-                    <li><NavLink to={"/"}>Home</NavLink></li>
+                <ul className={styles.ul}>
+                    <li><NavLink to={"/"} className={styles.navLink}>Home</NavLink></li>
                     {
                         user
                             ? <>
-                                <li><NavLink to={'/user-profile'}>{user.firstName} {user.lastName}</NavLink></li>
-                                <li><LogoutLink /></li>
+                                <li><NavLink to={'/user-profile'} className={styles.navLink}>{user.firstName} {user.lastName}</NavLink></li>
+                                <li><Link to={'/'} onClick={removeUser} className={styles.navLink}>Logout</Link></li>
                             </>
                             : <>
-                                <li><NavLink to={'/login'}>Login</NavLink></li>
-                                <li><NavLink to={'/register'}>Register</NavLink></li>
+                                <li><NavLink to={'/login'} className={styles.navLink}>Login</NavLink></li>
+                                <li><NavLink to={'/register'} className={styles.navLink}>Register</NavLink></li>
                             </>
                     }
                 </ul>

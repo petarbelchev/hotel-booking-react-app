@@ -6,7 +6,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SearchResultPage } from "./pages/SearchResultPage";
 import { AuthProvider } from "./contexts/AuthContext";
-import { UserProfilePage } from "./pages/UserProfilePage/UserProfilePage";
+import { UserProfilePage } from "./pages/UserProfilePage";
 
 export default function App() {
     return (
