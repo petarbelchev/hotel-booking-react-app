@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { getHotelsWithAvailableRooms } from "../services/searchService";
+
 import { HotelWithRoomsDiv } from "../components/HotelWithRoomsDiv";
+import { SearchForm } from "../components/SearchForm";
 
 export function SearchResultPage() {
-    const [searchParams, setSearchParams] = useSearchParams([]);
+    const [searchParams] = useSearchParams();
     const [hotelsWithAvailableRooms, setHotelsWithAvailableRooms] = useState([]);
 
     useEffect(() => {
@@ -21,6 +23,14 @@ export function SearchResultPage() {
 
     return (
         <main>
+            <section>
+                <h1>Try another options</h1>
+                <SearchForm
+                    initCityId={searchParams.get('cityId')}
+                    initCheckInDate={searchParams.get('checkInLocal')}
+                    initCheckOutDate={searchParams.get('checkOutLocal')}
+                />
+            </section>
             <section>
                 <h1>Here what we have</h1>
                 {hotelsWithAvailableRooms.map(hotel => <HotelWithRoomsDiv key={hotel.id} hotel={hotel} />)}
