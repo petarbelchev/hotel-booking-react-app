@@ -18,8 +18,8 @@ async function request(method, path, { token, body }) {
 
 async function responseHandler(response) {
     const responsesWithoutBody = [
-        { status: 204, title: 'No Content.' }, 
-        { status: 401, title: 'Unauthorized!' }, 
+        { status: 204, title: 'No Content.' },
+        { status: 401, title: 'Unauthorized!' },
         { status: 403, title: 'Forbidden!' },
     ];
 
@@ -27,7 +27,7 @@ async function responseHandler(response) {
 
     if (responseWithoutBody) {
         if (response.ok) {
-            return responseWithoutBody;            
+            return responseWithoutBody;
         }
 
         throw responseWithoutBody;
@@ -56,4 +56,8 @@ async function post(path, { body, token }) {
     return await request('POST', path, { body, token });
 }
 
-export { get, post };
+async function put(path, { body, token }) {
+    return await request('PUT', path, { body, token })
+}
+
+export { get, post, put };
