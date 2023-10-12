@@ -8,11 +8,7 @@ export function UserProfilePage() {
     const [userInfo, setUserInfo] = useState({});
 
     useEffect(() => {
-        async function fetchData() {
-            return await getUserInfo(user.id, user.token);
-        }
-        
-        fetchData()
+        getUserInfo(user.id, user.token)
             .then(data => setUserInfo(data))
             .catch(error => alert(`${error.status} ${error.title}`));
     }, [user.id, user.token]);
@@ -32,6 +28,10 @@ export function UserProfilePage() {
                     <p>Ratings: {userInfo.ratings}</p>
                 </div>
             </section>
+            {/* <section>
+                <button onClick={}>Update Your Profile</button>
+                <button></button>
+            </section> */}
         </main>
     );
 }

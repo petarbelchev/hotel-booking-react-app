@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "../components/Dropdown";
-import { useDateManager } from "../hooks/useDateManager";
+import { useDateValidator } from "../hooks/useDateValidator";
 import { getCities } from "../services/citiesService";
 
 export function SearchForm({
@@ -14,17 +14,13 @@ export function SearchForm({
     const [cityId, setCityId] = useState(initCityId || '0');
     const navigate = useNavigate();
 
-    const dateConfig = useDateManager(
+    const dateConfig = useDateValidator(
         initCheckInDate,
         initCheckOutDate
     );
 
     useEffect(() => {
-        async function fetchData() {
-            return await getCities();
-        }
-
-        fetchData().then(cities => setCities(cities));
+        getCities().then(cities => setCities(cities));
     }, []);
 
     function onSearchSubmit(e) {

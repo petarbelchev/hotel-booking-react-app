@@ -11,11 +11,7 @@ export function SearchResultPage() {
     const [hotelsWithAvailableRooms, setHotelsWithAvailableRooms] = useState([]);
 
     useEffect(() => {
-        async function fetchData() {
-            return await getHotelsWithAvailableRooms(searchParams);
-        }
-
-        fetchData()
+        getHotelsWithAvailableRooms(searchParams)
             .then(hotels => setHotelsWithAvailableRooms(hotels))
             // TODO: Render the validation errors in the search form.
             .catch(error => alert(`${error.status} ${error.title}`));
@@ -33,7 +29,9 @@ export function SearchResultPage() {
             </section>
             <section>
                 <h1>Here what we have</h1>
-                {hotelsWithAvailableRooms.map(hotel => <HotelWithRoomsDiv key={hotel.id} hotel={hotel} />)}
+                {hotelsWithAvailableRooms.length > 0
+                    ? hotelsWithAvailableRooms.map(hotel => <HotelWithRoomsDiv key={hotel.id} hotel={hotel} />)
+                    : <p>There are no available rooms with this criteria.</p>}
             </section>
         </main>
     );

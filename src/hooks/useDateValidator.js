@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useDateManager(
+export function useDateValidator(
     initCheckInDate,
     initCheckOutDate
 ) {
