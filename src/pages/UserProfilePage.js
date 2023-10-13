@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../contexts/AuthContext";
-import { getUserInfo, updateUserProfile } from "../services/usersService";
+import { deleteUserProfile, getUserInfo, updateUserProfile } from "../services/usersService";
+import { useNavigate } from "react-router-dom";
 
 export function UserProfilePage() {
-    const { user, addUser } = useContext(AuthContext);
+    const { user, addUser, removeUser } = useContext(AuthContext);
     const [userInfo, setUserInfo] = useState({});
     const [hideEditForm, setHideEditForm] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getUserInfo(user.id, user.token)
@@ -16,6 +18,25 @@ export function UserProfilePage() {
 
     function onClickUpdate(e) {
         setHideEditForm(false);
+    }
+
+    function onClickDelete(e) {
+        e.preventDefault();
+
+        // TODO: Use modal window instead of 'confirm()'.
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm('Are you sure you want to delete your profile?')) {
+            deleteUserProfile(
+                user.id,
+                user.token
+            ).then(response => {
+                if (response.status === 204) {
+                    alert('Your profile was successfully deleted!');
+                    removeUser();
+                    navigate('/');
+                }
+            }).catch(error => alert(`${error.status} ${error.title}!`)); // TODO: Render validation errors.
+        }
     }
 
     function onClickCancel(e) {
@@ -87,7 +108,7 @@ export function UserProfilePage() {
             </section>
             <section>
                 <button onClick={onClickUpdate}>Update Your Profile</button>
-                <button>Delete Your Profile</button> {/* // TODO: Implement the deletion of the user profile. */}
+                <button onClick={onClickDelete}>Delete Your Profile</button>
             </section>
         </main>
     );

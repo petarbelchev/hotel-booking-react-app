@@ -60,4 +60,8 @@ async function put(path, { body, token }) {
     return await request('PUT', path, { body, token })
 }
 
-export { get, post, put };
+async function remove(path, { token }) {
+    return await request('DELETE', path, { token });
+}
+
+export { get, post, put, remove };
