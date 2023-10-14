@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { getHotelsWithAvailableRooms } from "../services/searchService";
 
-import { HotelWithRoomsDiv } from "../components/HotelWithRoomsDiv";
+import { HotelRoomsInfoDiv } from "../components/HotelRoomsInfoDiv";
 import { SearchForm } from "../components/SearchForm";
 
 export function SearchResultPage() {
@@ -30,7 +30,7 @@ export function SearchResultPage() {
             <section>
                 <h1>Here what we have</h1>
                 {hotelsWithAvailableRooms.length > 0
-                    ? hotelsWithAvailableRooms.map(hotel => <HotelWithRoomsDiv key={hotel.id} hotel={hotel} />)
+                    ? hotelsWithAvailableRooms.map(hotel => <HotelRoomsInfoDiv key={hotel.id} hotel={hotel} />)
                     : <p>There are no available rooms with this criteria.</p>}
             </section>
         </main>

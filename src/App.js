@@ -7,6 +7,8 @@ import { LoginPage } from "./pages/LoginPage";
 import { SearchResultPage } from "./pages/SearchResultPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserProfilePage } from "./pages/UserProfilePage";
+import { AddHotelPage } from "./pages/AddHotelPage";
+import { HotelDetailsPage } from "./pages/HotelDetailsPage";
 
 export default function App() {
     return (
@@ -18,6 +20,8 @@ export default function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/search-result" element={<SearchResultPage />} />
                 <Route path="/user-profile" element={<UserProfilePage />} />
+                <Route path="/add-hotel" element={<AddHotelPage />} />
+                <Route path="/hotels/:hotelId" element={<HotelDetailsPage />} />
             </Routes>
         </AuthProvider>
     );

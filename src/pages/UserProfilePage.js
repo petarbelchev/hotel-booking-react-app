@@ -45,11 +45,11 @@ export function UserProfilePage() {
 
     function onUpdateSubmit(e) {
         e.preventDefault();
-        const body = Object.fromEntries(new FormData(e.target));
+        const userData = Object.fromEntries(new FormData(e.target));
 
         updateUserProfile(
             user.id,
-            JSON.stringify(body),
+            userData,
             user.token
         ).then(data => {
             setUserInfo(state => ({

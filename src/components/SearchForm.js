@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "../components/Dropdown";
+
 import { useDateValidator } from "../hooks/useDateValidator";
-import { getCities } from "../services/citiesService";
+import { useCities } from "../hooks/useCities";
 
 export function SearchForm({
     initCityId,
     initCheckInDate,
     initCheckOutDate,
 }) {
-    const [cities, setCities] = useState([]);
+    const cities = useCities();
     const [cityId, setCityId] = useState(initCityId || '0');
     const navigate = useNavigate();
 
@@ -18,10 +19,6 @@ export function SearchForm({
         initCheckInDate,
         initCheckOutDate
     );
-
-    useEffect(() => {
-        getCities().then(cities => setCities(cities));
-    }, []);
 
     function onSearchSubmit(e) {
         e.preventDefault();

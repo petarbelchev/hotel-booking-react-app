@@ -1,6 +1,6 @@
 import { useImage } from "../hooks/useImage";
 
-export function RoomListItem({ room }) {
+export function RoomInfoDiv({ room }) {
     const mainImage = useImage(room.mainImageId);
 
     return (

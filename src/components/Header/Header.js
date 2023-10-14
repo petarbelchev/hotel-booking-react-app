@@ -15,6 +15,7 @@ export function Header() {
                     {
                         user
                             ? <>
+                                <li><NavLink to={'/add-hotel'} className={styles.navLink}>Add Hotel</NavLink></li>
                                 <li><NavLink to={'/user-profile'} className={styles.navLink}>{user.firstName} {user.lastName}</NavLink></li>
                                 <li><Link to={'/'} onClick={removeUser} className={styles.navLink}>Logout</Link></li>
                             </>
