@@ -7,10 +7,12 @@ export function HotelRoomsInfoDiv({ hotel }) {
 
     return (
         <div style={{ borderStyle: "solid", margin: "20px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "auto auto", justifyContent: "space-around", margin: "10px" }}>
-                <div style={{ gridColumnStart: 1, gridColumnEnd: 2 }}>
-                    {mainImage && <img src={mainImage} alt="Hotel." />}
-                </div>
+            <div style={{ display: "grid", gridTemplateColumns: "auto auto", margin: "10px" }}>
+                {mainImage &&
+                    <div style={{ gridColumnStart: 1, gridColumnEnd: 2 }}>
+                        <img src={mainImage} alt="Hotel." />
+                    </div>
+                }
 
                 <div>
                     <h2>{hotel.name}</h2>

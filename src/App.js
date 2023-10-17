@@ -4,11 +4,11 @@ import { Header } from "./components/Header/Header";
 import { HomePage } from "./pages/HomePage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { LoginPage } from "./pages/LoginPage";
-import { SearchResultPage } from "./pages/SearchResultPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserProfilePage } from "./pages/UserProfilePage";
 import { AddHotelPage } from "./pages/AddHotelPage";
 import { HotelDetailsPage } from "./pages/HotelDetailsPage";
+import { SearchRoomsResultPage } from "./pages/SearchRoomsResultPage";
 
 export default function App() {
     return (
@@ -18,7 +18,7 @@ export default function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/search-result" element={<SearchResultPage />} />
+                <Route path="/search-result" element={<SearchRoomsResultPage />} />
                 <Route path="/user-profile" element={<UserProfilePage />} />
                 <Route path="/add-hotel" element={<AddHotelPage />} />
                 <Route path="/hotels/:hotelId" element={<HotelDetailsPage />} />

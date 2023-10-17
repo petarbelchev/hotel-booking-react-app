@@ -4,9 +4,9 @@ import { useSearchParams } from "react-router-dom";
 import { getHotelsWithAvailableRooms } from "../services/searchService";
 
 import { HotelRoomsInfoDiv } from "../components/HotelRoomsInfoDiv";
-import { SearchForm } from "../components/SearchForm";
+import { SearchRoomsForm } from "../components/SearchRoomsForm";
 
-export function SearchResultPage() {
+export function SearchRoomsResultPage() {
     const [searchParams] = useSearchParams();
     const [hotelsWithAvailableRooms, setHotelsWithAvailableRooms] = useState([]);
 
@@ -21,7 +21,7 @@ export function SearchResultPage() {
         <main>
             <section>
                 <h1>Try another options</h1>
-                <SearchForm
+                <SearchRoomsForm
                     initCityId={searchParams.get('cityId')}
                     initCheckInDate={searchParams.get('checkInLocal')}
                     initCheckOutDate={searchParams.get('checkOutLocal')}
