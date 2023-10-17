@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AddEditRoomDiv } from "../components/AddEditRoomDiv";
 import { Button } from "../components/Button";
-import { AddEditHotelDiv } from "../components/AddEditHotelDiv";
+import { SubmitButton } from "../components/SubmitButton";
+import { AddEditHotelForm } from "../components/AddEditHotelForm";
+import { AddEditRoomDiv } from "../components/AddEditRoomDiv";
 
 import { addHotel } from "../services/hotelsService";
 import { AuthContext } from "../contexts/AuthContext";
@@ -21,28 +22,30 @@ export function AddHotelPage() {
         rooms: [],
     });
 
-    const onAddRoomClick = () => addRoom();
+    const onAddRoomClick = (e) => {
+        e.preventDefault();
+        addRoom();
+    };
 
-    const onAddHotelClick = () => {
-        addHotel(
-            hotel, user.token
-        ).then(({ id }) =>
-            navigate(`/hotels/${id}`)
-        ).catch(error =>
+    const onAddHotelSubmit = (e) => {
+        e.preventDefault();
+
+        addHotel(hotel, user.token)
+            .then(({ id }) => navigate(`/hotels/${id}`))
             // TODO: Render validation errors.
-            alert(`${error.status} ${error.title}!`)
-        );
-    }
+            .catch(error => alert(`${error.status} ${error.title}!`));
+    };
 
     return (
         <main>
             <section>
                 <h1>Add a Hotel</h1>
 
-                <AddEditHotelDiv
+                <AddEditHotelForm
                     hotel={hotel}
-                    onChange={changeHandler}
                     setCityId={setCityId}
+                    onChange={changeHandler}
+                    onSubmit={onAddHotelSubmit}
                 >
                     <div>
                         {hotel.rooms.map((room, index) =>
@@ -57,9 +60,9 @@ export function AddHotelPage() {
 
                     <div>
                         <Button onClick={onAddRoomClick} name="Add Room" />
-                        <Button onClick={onAddHotelClick} name="Add Hotel" />
+                        <SubmitButton name="Add Hotel" />
                     </div>
-                </AddEditHotelDiv>
+                </AddEditHotelForm>
             </section>
         </main>
     );

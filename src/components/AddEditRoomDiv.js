@@ -70,6 +70,6 @@ export function AddEditRoomDiv({
                 onChange={(e) => onChange(e, roomIdx)}
             />
             {children}
-        </div >
+        </div>
     );
 };

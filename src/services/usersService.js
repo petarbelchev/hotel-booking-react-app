@@ -2,7 +2,7 @@ import { get, put, remove } from "./api";
 
 const path = '/api/users';
 
-export async function getUserInfo(userId, token) {
+export async function getUserProfile(userId, token) {
     return await get(`${path}/${userId}`, { token });
 };
 

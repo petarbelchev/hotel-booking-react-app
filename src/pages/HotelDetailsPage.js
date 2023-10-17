@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { AddEditHotelDiv } from "../components/AddEditHotelDiv";
 import { Button } from "../components/Button";
+import { SubmitButton } from "../components/SubmitButton";
+import { AddEditHotelForm } from "../components/AddEditHotelForm";
 import { AddEditRoomDiv } from "../components/AddEditRoomDiv";
 
 import { useImage } from "../hooks/useImage";
@@ -32,7 +33,7 @@ export function HotelDetailsPage() {
     const onEditClick = () => setHideEditForm(false);
     const onCancelClick = () => setHideEditForm(true);
 
-    const onUpdateHotelClick = () => {
+    const onUpdateHotelSubmit = () => {
         const formData = {
             name: hotel.name,
             cityId: hotel.cityId,
@@ -57,7 +58,8 @@ export function HotelDetailsPage() {
         }
     };
 
-    const onUpdateRoomClick = (roomIdx) => {
+    const onUpdateRoomSubmit = (e, roomIdx) => {
+        e.preventDefault();
         const room = hotel.rooms[roomIdx];
 
         try {
@@ -92,28 +94,31 @@ export function HotelDetailsPage() {
                                     {hotel.isUserFavoriteHotel && <p>You mark this hotel as favorite.</p>}
                                     {isOwner && <div><Button onClick={onEditClick} name="Edit Hotel" /></div>}
                                 </div>
-                                : <AddEditHotelDiv
+                                : <AddEditHotelForm
                                     hotel={hotel}
-                                    onChange={changeHandler}
                                     setCityId={setCityId}
+                                    onChange={changeHandler}
+                                    onSubmit={onUpdateHotelSubmit}
                                 >
                                     <div>
                                         <Button onClick={onCancelClick} name="Cancel" />
-                                        <Button onClick={onUpdateHotelClick} name="Update Hotel" />
+                                        <SubmitButton name="Update Hotel" />
                                     </div>
-                                </AddEditHotelDiv>
+                                </AddEditHotelForm>
                             }
 
                             {hotel.rooms && hotel.rooms.map((room, index) =>
-                                <AddEditRoomDiv
-                                    key={room.id}
-                                    roomIdx={index}
-                                    room={room}
-                                    onChange={changeHandler}
-                                >
-                                    <Button onClick={() => onUpdateRoomClick(index)} name="Update Room" />
-                                </AddEditRoomDiv>)
-                            }
+                                <form key={index} onSubmit={(e) => onUpdateRoomSubmit(e, index)}>
+                                    <AddEditRoomDiv
+                                        key={room.id}
+                                        roomIdx={index}
+                                        room={room}
+                                        onChange={changeHandler}
+                                    />
+
+                                    <SubmitButton name="Update Room" />
+                                </form>
+                            )}
 
 
                             {isOwner && hotel.roomsCount > 0 &&

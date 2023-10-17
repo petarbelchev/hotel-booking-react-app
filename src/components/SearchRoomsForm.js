@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "./Dropdown";
-import { Button } from "./Button";
+import { SubmitButton } from "./SubmitButton";
 
 import { useDateValidator } from "../hooks/useDateValidator";
 import { useCities } from "../hooks/useCities";
@@ -16,23 +16,21 @@ export function SearchRoomsForm({
     const [cityId, setCityId] = useState(initCityId || '0');
     const dateValidator = useDateValidator(initCheckInDate, initCheckOutDate);
     const navigate = useNavigate();
-    
-    const onSearchClick = () => {
-        if (!dateValidator.checkInDate || !dateValidator.checkOutDate) {
-            alert('Please enter Check-In and CheckOut dates!')
-        } else {
-            navigate('/search-result?' +
-                `cityId=${cityId}&` +
-                `checkInLocal=${dateValidator.checkInDate}&` +
-                `checkOutLocal=${dateValidator.checkOutDate}`
-            );
-        }
+
+    const onSearchSubmit = (e) => {
+        e.preventDefault();
+
+        navigate('/search-result?' +
+            `cityId=${cityId}&` +
+            `checkInLocal=${dateValidator.checkInDate}&` +
+            `checkOutLocal=${dateValidator.checkOutDate}`
+        );
     };
 
     const onCityChange = (e) => setCityId(e.target.value);
 
     return (
-        <div>
+        <form onSubmit={onSearchSubmit}>
             <Dropdown
                 labelName={'Choose a city:'}
                 paramName={'cityId'}
@@ -49,6 +47,7 @@ export function SearchRoomsForm({
                 min={dateValidator.checkInMinDate.toISOString().split("T")[0]}
                 max={dateValidator.checkInMaxDate?.toISOString().split("T")[0]}
                 value={dateValidator.checkInDate}
+                required
             />
             <label htmlFor="checkOutLocal">To:</label>
             <input
@@ -58,8 +57,9 @@ export function SearchRoomsForm({
                 onChange={dateValidator.onDateChange}
                 min={dateValidator.checkOutMinDate.toISOString().split("T")[0]}
                 value={dateValidator.checkOutDate}
+                required
             />
-            <Button onClick={onSearchClick} name="Search" />
-        </div>
+            <SubmitButton name="Search" />
+        </form>
     );
-}
+};

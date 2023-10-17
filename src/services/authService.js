@@ -2,9 +2,9 @@ import { post } from "./api";
 
 const basePath = '/api/users';
 
-export async function register(credentials) {
+export async function register(data) {
     const path = basePath + '/register';
-    return await post(path, { data: credentials });
+    return await post(path, { data });
 }
 
 export async function login(credentials) {

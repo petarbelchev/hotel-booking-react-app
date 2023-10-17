@@ -20,14 +20,24 @@ export function useDateValidator(
     );
 
     function onDateChange(e) {
-        const dateString = e.target.value;
+        const { name, value } = e.target;
 
-        if (e.target.name === 'checkInLocal') {
-            setCheckOutMinDate(getDateWithOffset(dateString, 1));
-            setCheckInDate(dateString);
-        } else if (e.target.name === 'checkOutLocal') {
-            setCheckInMaxDate(getDateWithOffset(dateString, -1));
-            setCheckOutDate(dateString);
+        if (name === 'checkInLocal') {
+            if (!value || value === '') {
+                setCheckOutMinDate(getDateWithOffset(checkInMinDate, 1))    
+            } else {
+                setCheckOutMinDate(getDateWithOffset(value, 1));
+            }
+
+            setCheckInDate(value);                
+        } else if (name === 'checkOutLocal') {
+            if (!value || value === '') {
+                setCheckInMaxDate(null);                
+            } else {
+                setCheckInMaxDate(getDateWithOffset(value, -1));                
+            }
+
+            setCheckOutDate(value);
         }
     }
 

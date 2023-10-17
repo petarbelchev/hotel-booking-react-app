@@ -1,71 +1,83 @@
 import { useContext, useEffect, useState } from "react";
-
-import { AuthContext } from "../contexts/AuthContext";
-import { deleteUserProfile, getUserInfo, updateUserProfile } from "../services/usersService";
 import { useNavigate } from "react-router-dom";
 
+import { Button } from "../components/Button";
+import { SubmitButton } from "../components/SubmitButton";
+import { InputField } from "../components/InputField";
+
+import { useForm } from "../hooks/useForm";
+import { AuthContext } from "../contexts/AuthContext";
+import { getUserProfile, updateUserProfile, deleteUserProfile } from "../services/usersService";
+
 export function UserProfilePage() {
-    const { user, addUser, removeUser } = useContext(AuthContext);
-    const [userInfo, setUserInfo] = useState({});
-    const [hideEditForm, setHideEditForm] = useState(true);
     const navigate = useNavigate();
+    const { form, setForm, changeHandler } = useForm();
+    const { user, addUser, removeUser } = useContext(AuthContext);
+    const [userProfile, setUserProfile] = useState({});
+    const [hideEditForm, setHideEditForm] = useState(true);
 
     useEffect(() => {
-        getUserInfo(user.id, user.token)
-            .then(data => setUserInfo(data))
+        getUserProfile(user.id, user.token)
+            .then(data => {
+                setUserProfile(data);
+
+                setForm({
+                    firstName: userProfile.firstName,
+                    lastName: userProfile.lastName,
+                    phoneNumber: userProfile.phoneNumber,
+                });
+            })
             .catch(error => alert(`${error.status} ${error.title}`));
-    }, [user.id, user.token]);
+    }, [
+        user.id,
+        user.token,
+        setForm,
+        userProfile.firstName,
+        userProfile.lastName,
+        userProfile.phoneNumber,
+    ]);
 
-    function onClickUpdate(e) {
-        setHideEditForm(false);
-    }
+    const onClickUpdate = () => setHideEditForm(false);
+    const onClickCancel = () => setHideEditForm(true);
 
-    function onClickDelete(e) {
-        e.preventDefault();
-
+    const onClickDelete = () => {
         // TODO: Use modal window instead of 'confirm()'.
         // eslint-disable-next-line no-restricted-globals
         if (confirm('Are you sure you want to delete your profile?')) {
-            deleteUserProfile(
-                user.id,
-                user.token
-            ).then(response => {
-                if (response.status === 204) {
-                    alert('Your profile was successfully deleted!');
-                    removeUser();
-                    navigate('/');
-                }
-            }).catch(error => alert(`${error.status} ${error.title}!`)); // TODO: Render validation errors.
+            deleteUserProfile(user.id, user.token)
+                .then(response => {
+                    if (response.status === 204) {
+                        alert('Your profile was successfully deleted!');
+                        removeUser();
+                        navigate('/');
+                    }
+                })
+                // TODO: Render validation errors.
+                .catch(error => alert(`${error.status} ${error.title}!`));
         }
-    }
+    };
 
-    function onClickCancel(e) {
-        setHideEditForm(true);
-    }
-
-    function onUpdateSubmit(e) {
+    const onUpdateSubmit = (e) => {
         e.preventDefault();
-        const userData = Object.fromEntries(new FormData(e.target));
 
-        updateUserProfile(
-            user.id,
-            userData,
-            user.token
-        ).then(data => {
-            setUserInfo(state => ({
-                ...state,
-                ...data,
-            }));
+        updateUserProfile(user.id, form, user.token)
+            .then(data => {
+                setUserProfile(state => ({
+                    ...state,
+                    ...data,
+                }));
 
-            addUser({
-                ...user,
-                firstName: data.firstName,
-                lastName: data.lastName
-            });
-        }).catch(error => alert(`${error.status} ${error.title}!`)); // TODO: Render validation errors inside the update form.
+                addUser({
+                    ...user,
+                    firstName: data.firstName,
+                    lastName: data.lastName
+                });
+            })
+            // TODO: Render validation errors inside the update form.
+            .catch(error => alert(`${error.status} ${error.title}!`));
 
         setHideEditForm(true);
-    }
+    };
 
     return (
         <main>
@@ -74,41 +86,54 @@ export function UserProfilePage() {
                 <div>
                     {hideEditForm
                         ? <>
-                            <p>First Name: {userInfo.firstName}</p>
-                            <p>Last Name: {userInfo.lastName}</p>
-                            <p>Phone Number: {userInfo.phoneNumber}</p>
+                            <p>First Name: {userProfile.firstName}</p>
+                            <p>Last Name: {userProfile.lastName}</p>
+                            <p>Phone Number: {userProfile.phoneNumber}</p>
                         </>
                         : <>
                             <form onSubmit={onUpdateSubmit}>
+                                <InputField
+                                    labelName="First Name"
+                                    type="text"
+                                    paramName="firstName"
+                                    value={form.firstName}
+                                    onChange={changeHandler}
+                                    required={true}
+                                />
+                                <InputField
+                                    labelName="Last Name"
+                                    type="text"
+                                    paramName="lastName"
+                                    value={form.lastName}
+                                    onChange={changeHandler}
+                                    required={true}
+                                />
+                                <InputField
+                                    labelName="Phone Number"
+                                    type="text"
+                                    paramName="phoneNumber"
+                                    value={form.phoneNumber}
+                                    onChange={changeHandler}
+                                    required={true}
+                                />
                                 <div>
-                                    <label htmlFor="firstName">First Name:</label>
-                                    <input type="text" id="firstName" name="firstName" defaultValue={userInfo.firstName} />
-                                </div>
-                                <div>
-                                    <label htmlFor="lastName">Last Name:</label>
-                                    <input type="text" id="lastName" name="lastName" defaultValue={userInfo.lastName} />
-                                </div>
-                                <div>
-                                    <label htmlFor="phoneNumber">Phone Number:</label>
-                                    <input type="text" id="phoneNumber" name="phoneNumber" defaultValue={userInfo.phoneNumber} />
-                                </div>
-                                <div>
-                                    <button type="submit">Update</button>
-                                    <button onClick={onClickCancel}>Cancel</button>
+                                    <SubmitButton name="Update" />
+                                    <Button onClick={onClickCancel} name="Cancel" />
                                 </div>
                             </form>
-                        </>}
-                    <p>Trips: {userInfo.trips}</p>
-                    <p>Owned Hotels: {userInfo.ownedHotels}</p>
-                    <p>Favorite Hotels: {userInfo.favoriteHotels}</p>
-                    <p>Comments: {userInfo.comments}</p>
-                    <p>Replies: {userInfo.replies}</p>
-                    <p>Ratings: {userInfo.ratings}</p>
+                        </>
+                    }
+                    <p>Trips: {userProfile.trips}</p>
+                    <p>Owned Hotels: {userProfile.ownedHotels}</p>
+                    <p>Favorite Hotels: {userProfile.favoriteHotels}</p>
+                    <p>Comments: {userProfile.comments}</p>
+                    <p>Replies: {userProfile.replies}</p>
+                    <p>Ratings: {userProfile.ratings}</p>
                 </div>
             </section>
             <section>
-                <button onClick={onClickUpdate}>Update Your Profile</button>
-                <button onClick={onClickDelete}>Delete Your Profile</button>
+                <Button onClick={onClickUpdate} name="Update Your Profile" />
+                <Button onClick={onClickDelete} name="Delete Your Profile" />
             </section>
         </main>
     );

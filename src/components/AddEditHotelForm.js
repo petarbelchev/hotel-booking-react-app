@@ -5,10 +5,11 @@ import { Dropdown } from "./Dropdown";
 
 import { useCities } from "../hooks/useCities";
 
-export function AddEditHotelDiv({
+export function AddEditHotelForm({
     hotel,
-    onChange,
     setCityId,
+    onChange,
+    onSubmit,
     children,
 }) {
     const cities = useCities();
@@ -20,7 +21,7 @@ export function AddEditHotelDiv({
     }, [cities, hotel.cityId, hotel.city, setCityId]);
 
     return (
-        <div style={{ borderStyle: "solid", padding: "10px" }}>
+        <form onSubmit={onSubmit} style={{ borderStyle: "solid", padding: "10px" }}>
             <InputField
                 type="text"
                 labelName="Hotel Name"
@@ -53,6 +54,6 @@ export function AddEditHotelDiv({
                 required={true}
             />
             {children}
-        </div>
+        </form>
     );
 };
