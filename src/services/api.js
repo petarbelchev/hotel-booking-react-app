@@ -1,6 +1,6 @@
 const host = 'https://localhost:7247';
 
-async function request(method, path, { token, body }) {
+async function request(method, path, { token, data }) {
     const options = { method, headers: {} };
 
     if (token) {
@@ -9,7 +9,7 @@ async function request(method, path, { token, body }) {
 
     if (method !== 'GET') {
         options.headers['Content-Type'] = 'application/json';
-        options.body = body;
+        options.body = JSON.stringify(data);
     }
 
     const response = await fetch(host + path, options);
@@ -52,12 +52,12 @@ async function get(path, { token }) {
     return await request('GET', path, { token });
 }
 
-async function post(path, { body, token }) {
-    return await request('POST', path, { body, token });
+async function post(path, { data, token }) {
+    return await request('POST', path, { data, token });
 }
 
-async function put(path, { body, token }) {
-    return await request('PUT', path, { body, token })
+async function put(path, { data, token }) {
+    return await request('PUT', path, { data, token })
 }
 
 async function remove(path, { token }) {
