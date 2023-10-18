@@ -1,57 +1,46 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 
 import { getHotel, updateHotel } from "../services/hotelsService";
 import { getHotelRooms, updateRoom } from "../services/roomsService";
 
 import { AuthContext } from "../contexts/AuthContext";
+import { useForm } from "./useForm";
 
 export function useHotel(initHotelValues, hotelId) {
     const { user } = useContext(AuthContext);
-    const [hotel, setHotel] = useState(initHotelValues);
+    const { form: hotel, setForm: setHotel, changeHandler } = useForm(initHotelValues);
 
     useEffect(() => {
-        hotelId && getHotel(
-            hotelId, user.token
-        ).then(hotelData => {
-            setHotel(hotelData);
-        }).catch(error => alert(`${error.status} ${error.title}`));
-    }, [hotelId, user.id, user.token]);
-
-    const changeHandler = (e, roomIdx) => {
-        const fieldName = e.target.name;
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-
-        setHotel(state => {
-            const newState = { ...state };
-
-            roomIdx !== undefined
-                ? newState.rooms[roomIdx][fieldName] = value
-                : newState[fieldName] = value;
-
-            return newState;
-        });
-    };
+        hotelId && getHotel(hotelId, user.token)
+            .then(setHotel)
+            .catch(error => alert(`${error.status} ${error.title}`));
+    }, [hotelId, user.id, user.token, setHotel]);
 
     const addRoom = () => {
         setHotel(state => ({
             ...state,
-            rooms: [...state.rooms, {
-                number: '',
-                capacity: 0,
-                pricePerNight: 0,
-                roomType: 0,
-                hasAirConditioner: false,
-                hasBalcony: false,
-                hasKitchen: false,
-                isSmokingAllowed: false,
-            }]
+            rooms: [
+                ...state.rooms,
+                {
+                    number: '',
+                    capacity: 0,
+                    pricePerNight: 0,
+                    roomType: 0,
+                    hasAirConditioner: false,
+                    hasBalcony: false,
+                    hasKitchen: false,
+                    isSmokingAllowed: false,
+                },
+            ],
         }));
     };
 
-    const setCityId = (cityId) => setHotel(state => ({
-        ...state,
-        cityId: cityId,
-    }));
+    const setCityId = (cityId) => {
+        setHotel(state => ({
+            ...state,
+            cityId: cityId,
+        }));
+    };
 
     const loadRooms = () => {
         getHotelRooms(
