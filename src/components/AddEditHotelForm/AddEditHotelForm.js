@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 
-import { InputField } from "./InputField";
-import { Dropdown } from "./Dropdown";
+import { InputField } from "../InputField";
+import { Dropdown } from "../Dropdown";
 
-import { useCities } from "../hooks/useCities";
+import { useCities } from "../../hooks/useCities";
+
+import "./AddEditHotelForm.css"
 
 export function AddEditHotelForm({
     hotel,
@@ -21,7 +23,7 @@ export function AddEditHotelForm({
     }, [cities, hotel.cityId, hotel.city, setCityId]);
 
     return (
-        <form onSubmit={onSubmit} style={{ borderStyle: "solid", padding: "10px" }}>
+        <form className="hotelForm" onSubmit={onSubmit}>
             <InputField
                 type="text"
                 labelName="Hotel Name"

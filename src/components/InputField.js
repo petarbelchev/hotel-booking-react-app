@@ -7,7 +7,7 @@ export function InputField({
     required,
 }) {
     return (
-        <div style={{margin: "5px"}}>
+        <div style={{ margin: "5px" }}>
             <label htmlFor={paramName}>{labelName}:</label>
             <input
                 type={type}

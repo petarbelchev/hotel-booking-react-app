@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "../components/Button";
-import { SubmitButton } from "../components/SubmitButton";
-import { InputField } from "../components/InputField";
+import { Button } from "../../components/Button";
+import { SubmitButton } from "../../components/SubmitButton";
+import { InputField } from "../../components/InputField";
 
-import { useForm } from "../hooks/useForm";
-import { AuthContext } from "../contexts/AuthContext";
-import { getUserProfile, updateUserProfile, deleteUserProfile } from "../services/usersService";
+import { useForm } from "../../hooks/useForm";
+import { AuthContext } from "../../contexts/AuthContext";
+import { getUserProfile, updateUserProfile, deleteUserProfile } from "../../services/usersService";
+
+import "./UserProfilePage.css";
 
 export function UserProfilePage() {
     const navigate = useNavigate();
@@ -83,12 +85,21 @@ export function UserProfilePage() {
         <main>
             <section>
                 <h1>User Profile Page</h1>
-                <div>
+                <div className="userProfileDiv">
                     {hideEditForm
                         ? <>
-                            <p>First Name: {userProfile.firstName}</p>
-                            <p>Last Name: {userProfile.lastName}</p>
-                            <p>Phone Number: {userProfile.phoneNumber}</p>
+                            <div>
+                                <span>First Name: </span>
+                                <span>{userProfile.firstName}</span>
+                            </div>
+                            <div>
+                                <span>Last Name: </span>
+                                <span>{userProfile.lastName}</span>
+                            </div>
+                            <div>
+                                <span>Phone Number: </span>
+                                <span>{userProfile.phoneNumber}</span>
+                            </div>
                         </>
                         : <>
                             <form onSubmit={onUpdateSubmit}>
@@ -123,17 +134,35 @@ export function UserProfilePage() {
                             </form>
                         </>
                     }
-                    <p>Trips: {userProfile.trips}</p>
-                    <p>Owned Hotels: {userProfile.ownedHotels}</p>
-                    <p>Favorite Hotels: {userProfile.favoriteHotels}</p>
-                    <p>Comments: {userProfile.comments}</p>
-                    <p>Replies: {userProfile.replies}</p>
-                    <p>Ratings: {userProfile.ratings}</p>
+                    <div>
+                        <span>Trips: </span>
+                        <span>{userProfile.trips}</span>
+                    </div>
+                    <div>
+                        <span>Owned Hotels: </span>
+                        <span>{userProfile.ownedHotels}</span>
+                    </div>
+                    <div>
+                        <span>Favorite Hotels: </span>
+                        <span>{userProfile.favoriteHotels}</span>
+                    </div>
+                    <div>
+                        <span>Comments: </span>
+                        <span>{userProfile.comments}</span>
+                    </div>
+                    <div>
+                        <span>Replies: </span>
+                        <span>{userProfile.replies}</span>
+                    </div>
+                    <div>
+                        <span>Ratings: </span>
+                        <span>{userProfile.ratings}</span>
+                    </div>
+                    <div>
+                        <Button onClick={onClickUpdate} name="Update Your Profile" />
+                        <Button onClick={onClickDelete} name="Delete Your Profile" />
+                    </div>
                 </div>
-            </section>
-            <section>
-                <Button onClick={onClickUpdate} name="Update Your Profile" />
-                <Button onClick={onClickDelete} name="Delete Your Profile" />
             </section>
         </main>
     );

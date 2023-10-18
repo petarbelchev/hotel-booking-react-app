@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { Button } from "../components/Button";
 import { SubmitButton } from "../components/SubmitButton";
-import { AddEditHotelForm } from "../components/AddEditHotelForm";
+import { AddEditHotelForm } from "../components/AddEditHotelForm/AddEditHotelForm";
 import { AddEditRoomDiv } from "../components/AddEditRoomDiv";
 
 import { useImage } from "../hooks/useImage";

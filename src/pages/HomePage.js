@@ -1,4 +1,4 @@
-import { SearchRoomsForm } from "../components/SearchRoomsForm";
+import { SearchRoomsForm } from "../components/SearchRoomsForm/SearchRoomsForm";
 
 export function HomePage() {
     return (

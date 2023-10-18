@@ -3,8 +3,8 @@ import { useSearchParams } from "react-router-dom";
 
 import { getHotelsWithAvailableRooms } from "../services/searchService";
 
-import { HotelRoomsInfoDiv } from "../components/HotelRoomsInfoDiv";
-import { SearchRoomsForm } from "../components/SearchRoomsForm";
+import { HotelRoomsInfoDiv } from "../components/HotelRoomsInfoDiv/HotelRoomsInfoDiv";
+import { SearchRoomsForm } from "../components/SearchRoomsForm/SearchRoomsForm";
 
 export function SearchRoomsResultPage() {
     const [searchParams] = useSearchParams();
@@ -35,4 +35,4 @@ export function SearchRoomsResultPage() {
             </section>
         </main>
     );
-}
+};

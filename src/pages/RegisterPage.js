@@ -19,7 +19,7 @@ export function RegisterPage() {
 
     const onRegisterSubmit = (e) => {
         e.preventDefault();
-        
+
         if (Object.values(form).includes('')) {
             alert('Please fill out all fields!');
         } else {
@@ -35,7 +35,7 @@ export function RegisterPage() {
             <section>
                 <h1>Register Page</h1>
 
-                <form onSubmit={onRegisterSubmit}>
+                <form onSubmit={onRegisterSubmit} style={{ border: "solid", display: "inline-block" }}>
                     <InputField
                         labelName="Email"
                         paramName="email"

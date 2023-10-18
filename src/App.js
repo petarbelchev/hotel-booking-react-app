@@ -5,7 +5,7 @@ import { HomePage } from "./pages/HomePage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { LoginPage } from "./pages/LoginPage";
 import { AuthProvider } from "./contexts/AuthContext";
-import { UserProfilePage } from "./pages/UserProfilePage";
+import { UserProfilePage } from "./pages/UserProfilePage/UserProfilePage";
 import { AddHotelPage } from "./pages/AddHotelPage";
 import { HotelDetailsPage } from "./pages/HotelDetailsPage";
 import { SearchRoomsResultPage } from "./pages/SearchRoomsResultPage";

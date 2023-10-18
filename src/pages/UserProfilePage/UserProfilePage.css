@@ -1,0 +1,10 @@
+.userProfileDiv {
+    display: inline-block;
+    border: solid;
+    padding: 15px;
+}
+
+.userProfileDiv div {
+    display: flex;
+    justify-content: space-between;
+}

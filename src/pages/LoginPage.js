@@ -34,7 +34,7 @@ export function LoginPage() {
             <section>
                 <h1>Login Page</h1>
 
-                <form onSubmit={onLoginSubmit}>
+                <form onSubmit={onLoginSubmit} style={{ border: "solid", display: "inline-block" }}>
                     <InputField
                         labelName="Email"
                         paramName="email"

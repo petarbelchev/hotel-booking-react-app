@@ -1,0 +1,31 @@
+.topNav {
+    background-color: royalblue;
+    overflow: hidden;
+}
+
+.topNav ul {
+    list-style-type: none;
+    display: inline-flex;
+    padding: 0%;
+}
+
+.topNav a {
+    margin: 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+}
+
+.topNav ul a.active {
+    border: double;
+}
+
+.topNav a:hover {
+    background-color: cornflowerblue;
+}
+
+@media screen and (max-width: 600px) {
+    .topNav ul {
+        display: flow;
+    }
+}
