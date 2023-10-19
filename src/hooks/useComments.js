@@ -4,14 +4,14 @@ import { getHotelComments, getCommentReplies } from "../services/commentsService
 export function useComments() {
     const [comments, setComments] = useState(null);
 
-    const loadComments = (hotelId, token) => {
-        getHotelComments(hotelId, token)
+    const loadComments = (hotelId) => {
+        getHotelComments(hotelId)
             .then(setComments)
             .catch(error => alert(`${error.status} ${error.title}!`));
     };
 
-    const loadReplies = (commentId, token) => {
-        getCommentReplies(commentId, token)
+    const loadReplies = (commentId) => {
+        getCommentReplies(commentId)
             .then(replies => {
                 setComments(state => {
                     const newState = [...state];

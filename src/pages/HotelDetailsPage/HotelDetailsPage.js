@@ -39,7 +39,7 @@ export function HotelDetailsPage() {
     const [showEditHotelBtn, setShowEditHotelBtn] = useState(true);
     const [showEditRoomsBtn, setShowEditRoomsBtn] = useState(true);
     const [showCommentsBtn, setShowCommentsBtn] = useState(true);
-    const isOwner = hotel.owner && hotel.owner.id === user.id;
+    const isOwner = hotel.owner && user && user.id && hotel.owner.id === user.id;
 
     const onEditHotelClick = () => {
         setHideEditForm(false);
@@ -101,12 +101,12 @@ export function HotelDetailsPage() {
     };
 
     const onCommentsClick = () => {
-        loadComments(hotelId, user.token);
+        loadComments(hotelId);
         setShowCommentsBtn(false);
     };
 
     const onRepliesClick = (commentId) => {
-        loadReplies(commentId, user.token);
+        loadReplies(commentId);
     };
 
     return (

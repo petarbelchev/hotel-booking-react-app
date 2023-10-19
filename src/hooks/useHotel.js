@@ -11,10 +11,10 @@ export function useHotel(initHotelValues, hotelId) {
     const { form: hotel, setForm: setHotel, changeHandler } = useForm(initHotelValues);
 
     useEffect(() => {
-        hotelId && getHotel(hotelId, user.token)
+        hotelId && getHotel(hotelId)
             .then(hotelData => setHotel(state => ({ ...state, ...hotelData })))
             .catch(error => alert(`${error.status} ${error.title}`));
-    }, [hotelId, user.id, user.token, setHotel]);
+    }, [hotelId, setHotel]);
 
     const setCityId = (cityId) => {
         setHotel(state => ({
