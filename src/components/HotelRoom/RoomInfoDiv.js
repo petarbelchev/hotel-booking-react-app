@@ -1,14 +1,14 @@
 import { useImage } from "../../hooks/useImage";
 
-import "./RoomInfoDiv.css";
+import styles from "./RoomInfoDiv.module.css";
 
 export function RoomInfoDiv({ room, children }) {
     const mainImage = useImage(room.mainImageId);
 
     return (
-        <div className="container">
-            {mainImage && <div><img src={mainImage} alt="Room." /></div>}
-            <div className="content">
+        <div className={styles.container}>
+            {mainImage && <div><img src={mainImage} alt={'Room ' + room.number} /></div>}
+            <div className={styles.content}>
                 <h3>{room.roomType === 0 ? "Single" : room.roomType === 1 ? "Double" : "Apartment"}</h3>
                 <div>
                     <span>Price: </span>

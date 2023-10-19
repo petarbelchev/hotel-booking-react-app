@@ -9,7 +9,7 @@ import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../contexts/AuthContext";
 import { getUserProfile, updateUserProfile, deleteUserProfile } from "../../services/usersService";
 
-import "./UserProfilePage.css";
+import styles from "./UserProfilePage.module.css";
 
 export function UserProfilePage() {
     const navigate = useNavigate();
@@ -85,7 +85,7 @@ export function UserProfilePage() {
         <main>
             <section>
                 <h1>User Profile Page</h1>
-                <div className="userProfileDiv">
+                <div className={styles.userProfileDiv}>
                     {hideEditForm
                         ? <>
                             <div>

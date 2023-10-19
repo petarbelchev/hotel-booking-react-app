@@ -5,7 +5,7 @@ import { Dropdown } from "../Dropdown";
 
 import { useCities } from "../../hooks/useCities";
 
-import "./AddEditHotelForm.css"
+import styles from "./AddEditHotelForm.module.css";
 
 export function AddEditHotelForm({
     hotel,
@@ -23,7 +23,10 @@ export function AddEditHotelForm({
     }, [cities, hotel.cityId, hotel.city, setCityId]);
 
     return (
-        <form className="hotelForm" onSubmit={onSubmit}>
+        <form
+            className={styles.hotelForm}
+            onSubmit={onSubmit}
+        >
             <InputField
                 type="text"
                 labelName="Hotel Name"

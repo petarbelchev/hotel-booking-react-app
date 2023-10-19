@@ -3,26 +3,27 @@ import { NavLink, Link } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
-import "./Header.css";
+import styles from "./Header.module.css";
 
 export function Header() {
     const { user, removeUser } = useContext(AuthContext);
+    const setActiveClass = ({ isActive }) => isActive ? styles.active : "";
 
     return (
         <header>
-            <nav className="topNav">
+            <nav className={styles.topNav}>
                 <ul>
-                    <li><NavLink to={"/"}>Home</NavLink></li>
+                    <li><NavLink to={"/"} className={setActiveClass}>Home</NavLink></li>
                     {
                         user
                             ? <>
-                                <li><NavLink to={'/add-hotel'}>Add Hotel</NavLink></li>
-                                <li><NavLink to={'/user-profile'}>{user.firstName} {user.lastName}</NavLink></li>
+                                <li><NavLink to={'/add-hotel'} className={setActiveClass}>Add Hotel</NavLink></li>
+                                <li><NavLink to={'/user-profile'} className={setActiveClass}>{user.firstName} {user.lastName}</NavLink></li>
                                 <li><Link to={'/'} onClick={removeUser}>Logout</Link></li>
                             </>
                             : <>
-                                <li><NavLink to={'/login'}>Login</NavLink></li>
-                                <li><NavLink to={'/register'}>Register</NavLink></li>
+                                <li><NavLink to={'/login'} className={setActiveClass}>Login</NavLink></li>
+                                <li><NavLink to={'/register'} className={setActiveClass}>Register</NavLink></li>
                             </>
                     }
                 </ul>

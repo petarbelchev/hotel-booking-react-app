@@ -6,7 +6,7 @@ import { RoomInfoDiv } from "./RoomInfoDiv";
 
 import { useImage } from "../../hooks/useImage";
 
-import "./HotelRoomsInfoDiv.css";
+import styles from "./HotelRoomsInfoDiv.module.css";
 
 export function HotelRoomsInfoDiv({ hotel }) {
     const mainImage = useImage(hotel.mainImageId);
@@ -14,8 +14,8 @@ export function HotelRoomsInfoDiv({ hotel }) {
     const onMoreDetailsClick = () => navigate(`/hotels/${hotel.id}`);
 
     return (
-        <div className="hotelRoomsDiv">
-            <div className="hotelDiv">
+        <div className={styles.hotelRoomsDiv}>
+            <div className={styles.hotelDiv}>
                 {mainImage && <Image src={mainImage} alt={hotel.name} />}
 
                 <div>
@@ -31,7 +31,7 @@ export function HotelRoomsInfoDiv({ hotel }) {
                 </div>
             </div>
 
-            <div className="roomsDiv">
+            <div className={styles.roomsDiv}>
                 {hotel.availableRooms.map(room => <RoomInfoDiv key={room.id} room={room} />)}
             </div>
         </div>

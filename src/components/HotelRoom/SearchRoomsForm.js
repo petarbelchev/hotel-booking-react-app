@@ -7,7 +7,7 @@ import { SubmitButton } from "../Buttons/SubmitButton";
 import { useDateValidator } from "../../hooks/useDateValidator";
 import { useCities } from "../../hooks/useCities";
 
-import "./SearchRoomsForm.css";
+import styles from "./SearchRoomsForm.module.css";
 
 export function SearchRoomsForm({
     initCityId,
@@ -32,7 +32,10 @@ export function SearchRoomsForm({
     const onCityChange = (e) => setCityId(e.target.value);
 
     return (
-        <form className="roomsForm" onSubmit={onSearchSubmit}>
+        <form
+            className={styles.roomsForm}
+            onSubmit={onSearchSubmit}
+        >
             <Dropdown
                 labelName={'Choose a city:'}
                 paramName={'cityId'}

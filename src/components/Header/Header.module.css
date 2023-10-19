@@ -16,7 +16,7 @@
     color: white;
 }
 
-.topNav ul a.active {
+.active {
     border: double;
 }
 
