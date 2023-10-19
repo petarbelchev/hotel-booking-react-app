@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 
 import { getHotel, updateHotel } from "../services/hotelsService";
-import { getHotelRooms, updateRoom } from "../services/roomsService";
+import { getHotelRooms, createRoom, updateRoom, removeRoom } from "../services/roomsService";
 
 import { AuthContext } from "../contexts/AuthContext";
 import { useForm } from "./useForm";
@@ -12,9 +12,16 @@ export function useHotel(initHotelValues, hotelId) {
 
     useEffect(() => {
         hotelId && getHotel(hotelId, user.token)
-            .then(setHotel)
+            .then(hotelData => setHotel(state => ({ ...state, ...hotelData })))
             .catch(error => alert(`${error.status} ${error.title}`));
     }, [hotelId, user.id, user.token, setHotel]);
+
+    const setCityId = (cityId) => {
+        setHotel(state => ({
+            ...state,
+            cityId: cityId,
+        }));
+    };
 
     const addRoom = () => {
         setHotel(state => ({
@@ -32,13 +39,6 @@ export function useHotel(initHotelValues, hotelId) {
                     isSmokingAllowed: false,
                 },
             ],
-        }));
-    };
-
-    const setCityId = (cityId) => {
-        setHotel(state => ({
-            ...state,
-            cityId: cityId,
         }));
     };
 
@@ -62,6 +62,29 @@ export function useHotel(initHotelValues, hotelId) {
         });
     };
 
+    const createNewRoom = (hotelId, roomIdx, room) => {
+        createRoom(
+            hotelId, room, user.token
+        ).then(roomData => {
+            setHotel(state => {
+                const newState = { ...state };
+                newState.rooms[roomIdx] = roomData;
+                newState.roomsCount++;
+                return newState;
+            });
+        });
+    };
+
+    const deleteRoom = (roomId) => {
+        removeRoom(
+            roomId, user.token
+        ).then(setHotel(state => ({
+            ...state,
+            rooms: state.rooms.filter(room => room.id !== roomId),
+            roomsCount: state.roomsCount - 1,
+        })));
+    };
+
     const saveHotel = (formData) => {
         updateHotel(
             hotelId, formData, user.token
@@ -76,6 +99,8 @@ export function useHotel(initHotelValues, hotelId) {
         addRoom,
         loadRooms,
         saveRoom,
+        createNewRoom,
+        deleteRoom,
         saveHotel,
         setCityId,
     };

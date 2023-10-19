@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "../../components/Button";
-import { SubmitButton } from "../../components/SubmitButton";
+import { Button } from "../../components/Buttons/Button";
+import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { InputField } from "../../components/InputField";
 
 import { useForm } from "../../hooks/useForm";

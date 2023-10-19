@@ -1,0 +1,23 @@
+.button {
+    margin: 10px;
+    background-color: royalblue;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+}
+
+.small {
+    padding: 5px 10px;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: cornflowerblue;
+    color: white;
+}

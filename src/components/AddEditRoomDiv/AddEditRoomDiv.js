@@ -1,6 +1,8 @@
-import { CheckBox } from "./CheckBox";
-import { Dropdown } from "./Dropdown";
-import { InputField } from "./InputField";
+import { CheckBox } from "../CheckBox";
+import { Dropdown } from "../Dropdown";
+import { InputField } from "../InputField";
+
+import styles from "./AddEditRoomDiv.module.css";
 
 export function AddEditRoomDiv({
     roomIdx,
@@ -9,7 +11,8 @@ export function AddEditRoomDiv({
     children,
 }) {
     return (
-        <div style={{ borderStyle: "double", marginTop: "10px", marginBottom: "10px", padding: "10px" }}>
+        room &&
+        <div className={styles.container}>
             <InputField
                 type="text"
                 labelName="Room Number"

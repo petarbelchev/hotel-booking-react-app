@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "../components/Button";
-import { SubmitButton } from "../components/SubmitButton";
+import { Button } from "../components/Buttons/Button";
+import { SubmitButton } from "../components/Buttons/SubmitButton";
 import { AddEditHotelForm } from "../components/AddEditHotelForm/AddEditHotelForm";
-import { AddEditRoomDiv } from "../components/AddEditRoomDiv";
+import { AddEditRoomDiv } from "../components/AddEditRoomDiv/AddEditRoomDiv";
 
 import { addHotel } from "../services/hotelsService";
 import { AuthContext } from "../contexts/AuthContext";

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "../Dropdown";
-import { SubmitButton } from "../SubmitButton";
+import { SubmitButton } from "../Buttons/SubmitButton";
 
 import { useDateValidator } from "../../hooks/useDateValidator";
 import { useCities } from "../../hooks/useCities";
