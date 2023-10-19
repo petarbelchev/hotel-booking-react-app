@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "../Buttons/Button";
 import { Image } from "../Image";
-import { RoomInfoDiv } from "../RoomInfoDiv/RoomInfoDiv";
+import { RoomInfoDiv } from "./RoomInfoDiv";
 
 import { useImage } from "../../hooks/useImage";
 

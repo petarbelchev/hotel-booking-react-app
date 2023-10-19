@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { Button } from "../../components/Buttons/Button";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { Image } from "../../components/Image";
-import { AddEditHotelForm } from "../../components/AddEditHotelForm/AddEditHotelForm";
-import { AddEditRoomDiv } from "../../components/AddEditRoomDiv/AddEditRoomDiv";
+import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
+import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 import { CommentInfoDiv } from "../../components/CommentReply/CommentInfoDiv";
 
 import { useImage } from "../../hooks/useImage";
