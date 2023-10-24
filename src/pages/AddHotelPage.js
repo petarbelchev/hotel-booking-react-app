@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "../components/Buttons/Button";
@@ -6,29 +6,42 @@ import { SubmitButton } from "../components/Buttons/SubmitButton";
 import { AddEditHotelForm } from "../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../components/HotelRoom/AddEditRoomDiv";
 
+import { useForm } from "../hooks/useForm";
+import { useCities } from "../hooks/useCities";
+import { useRoomForms } from "../hooks/useRoomForms";
+
 import { addHotel } from "../services/hotelsService";
 import { AuthContext } from "../contexts/AuthContext";
-import { useHotel } from "../hooks/useHotel";
 
 export function AddHotelPage() {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+    const cities = useCities();
 
-    const { hotel, changeHandler, addRoom, setCityId, } = useHotel({
+    const { form: hotelForm, setForm: setHotelForm, changeHandler: hotelChangeHandler } = useForm({
         name: '',
         address: '',
         cityId: 0,
         description: '',
-        rooms: [],
     });
+
+    const { roomForms, addRoomToForm, roomFormsChangeHandler } = useRoomForms();
+
+    useEffect(() => {
+        setHotelForm(state => ({ ...state, cityId: cities[0]?.id }));
+    }, [cities, setHotelForm]);
 
     const onAddRoomClick = (e) => {
         e.preventDefault();
-        addRoom();
+        addRoomToForm();
     };
 
     const onAddHotelSubmit = (e) => {
         e.preventDefault();
+        const hotel = {
+            ...hotelForm,
+            rooms: roomForms
+        };
 
         addHotel(hotel, user.token)
             .then(({ id }) => navigate(`/hotels/${id}`))
@@ -42,18 +55,18 @@ export function AddHotelPage() {
                 <h1>Add a Hotel</h1>
 
                 <AddEditHotelForm
-                    hotel={hotel}
-                    setCityId={setCityId}
-                    onChange={changeHandler}
+                    hotel={hotelForm}
+                    onChange={hotelChangeHandler}
                     onSubmit={onAddHotelSubmit}
+                    cities={cities}
                 >
                     <div>
-                        {hotel.rooms.map((room, index) =>
+                        {roomForms.map((room, index) =>
                             <AddEditRoomDiv
                                 key={index}
                                 roomIdx={index}
                                 room={room}
-                                onChange={changeHandler}
+                                onChange={roomFormsChangeHandler}
                             />
                         )}
                     </div>

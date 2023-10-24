@@ -1,26 +1,15 @@
-import { useEffect } from "react";
-
 import { InputField } from "../InputField";
 import { Dropdown } from "../Dropdown";
-
-import { useCities } from "../../hooks/useCities";
 
 import styles from "./AddEditHotelForm.module.css";
 
 export function AddEditHotelForm({
     hotel,
-    setCityId,
     onChange,
     onSubmit,
+    cities,
     children,
 }) {
-    const cities = useCities();
-
-    useEffect(() => {
-        if (!hotel.cityId || hotel.cityId === 0) {
-            (hotel.city && setCityId(hotel.city.id)) || (cities[0] && setCityId(cities[0].id));
-        }
-    }, [cities, hotel.cityId, hotel.city, setCityId]);
 
     return (
         <form

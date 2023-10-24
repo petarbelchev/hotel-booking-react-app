@@ -5,14 +5,19 @@ export function useForm(initValues) {
 
     const changeHandler = (event, roomIdx) => {
         const name = event.target.name;
-        const value = event.target.type === 'checkbox' 
-            ? event.target.checked 
-            : event.target.value;
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        
         setForm(state => {
-            const newState = { ...state };
-            roomIdx !== undefined
-                ? newState.rooms[roomIdx][name] = value
-                : newState[name] = value;
+            let newState;
+
+            if (roomIdx !== undefined) {
+                newState = [...state];
+                newState[roomIdx][name] = value
+            } else {
+                newState = { ...state };
+                newState[name] = value;
+            }
+
             return newState;
         });
     };

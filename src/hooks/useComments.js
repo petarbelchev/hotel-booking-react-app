@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getHotelComments, getCommentReplies } from "../services/commentsService";
 
 export function useComments() {
-    const [comments, setComments] = useState(null);
+    const [comments, setComments] = useState([]);
 
     const loadComments = (hotelId) => {
         getHotelComments(hotelId)

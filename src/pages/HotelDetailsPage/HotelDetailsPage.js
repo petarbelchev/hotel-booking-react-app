@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/Buttons/Button";
@@ -9,59 +9,64 @@ import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 import { CommentInfoDiv } from "../../components/CommentReply/CommentInfoDiv";
 
 import { useImage } from "../../hooks/useImage";
-import { useHotel } from "../../hooks/useHotel";
+import { useForm } from "../../hooks/useForm";
+import { useRoomForms } from "../../hooks/useRoomForms";
+import { useCities } from "../../hooks/useCities";
 import { useComments } from "../../hooks/useComments";
 
-import { AuthContext } from "../../contexts/AuthContext";
+import { getHotel, updateHotel } from "../../services/hotelsService";
+import { getHotelRooms, createRoom, updateRoom, removeRoom } from "../../services/roomsService";
 
+import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./HotelDetailsPage.module.css";
 
 export function HotelDetailsPage() {
-    const { user } = useContext(AuthContext);
-    const { hotelId } = useParams();
-
-    // TODO: Separate to useHotel and useRoom hooks?
-    const { hotel, changeHandler, loadRooms, addRoom, saveRoom, createNewRoom, deleteRoom, saveHotel, setCityId } = useHotel({
-        name: '',
-        address: '',
-        cityId: 0,
-        description: '',
-        city: {},
-        ratings: {},
-        owner: {},
-        rooms: [],
-    }, hotelId);
-
-    const { comments, loadComments, loadReplies } = useComments(hotelId);
-
-    const mainImage = useImage(hotel && hotel.mainImageId);
-    const [hideEditForm, setHideEditForm] = useState(true);
+    const [hotel, setHotel] = useState({});
+    const [hideEditHotelForm, setHideEditHotelForm] = useState(true);
     const [showEditHotelBtn, setShowEditHotelBtn] = useState(true);
     const [showEditRoomsBtn, setShowEditRoomsBtn] = useState(true);
     const [showCommentsBtn, setShowCommentsBtn] = useState(true);
-    const isOwner = hotel.owner && user && user.id && hotel.owner.id === user.id;
+
+    const { user } = useContext(AuthContext);
+    const { hotelId } = useParams();
+    const cities = useCities();
+    const { form: hotelForm, setForm: setHotelForm, changeHandler: hotelChangeHandler } = useForm({});
+    const { roomForms, setRoomForms, addRoomToForm, roomFormsChangeHandler } = useRoomForms([]);
+    const { comments, loadComments, loadReplies } = useComments(hotelId);
+    const mainImage = useImage(hotel.mainImageId);
+
+    const isOwner = hotel.owner?.id === user?.id;
+
+    useEffect(() => {
+        hotelId && getHotel(hotelId)
+            .then(hotelData => setHotel(state => ({ ...state, ...hotelData })))
+            .catch(error => alert(`${error.status} ${error.title}`));
+    }, [hotelId, setHotel]);
 
     const onEditHotelClick = () => {
-        setHideEditForm(false);
+        setHotelForm({
+            name: hotel.name,
+            address: hotel.address,
+            cityId: hotel.city.id,
+            description: hotel.description,
+        });
+        setHideEditHotelForm(false);
         setShowEditHotelBtn(false);
     };
 
     const onCancelClick = () => {
-        setHideEditForm(true);
+        setHideEditHotelForm(true);
         setShowEditHotelBtn(true);
     };
 
-    const onUpdateHotelSubmit = () => {
-        const formData = {
-            name: hotel.name,
-            cityId: hotel.cityId,
-            address: hotel.address,
-            description: hotel.description,
-        };
+    const onUpdateHotelSubmit = async (e) => {
+        e.preventDefault();
 
         try {
-            saveHotel(formData);
-            setHideEditForm(true);
+            const data = await updateHotel(hotelId, hotelForm, user.token);
+            setHotel(state => ({ ...state, ...data }));
+            setHideEditHotelForm(true);
+            setShowEditHotelBtn(true);
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
         }
@@ -69,32 +74,45 @@ export function HotelDetailsPage() {
 
     const onEditRoomsClick = () => {
         try {
-            loadRooms();
+            getHotelRooms(hotelId, user.token)
+                .then(setRoomForms);
             setShowEditRoomsBtn(false);
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
         }
     };
 
-    const onCreateUpdateRoomSubmit = (e, hotelId, roomIdx) => {
+    const onCreateUpdateRoomSubmit = async (e, hotelId, roomIdx) => {
         e.preventDefault();
-        const room = hotel.rooms[roomIdx];
+        const room = roomForms[roomIdx];
 
         try {
-            room.id
-                ? saveRoom(roomIdx, room)
-                : createNewRoom(hotelId, roomIdx, room);
+            let roomData;
+
+            if (room.id) {
+                roomData = await updateRoom(room.id, room, user.token)
+            } else {
+                roomData = await createRoom(hotelId, room, user.token);
+                setHotel(state => ({ ...state, roomsCount: state.roomsCount + 1 }));
+            }
+
+            setRoomForms(state => {
+                const newState = [...state];
+                newState[roomIdx] = roomData;
+                return newState;
+            });
+
             alert('The room was successfully updated!');
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
         }
     };
 
-    const onAddRoomClick = () => addRoom();
-
-    const onDeleteRoomClick = (roomId) => {
+    const onDeleteRoomClick = async (roomId) => {
         try {
-            deleteRoom(roomId);
+            await removeRoom(roomId, user.token);
+            setRoomForms(roomForms.filter(room => room.id !== roomId));
+            setHotel(state => ({ ...state, roomsCount: state.roomsCount - 1 }));
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
         }
@@ -103,10 +121,6 @@ export function HotelDetailsPage() {
     const onCommentsClick = () => {
         loadComments(hotelId);
         setShowCommentsBtn(false);
-    };
-
-    const onRepliesClick = (commentId) => {
-        loadReplies(commentId);
     };
 
     return (
@@ -120,28 +134,28 @@ export function HotelDetailsPage() {
                             {mainImage && <div><Image src={mainImage} alt={hotel.name} /></div>}
 
                             <div>
-                                {hideEditForm
+                                {hideEditHotelForm
                                     ? <div>
                                         <h2>{hotel.name}</h2>
 
                                         <div>
                                             <p>{hotel.description}</p>
-                                            <span>Rating: {hotel.ratings.rating} from {hotel.ratings.ratingsCount} votes</span>
+                                            <span>Rating: {hotel.ratings?.rating} from {hotel.ratings?.ratingsCount} votes</span>
                                             <span> | Favorited from {hotel.usersWhoFavoritedCount} people</span>
                                             {hotel.isUserFavoriteHotel && <p>You mark this hotel as favorite.</p>}
                                         </div>
 
                                         <div>
-                                            <span>{hotel.city.name}, {hotel.address}</span>
-                                            <span> | Owner: {hotel.owner.firstName} {hotel.owner.lastName}</span>
+                                            <span>{hotel.city?.name}, {hotel.address}</span>
+                                            <span> | Owner: {hotel.owner?.firstName} {hotel.owner?.lastName}</span>
                                             <span> | Rooms: {hotel.roomsCount}</span>
                                         </div>
                                     </div>
                                     : <AddEditHotelForm
-                                        hotel={hotel}
-                                        setCityId={setCityId}
-                                        onChange={changeHandler}
+                                        hotel={hotelForm}
+                                        onChange={hotelChangeHandler}
                                         onSubmit={onUpdateHotelSubmit}
+                                        cities={cities}
                                     >
                                         <div>
                                             <Button onClick={onCancelClick} name="Cancel" />
@@ -158,7 +172,7 @@ export function HotelDetailsPage() {
                                             <CommentInfoDiv
                                                 key={comment.id}
                                                 comment={comment}
-                                                onRepliesClick={onRepliesClick}
+                                                onRepliesClick={loadReplies}
                                             />
                                         )}
                                     </div>
@@ -172,7 +186,7 @@ export function HotelDetailsPage() {
                         </div>
 
                         <div className={styles.roomsDiv}>
-                            {hotel.rooms && hotel.rooms.map((room, roomIdx) =>
+                            {roomForms.map((room, roomIdx) =>
                                 <form
                                     key={roomIdx}
                                     onSubmit={(e) => onCreateUpdateRoomSubmit(e, hotel.id, roomIdx)}
@@ -181,7 +195,7 @@ export function HotelDetailsPage() {
                                         key={roomIdx}
                                         roomIdx={roomIdx}
                                         room={room}
-                                        onChange={changeHandler}
+                                        onChange={(e) => roomFormsChangeHandler(e, roomIdx)}
                                     >
                                         <SubmitButton name={room.id ? "Update Room" : "Create Room"} />
                                         {room.id && <Button onClick={() => onDeleteRoomClick(room.id)} name="Delete Room" />}
@@ -194,7 +208,7 @@ export function HotelDetailsPage() {
                             <div>
                                 {showEditHotelBtn && <Button onClick={onEditHotelClick} name="Edit Hotel" />}
                                 {hotel.roomsCount > 0 && showEditRoomsBtn && <Button onClick={onEditRoomsClick} name="Edit Rooms" />}
-                                <Button onClick={onAddRoomClick} name="Add Room" />
+                                <Button onClick={addRoomToForm} name="Add Room" />
                             </div>
                         }
                     </div>
