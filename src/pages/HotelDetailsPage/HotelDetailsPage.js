@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/Buttons/Button";
+import { SmallButton } from "../../components/Buttons/SmallButton";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { Image } from "../../components/Image";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 import { CommentInfoDiv } from "../../components/CommentReply/CommentInfoDiv";
+import { TextArea } from "../../components/TextArea";
 
 import { useImage } from "../../hooks/useImage";
 import { useForm } from "../../hooks/useForm";
@@ -26,13 +28,15 @@ export function HotelDetailsPage() {
     const [showEditHotelBtn, setShowEditHotelBtn] = useState(true);
     const [showEditRoomsBtn, setShowEditRoomsBtn] = useState(true);
     const [showCommentsBtn, setShowCommentsBtn] = useState(true);
+    const [showAddCommentBtn, setShowAddCommentBtn] = useState(true);
 
     const { user } = useContext(AuthContext);
     const { hotelId } = useParams();
     const cities = useCities();
     const { form: hotelForm, setForm: setHotelForm, changeHandler: hotelChangeHandler } = useForm({});
     const { roomForms, setRoomForms, addRoomToForm, roomFormsChangeHandler } = useRoomForms([]);
-    const { comments, loadComments, loadReplies } = useComments(hotelId);
+    const { form: commentForm, setForm: setCommentForm, changeHandler: commentChangeHandler } = useForm({ content: '' });
+    const { comments, loadComments, sendComment, loadReplies, sendReply } = useComments(hotelId);
     const mainImage = useImage(hotel.mainImageId);
 
     const isOwner = hotel.owner?.id === user?.id;
@@ -123,6 +127,24 @@ export function HotelDetailsPage() {
         setShowCommentsBtn(false);
     };
 
+    const onSendCommentSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            await sendComment(hotelId, commentForm, user.token);
+            setCommentForm({ content: '' });
+            setHotel({ ...hotel, commentsCount: hotel.commentsCount + 1 });
+            setShowAddCommentBtn(true);
+        } catch (error) {
+            // TODO: Render validation errors.
+            alert(`${error.status} ${error.title}`);
+        }
+    };
+
+    const onSendReplySubmit = async (commentId, reply) => {
+        await sendReply(commentId, reply, user.token);
+    };
+
     return (
         <main>
             <section>
@@ -172,6 +194,7 @@ export function HotelDetailsPage() {
                                             <CommentInfoDiv
                                                 key={comment.id}
                                                 comment={comment}
+                                                onSendReplySubmit={onSendReplySubmit}
                                                 onRepliesClick={loadReplies}
                                             />
                                         )}
@@ -179,9 +202,27 @@ export function HotelDetailsPage() {
                                 }
 
                                 <div>
-                                    {showCommentsBtn && <Button onClick={onCommentsClick} name="Comments" />}
+                                    {showAddCommentBtn && <SmallButton onClick={() => setShowAddCommentBtn(false)} name="Add Comment" />}
+                                    {showCommentsBtn && <SmallButton onClick={onCommentsClick} name="Comments" />}
                                     <span>{hotel.commentsCount} comments</span>
                                 </div>
+
+                                {!showAddCommentBtn &&
+                                    <form onSubmit={onSendCommentSubmit}>
+                                        <div>
+                                            <TextArea
+                                                placeHolder="Write your comment here..."
+                                                paramName="content"
+                                                value={commentForm.content}
+                                                onChange={commentChangeHandler}
+                                                rows="5"
+                                                cols="50"
+                                                required={true}
+                                            />
+                                        </div>
+                                        <SubmitButton name="Send Comment" />
+                                    </form>
+                                }
                             </div>
                         </div>
 

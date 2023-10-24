@@ -15,3 +15,7 @@
 .comment span {
     font-style: italic;
 }
+
+.comment textarea {
+    margin: 10px;
+}
