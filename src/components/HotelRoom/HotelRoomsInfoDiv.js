@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "../Buttons/Button";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
 import { Image } from "../Image";
 import { RoomInfoDiv } from "./RoomInfoDiv";
 
@@ -26,7 +26,7 @@ export function HotelRoomsInfoDiv({ hotel }) {
                     {hotel.isUserFavoriteHotel && <p>You mark this hotel as favorite.</p>}
 
                     <div>
-                        <Button onClick={onMoreDetailsClick} name="More Details" />
+                        <PrimaryButton onClick={onMoreDetailsClick} name="More Details" />
                     </div>
                 </div>
             </div>

@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "../../components/Buttons/Button";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { InputField } from "../../components/InputField";
 
 import { useForm } from "../../hooks/useForm";
@@ -128,8 +127,8 @@ export function UserProfilePage() {
                                     required={true}
                                 />
                                 <div>
-                                    <SubmitButton name="Update" />
-                                    <Button onClick={onClickCancel} name="Cancel" />
+                                    <PrimaryButton type="submit" name="Update" />
+                                    <PrimaryButton onClick={onClickCancel} name="Cancel" />
                                 </div>
                             </form>
                         </>
@@ -159,8 +158,8 @@ export function UserProfilePage() {
                         <span>{userProfile.ratings}</span>
                     </div>
                     <div>
-                        <Button onClick={onClickUpdate} name="Update Your Profile" />
-                        <Button onClick={onClickDelete} name="Delete Your Profile" />
+                        <PrimaryButton onClick={onClickUpdate} name="Update Your Profile" />
+                        <PrimaryButton onClick={onClickDelete} name="Delete Your Profile" />
                     </div>
                 </div>
             </section>

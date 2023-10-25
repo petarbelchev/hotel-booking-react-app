@@ -1,8 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "../components/Buttons/Button";
-import { SubmitButton } from "../components/Buttons/SubmitButton";
+import { PrimaryButton } from "../components/Buttons/PrimaryButton";
 import { AddEditHotelForm } from "../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../components/HotelRoom/AddEditRoomDiv";
 
@@ -72,8 +71,8 @@ export function AddHotelPage() {
                     </div>
 
                     <div>
-                        <Button onClick={onAddRoomClick} name="Add Room" />
-                        <SubmitButton name="Add Hotel" />
+                        <PrimaryButton onClick={onAddRoomClick} name="Add Room" />
+                        <PrimaryButton type="submit" name="Add Hotel" />
                     </div>
                 </AddEditHotelForm>
             </section>

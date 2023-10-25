@@ -1,12 +1,14 @@
 import styles from "./Buttons.module.css";
 
-export function Button({
+export function DangerButton({
+    type = "button",
     name,
     onClick,
 }) {
     return (
         <button
-            className={styles.button}
+            type={type}
+            className={`${styles.button} ${styles.danger}`}
             onClick={onClick}
         >
             {name}

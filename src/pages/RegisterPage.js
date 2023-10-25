@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { InputField } from "../components/InputField";
-import { SubmitButton } from "../components/Buttons/SubmitButton";
+import { PrimaryButton } from "../components/Buttons/PrimaryButton";
 
 import { register } from "../services/authService";
 import { useForm } from "../hooks/useForm";
@@ -86,7 +86,7 @@ export function RegisterPage() {
                     />
 
                     <div>
-                        <SubmitButton name="Register" />
+                        <PrimaryButton type="submit" name="Register" />
                     </div>
                 </form>
             </section>

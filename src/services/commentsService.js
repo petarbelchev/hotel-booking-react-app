@@ -1,4 +1,4 @@
-import { get, post } from "./api";
+import { get, post, remove } from "./api";
 
 export async function getHotelComments(hotelId) {
     const path = `/api/hotels/${hotelId}/comments`;
@@ -15,7 +15,17 @@ export async function createComment(hotelId, data, token) {
     return await post(path, { data, token });
 };
 
+export async function removeComment(commendId, token) {
+    const path = `/api/comments/${commendId}`;
+    return await remove(path, { token });
+}
+
 export async function createReply(commentId, data, token) {
     const path = `/api/comments/${commentId}/replies`;
     return await post(path, { data, token });
+};
+
+export async function removeReply(replyId, token) {
+    const path = `/api/replies/${replyId}`;
+    return await remove(path, { token });
 };

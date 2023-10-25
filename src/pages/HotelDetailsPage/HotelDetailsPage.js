@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button } from "../../components/Buttons/Button";
-import { SmallButton } from "../../components/Buttons/SmallButton";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { Image } from "../../components/Image";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
@@ -36,7 +34,7 @@ export function HotelDetailsPage() {
     const { form: hotelForm, setForm: setHotelForm, changeHandler: hotelChangeHandler } = useForm({});
     const { roomForms, setRoomForms, addRoomToForm, roomFormsChangeHandler } = useRoomForms([]);
     const { form: commentForm, setForm: setCommentForm, changeHandler: commentChangeHandler } = useForm({ content: '' });
-    const { comments, loadComments, sendComment, loadReplies, sendReply } = useComments(hotelId);
+    const { comments, loadComments, sendComment, deleteComment, loadReplies, sendReply, deleteReply } = useComments(hotelId);
     const mainImage = useImage(hotel.mainImageId);
 
     const isOwner = hotel.owner?.id === user?.id;
@@ -145,6 +143,15 @@ export function HotelDetailsPage() {
         await sendReply(commentId, reply, user.token);
     };
 
+    const onDeleteCommentClick = async (commentId) => {
+        await deleteComment(commentId, user.token);
+        setHotel({ ...hotel, commentsCount: hotel.commentsCount - 1 });
+    };
+
+    const onDeleteReplyClick = (replyId, commentId) => {
+        deleteReply(replyId, commentId, user.token);
+    };
+
     return (
         <main>
             <section>
@@ -180,8 +187,8 @@ export function HotelDetailsPage() {
                                         cities={cities}
                                     >
                                         <div>
-                                            <Button onClick={onCancelClick} name="Cancel" />
-                                            <SubmitButton name="Update Hotel" />
+                                            <PrimaryButton onClick={onCancelClick} name="Cancel" />
+                                            <PrimaryButton type="submit" name="Update Hotel" />
                                         </div>
                                     </AddEditHotelForm>
                                 }
@@ -196,14 +203,17 @@ export function HotelDetailsPage() {
                                                 comment={comment}
                                                 onSendReplySubmit={onSendReplySubmit}
                                                 onRepliesClick={loadReplies}
+                                                onDeleteCommentClick={onDeleteCommentClick}
+                                                onDeleteReplyClick={onDeleteReplyClick}
+                                                userId={user.id}
                                             />
                                         )}
                                     </div>
                                 }
 
                                 <div>
-                                    {showAddCommentBtn && <SmallButton onClick={() => setShowAddCommentBtn(false)} name="Add Comment" />}
-                                    {showCommentsBtn && <SmallButton onClick={onCommentsClick} name="Comments" />}
+                                    {showAddCommentBtn && <PrimaryButton onClick={() => setShowAddCommentBtn(false)} name="Add Comment" />}
+                                    {showCommentsBtn && <PrimaryButton onClick={onCommentsClick} name="Comments" />}
                                     <span>{hotel.commentsCount} comments</span>
                                 </div>
 
@@ -220,7 +230,7 @@ export function HotelDetailsPage() {
                                                 required={true}
                                             />
                                         </div>
-                                        <SubmitButton name="Send Comment" />
+                                        <PrimaryButton type="submit" name="Send Comment" />
                                     </form>
                                 }
                             </div>
@@ -238,8 +248,8 @@ export function HotelDetailsPage() {
                                         room={room}
                                         onChange={(e) => roomFormsChangeHandler(e, roomIdx)}
                                     >
-                                        <SubmitButton name={room.id ? "Update Room" : "Create Room"} />
-                                        {room.id && <Button onClick={() => onDeleteRoomClick(room.id)} name="Delete Room" />}
+                                        <PrimaryButton type="submit" name={room.id ? "Update Room" : "Create Room"} />
+                                        {room.id && <PrimaryButton onClick={() => onDeleteRoomClick(room.id)} name="Delete Room" />}
                                     </AddEditRoomDiv>
                                 </form>
                             )}
@@ -247,9 +257,9 @@ export function HotelDetailsPage() {
 
                         {isOwner &&
                             <div>
-                                {showEditHotelBtn && <Button onClick={onEditHotelClick} name="Edit Hotel" />}
-                                {hotel.roomsCount > 0 && showEditRoomsBtn && <Button onClick={onEditRoomsClick} name="Edit Rooms" />}
-                                <Button onClick={addRoomToForm} name="Add Room" />
+                                {showEditHotelBtn && <PrimaryButton onClick={onEditHotelClick} name="Edit Hotel" />}
+                                {hotel.roomsCount > 0 && showEditRoomsBtn && <PrimaryButton onClick={onEditRoomsClick} name="Edit Rooms" />}
+                                <PrimaryButton onClick={addRoomToForm} name="Add Room" />
                             </div>
                         }
                     </div>

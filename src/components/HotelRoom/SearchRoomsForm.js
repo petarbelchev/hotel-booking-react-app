@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "../Dropdown";
-import { SubmitButton } from "../Buttons/SubmitButton";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
 
 import { useDateValidator } from "../../hooks/useDateValidator";
 import { useCities } from "../../hooks/useCities";
@@ -68,7 +68,7 @@ export function SearchRoomsForm({
                     required
                 />
             </div>
-            <SubmitButton name="Search" />
+            <PrimaryButton type="submit" name="Search" />
         </form>
     );
 };

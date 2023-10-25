@@ -1,15 +1,17 @@
 import styles from "./Buttons.module.css";
 
-export function SmallButton({
+export function PrimaryButton({
+    type = "button",
     name,
     onClick,
 }) {
     return (
         <button
-            className={`${styles.button} ${styles.small}`}
+            type={type}
+            className={`${styles.button} ${styles.primary}`}
             onClick={onClick}
         >
             {name}
         </button>
-    )
+    );
 };

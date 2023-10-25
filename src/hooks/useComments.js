@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { getHotelComments, getCommentReplies, createComment, createReply } from "../services/commentsService";
+import {
+    getHotelComments,
+    getCommentReplies,
+    createComment,
+    removeComment,
+    createReply,
+    removeReply,
+} from "../services/commentsService";
 
 export function useComments() {
     const [comments, setComments] = useState([]);
@@ -13,6 +20,11 @@ export function useComments() {
     const sendComment = async (hotelId, comment, token) => {
         const commentData = await createComment(hotelId, comment, token);
         setComments([...comments, commentData]);
+    };
+
+    const deleteComment = async (commentId, token) => {
+        await removeComment(commentId, token);
+        setComments(comments.filter(comment => comment.id !== commentId));
     };
 
     const loadReplies = (commentId) => {
@@ -42,11 +54,27 @@ export function useComments() {
         });
     };
 
+    const deleteReply = (replyId, commendId, token) => {
+        removeReply(replyId, token)
+            .then(() => {
+                setComments(state => {
+                    const newState = [...state];
+                    const comment = newState.find(comment => comment.id === commendId);
+                    comment.replies = comment.replies.filter(reply => reply.id !== replyId);
+                    comment.repliesCount--;
+                    return newState;
+                });
+            })
+            .catch(error => alert(`${error.status} ${error.title}!`));
+    };
+
     return {
         comments,
         loadComments,
         loadReplies,
         sendComment,
+        deleteComment,
         sendReply,
+        deleteReply,
     };
 };

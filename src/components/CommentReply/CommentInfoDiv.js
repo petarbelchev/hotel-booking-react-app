@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { SmallButton } from "../Buttons/SmallButton";
-import { SubmitButton } from "../Buttons/SubmitButton";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
+import { DangerButton } from "../Buttons/DangerButton";
 import { TextArea } from "../TextArea";
 import { ReplyInfoDiv } from "./ReplyInfoDiv";
 import { BaseCommentReplyContent } from "./BaseCommentReplyContent";
@@ -13,6 +13,9 @@ export function CommentInfoDiv({
     comment,
     onSendReplySubmit,
     onRepliesClick,
+    onDeleteCommentClick,
+    onDeleteReplyClick,
+    userId,
 }) {
     const [showRepliesBtn, setShowRepliesBtn] = useState(
         comment.repliesCount > 0 && (
@@ -22,6 +25,8 @@ export function CommentInfoDiv({
     );
     const [showAddReplyBtn, setShowAddReplyBtn] = useState(true);
     const { form, setForm, changeHandler } = useForm({ content: '' });
+
+    const isOwner = userId === comment.author.id;
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -39,20 +44,36 @@ export function CommentInfoDiv({
         onRepliesClick(comment.id);
     };
 
+    const deleteCommentClickHandler = async () => {
+        // TODO: Use modal window instead of 'confirm()'.
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm('Are you sure you want to delete this comment?')) {
+            await onDeleteCommentClick(comment.id);
+        }
+    };
+
     return (
         <div className={styles.comment}>
             <BaseCommentReplyContent content={comment}>
                 {comment.replies &&
                     <div>
                         <h4>Replies:</h4>
-                        {comment.replies.map(reply => <ReplyInfoDiv key={reply.id} reply={reply} />)}
+                        {comment.replies.map(reply =>
+                            <ReplyInfoDiv
+                                key={reply.id}
+                                reply={reply}
+                                onDeleteReplyBtnClick={() => onDeleteReplyClick(reply.id, comment.id)}
+                                userId={userId}
+                            />
+                        )}
                     </div>
                 }
 
                 <div>
-                    {showAddReplyBtn && <SmallButton onClick={() => setShowAddReplyBtn(false)} name="Add Reply" />}
-                    {showRepliesBtn && <SmallButton onClick={repliesClickHandler} name="Replies" />}
+                    {showAddReplyBtn && <PrimaryButton onClick={() => setShowAddReplyBtn(false)} name="Add Reply" />}
+                    {showRepliesBtn && <PrimaryButton onClick={repliesClickHandler} name="Replies" />}
                     <span>{comment.repliesCount} replies</span>
+                    {isOwner && <DangerButton onClick={deleteCommentClickHandler} name="Delete Comment" />}
                 </div>
 
                 {!showAddReplyBtn &&
@@ -69,7 +90,7 @@ export function CommentInfoDiv({
                             />
                         </div>
 
-                        <SubmitButton name="Send Reply" />
+                        <PrimaryButton type="submit" name="Send Reply" />
                     </form>
                 }
             </BaseCommentReplyContent>

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { InputField } from "../components/InputField";
-import { SubmitButton } from "../components/Buttons/SubmitButton";
+import { PrimaryButton } from "../components/Buttons/PrimaryButton";
 
 import { AuthContext } from "../contexts/AuthContext";
 import { useForm } from "../hooks/useForm";
@@ -53,7 +53,7 @@ export function LoginPage() {
                     />
 
                     <div>
-                        <SubmitButton name="Login" />
+                        <PrimaryButton type="submit" name="Login" />
                     </div>
                 </form>
             </section>
