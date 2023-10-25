@@ -6,14 +6,19 @@ import styles from "./ReplyInfoDiv.module.css";
 
 export function ReplyInfoDiv({
     reply,
-    onDeleteReplyBtnClick,
+    onDeleteClickHandler,
     userId,
 }) {
-    const [showDeleteBtn, setShowDeleteBtn] = useState(userId === reply.author.id);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const showDeleteBtn = userId === reply.author.id;
 
     const clickHandler = () => {
-        setShowDeleteBtn(false);
-        onDeleteReplyBtnClick();
+        if (isDeleting) {
+            return;
+        }
+
+        setIsDeleting(true);
+        onDeleteClickHandler(reply.id, setIsDeleting);
     };
 
     return (

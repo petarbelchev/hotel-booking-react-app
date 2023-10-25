@@ -5,12 +5,12 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
-    function addUser(user) {
+    const addUser = (user) => {
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
     };
 
-    function removeUser() {
+    const removeUser = () => {
         setUser(null);
         localStorage.removeItem('user');
     };

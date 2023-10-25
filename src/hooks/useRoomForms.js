@@ -2,13 +2,13 @@ import { useForm } from "./useForm";
 
 export function useRoomForms() {
     const {
-        form: roomForms,
-        setForm: setRoomForms,
-        changeHandler: roomFormsChangeHandler
+        form: forms,
+        setForm: setForms,
+        formChangeHandler: formsChangeHandler
     } = useForm([]);
 
     const addRoomToForm = () => {
-        setRoomForms(state => [
+        setForms(state => [
             ...state,
             {
                 number: '',
@@ -24,9 +24,9 @@ export function useRoomForms() {
     };
 
     return {
-        roomForms,
-        setRoomForms,
+        forms,
+        setForms,
         addRoomToForm,
-        roomFormsChangeHandler
+        formsChangeHandler,
     };
 };

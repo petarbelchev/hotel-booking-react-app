@@ -19,7 +19,7 @@ export function useDateValidator(
         : getDateWithOffset(checkInMinDate, 1)
     );
 
-    function onDateChange(e) {
+    const onDateChange = (e) => {
         const { name, value } = e.target;
 
         if (name === 'checkInLocal') {
@@ -51,7 +51,7 @@ export function useDateValidator(
     };
 };
 
-function getDateWithOffset(dateString, dateOffset) {
+const getDateWithOffset = (dateString, dateOffset) => {
     const date = new Date(dateString);
     const resultDate = new Date(date);
     resultDate.setDate(date.getDate() + dateOffset);

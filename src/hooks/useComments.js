@@ -11,10 +11,13 @@ import {
 export function useComments() {
     const [comments, setComments] = useState([]);
 
-    const loadComments = (hotelId) => {
-        getHotelComments(hotelId)
-            .then(setComments)
-            .catch(error => alert(`${error.status} ${error.title}!`));
+    const loadComments = async (hotelId) => {
+        try {
+            const comments = await getHotelComments(hotelId);
+            setComments(comments);
+        } catch (error) {
+            alert(`${error.status} ${error.title}!`);
+        }
     };
 
     const sendComment = async (hotelId, comment, token) => {
@@ -27,16 +30,18 @@ export function useComments() {
         setComments(comments.filter(comment => comment.id !== commentId));
     };
 
-    const loadReplies = (commentId) => {
-        getCommentReplies(commentId)
-            .then(replies => {
-                setComments(state => {
-                    const newState = [...state];
-                    newState.find(comment => comment.id === commentId).replies = replies;
-                    return newState;
-                });
-            })
-            .catch(error => alert(`${error.status} ${error.title}!`));
+    const loadReplies = async (commentId) => {
+        try {
+            const replies = await getCommentReplies(commentId);
+
+            setComments(state => {
+                const newState = [...state];
+                newState.find(comment => comment.id === commentId).replies = replies;
+                return newState;
+            });
+        } catch (error) {
+            alert(`${error.status} ${error.title}!`);
+        }
     };
 
     const sendReply = async (commentId, reply, token) => {
@@ -45,27 +50,33 @@ export function useComments() {
         setComments(state => {
             const newState = [...state];
             const comment = newState.find(comment => comment.id === commentId);
+
             if (!comment.replies) {
                 comment.replies = [];
             }
+            
             comment.replies.push(replyData);
             comment.repliesCount++;
+            
             return newState;
         });
     };
 
-    const deleteReply = (replyId, commendId, token) => {
-        removeReply(replyId, token)
-            .then(() => {
-                setComments(state => {
-                    const newState = [...state];
-                    const comment = newState.find(comment => comment.id === commendId);
-                    comment.replies = comment.replies.filter(reply => reply.id !== replyId);
-                    comment.repliesCount--;
-                    return newState;
-                });
-            })
-            .catch(error => alert(`${error.status} ${error.title}!`));
+    const deleteReply = async (replyId, commendId, token) => {
+        try {
+            await removeReply(replyId, token)
+
+            setComments(state => {
+                const newState = [...state];
+                const comment = newState.find(comment => comment.id === commendId);
+                comment.replies = comment.replies.filter(reply => reply.id !== replyId);
+                comment.repliesCount--;
+                
+                return newState;
+            });
+        } catch (error) {
+            alert(`${error.status} ${error.title}!`);
+        }
     };
 
     return {

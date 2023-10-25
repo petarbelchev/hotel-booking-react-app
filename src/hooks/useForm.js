@@ -3,10 +3,10 @@ import { useState } from "react";
 export function useForm(initValues) {
     const [form, setForm] = useState(initValues);
 
-    const changeHandler = (event, roomIdx) => {
+    const formChangeHandler = (event, roomIdx) => {
         const name = event.target.name;
         const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-        
+
         setForm(state => {
             let newState;
 
@@ -22,5 +22,9 @@ export function useForm(initValues) {
         });
     };
 
-    return { form, setForm, changeHandler };
+    return {
+        form,
+        setForm,
+        formChangeHandler
+    };
 };

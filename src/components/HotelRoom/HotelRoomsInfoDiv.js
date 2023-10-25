@@ -11,7 +11,7 @@ import styles from "./HotelRoomsInfoDiv.module.css";
 export function HotelRoomsInfoDiv({ hotel }) {
     const mainImage = useImage(hotel.mainImageId);
     const navigate = useNavigate();
-    const onMoreDetailsClick = () => navigate(`/hotels/${hotel.id}`);
+    const moreDetailsClickHandler = () => navigate(`/hotels/${hotel.id}`);
 
     return (
         <div className={styles.hotelRoomsDiv}>
@@ -26,7 +26,7 @@ export function HotelRoomsInfoDiv({ hotel }) {
                     {hotel.isUserFavoriteHotel && <p>You mark this hotel as favorite.</p>}
 
                     <div>
-                        <PrimaryButton onClick={onMoreDetailsClick} name="More Details" />
+                        <PrimaryButton onClick={moreDetailsClickHandler} name="More Details" />
                     </div>
                 </div>
             </div>

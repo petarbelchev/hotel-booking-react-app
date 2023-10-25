@@ -10,7 +10,6 @@ export function AddEditHotelForm({
     cities,
     children,
 }) {
-
     return (
         <form
             className={styles.hotelForm}

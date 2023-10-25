@@ -15,37 +15,47 @@ import { AuthContext } from "../contexts/AuthContext";
 export function AddHotelPage() {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
-    const cities = useCities();
 
-    const { form: hotelForm, setForm: setHotelForm, changeHandler: hotelChangeHandler } = useForm({
+    const cities = useCities();
+    const roomForms = useRoomForms();
+    
+    const {
+        form: hotelForm,
+        setForm: setHotelForm,
+        formChangeHandler: hotelFormChangeHandler
+    } = useForm({
         name: '',
         address: '',
         cityId: 0,
         description: '',
-    });
-
-    const { roomForms, addRoomToForm, roomFormsChangeHandler } = useRoomForms();
+    });    
 
     useEffect(() => {
-        setHotelForm(state => ({ ...state, cityId: cities[0]?.id }));
+        setHotelForm(state => ({
+            ...state,
+            cityId: cities[0]?.id
+        }));
     }, [cities, setHotelForm]);
 
-    const onAddRoomClick = (e) => {
+    const addRoomClickHandler = (e) => {
         e.preventDefault();
-        addRoomToForm();
+        roomForms.addRoomToForm();
     };
 
-    const onAddHotelSubmit = (e) => {
+    const addHotelSubmitHandler = async (e) => {
         e.preventDefault();
         const hotel = {
             ...hotelForm,
-            rooms: roomForms
+            rooms: roomForms.forms
         };
 
-        addHotel(hotel, user.token)
-            .then(({ id }) => navigate(`/hotels/${id}`))
+        try {
+            const { id } = await addHotel(hotel, user.token);
+            navigate(`/hotels/${id}`);
+        } catch (error) {
             // TODO: Render validation errors.
-            .catch(error => alert(`${error.status} ${error.title}!`));
+            alert(`${error.status} ${error.title}!`);
+        }
     };
 
     return (
@@ -55,23 +65,23 @@ export function AddHotelPage() {
 
                 <AddEditHotelForm
                     hotel={hotelForm}
-                    onChange={hotelChangeHandler}
-                    onSubmit={onAddHotelSubmit}
+                    onChange={hotelFormChangeHandler}
+                    onSubmit={addHotelSubmitHandler}
                     cities={cities}
                 >
                     <div>
-                        {roomForms.map((room, index) =>
+                        {roomForms.forms.map((room, index) =>
                             <AddEditRoomDiv
                                 key={index}
                                 roomIdx={index}
                                 room={room}
-                                onChange={roomFormsChangeHandler}
+                                onChange={roomForms.formsChangeHandler}
                             />
                         )}
                     </div>
 
                     <div>
-                        <PrimaryButton onClick={onAddRoomClick} name="Add Room" />
+                        <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
                         <PrimaryButton type="submit" name="Add Hotel" />
                     </div>
                 </AddEditHotelForm>

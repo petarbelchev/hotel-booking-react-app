@@ -11,7 +11,6 @@ export function AddEditRoomDiv({
     children,
 }) {
     return (
-        room &&
         <div className={styles.container}>
             <InputField
                 type="text"

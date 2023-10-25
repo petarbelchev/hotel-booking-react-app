@@ -11,21 +11,18 @@ import { login } from "../services/authService";
 export function LoginPage() {
     const { addUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    const { form, changeHandler } = useForm({ email: '', password: '' });
+    const { form, formChangeHandler } = useForm({ email: '', password: '' });
 
-    const onLoginSubmit = (e) => {
+    const loginSubmitHandler = async (e) => {
         e.preventDefault();
 
-        if (Object.values(form).includes('')) {
-            alert('Please fill out all fields!');
-        } else {
-            login(form)
-                .then(authData => {
-                    addUser(authData);
-                    navigate('/');
-                })
-                // TODO: Render the validation errors in the login form.
-                .catch(error => alert(`${error.status} ${error.title}`));
+        try {
+            const authData = await login(form);
+            addUser(authData);
+            navigate('/');
+        } catch (error) {
+            // TODO: Render the validation errors in the login form.
+            alert(`${error.status} ${error.title}`);
         }
     };
 
@@ -34,13 +31,13 @@ export function LoginPage() {
             <section>
                 <h1>Login Page</h1>
 
-                <form onSubmit={onLoginSubmit} style={{ border: "solid", display: "inline-block" }}>
+                <form onSubmit={loginSubmitHandler} style={{ border: "solid", display: "inline-block" }}>
                     <InputField
                         labelName="Email"
                         paramName="email"
                         type="email"
                         value={form.email}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
                     <InputField
@@ -48,7 +45,7 @@ export function LoginPage() {
                         paramName="password"
                         type="password"
                         value={form.password}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
 

@@ -12,7 +12,7 @@ import styles from "./UserProfilePage.module.css";
 
 export function UserProfilePage() {
     const navigate = useNavigate();
-    const { form, setForm, changeHandler } = useForm();
+    const { form, setForm, formChangeHandler } = useForm();
     const { user, addUser, removeUser } = useContext(AuthContext);
     const [userProfile, setUserProfile] = useState({});
     const [hideEditForm, setHideEditForm] = useState(true);
@@ -38,46 +38,54 @@ export function UserProfilePage() {
         userProfile.phoneNumber,
     ]);
 
-    const onClickUpdate = () => setHideEditForm(false);
-    const onClickCancel = () => setHideEditForm(true);
+    const updateClickHandler = () => setHideEditForm(false);
+    const cancelClickHandler = () => setHideEditForm(true);
 
-    const onClickDelete = () => {
+    const clickDeleteHandler = async () => {
         // TODO: Use modal window instead of 'confirm()'.
         // eslint-disable-next-line no-restricted-globals
         if (confirm('Are you sure you want to delete your profile?')) {
-            deleteUserProfile(user.id, user.token)
-                .then(response => {
-                    if (response.status === 204) {
-                        alert('Your profile was successfully deleted!');
-                        removeUser();
-                        navigate('/');
-                    }
-                })
+            try {
+                const response = await deleteUserProfile(user.id, user.token);
+
+                if (response.status === 204) {
+                    alert('Your profile was successfully deleted!');
+                    removeUser();
+                    navigate('/');
+                }
+            } catch (error) {
                 // TODO: Render validation errors.
-                .catch(error => alert(`${error.status} ${error.title}!`));
+                alert(`${error.status} ${error.title}!`);
+            }
         }
     };
 
-    const onUpdateSubmit = (e) => {
+    const updateSubmitHandler = async (e) => {
         e.preventDefault();
 
-        updateUserProfile(user.id, form, user.token)
-            .then(data => {
+        // TODO: Use modal window instead of 'confirm()'.
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm('Are you sure you want to update your profile?')) {
+            try {
+                const responseData = await updateUserProfile(user.id, form, user.token);
+    
                 setUserProfile(state => ({
                     ...state,
-                    ...data,
+                    ...responseData,
                 }));
-
+    
                 addUser({
                     ...user,
-                    firstName: data.firstName,
-                    lastName: data.lastName
+                    firstName: responseData.firstName,
+                    lastName: responseData.lastName
                 });
-            })
-            // TODO: Render validation errors inside the update form.
-            .catch(error => alert(`${error.status} ${error.title}!`));
-
-        setHideEditForm(true);
+    
+                setHideEditForm(true);
+            } catch (error) {
+                // TODO: Render validation errors inside the update form.
+                alert(`${error.status} ${error.title}!`);
+            }
+        }
     };
 
     return (
@@ -101,13 +109,13 @@ export function UserProfilePage() {
                             </div>
                         </>
                         : <>
-                            <form onSubmit={onUpdateSubmit}>
+                            <form onSubmit={updateSubmitHandler}>
                                 <InputField
                                     labelName="First Name"
                                     type="text"
                                     paramName="firstName"
                                     value={form.firstName}
-                                    onChange={changeHandler}
+                                    onChange={formChangeHandler}
                                     required={true}
                                 />
                                 <InputField
@@ -115,7 +123,7 @@ export function UserProfilePage() {
                                     type="text"
                                     paramName="lastName"
                                     value={form.lastName}
-                                    onChange={changeHandler}
+                                    onChange={formChangeHandler}
                                     required={true}
                                 />
                                 <InputField
@@ -123,12 +131,12 @@ export function UserProfilePage() {
                                     type="text"
                                     paramName="phoneNumber"
                                     value={form.phoneNumber}
-                                    onChange={changeHandler}
+                                    onChange={formChangeHandler}
                                     required={true}
                                 />
                                 <div>
                                     <PrimaryButton type="submit" name="Update" />
-                                    <PrimaryButton onClick={onClickCancel} name="Cancel" />
+                                    <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
                                 </div>
                             </form>
                         </>
@@ -158,8 +166,8 @@ export function UserProfilePage() {
                         <span>{userProfile.ratings}</span>
                     </div>
                     <div>
-                        <PrimaryButton onClick={onClickUpdate} name="Update Your Profile" />
-                        <PrimaryButton onClick={onClickDelete} name="Delete Your Profile" />
+                        <PrimaryButton onClick={updateClickHandler} name="Update Your Profile" />
+                        <PrimaryButton onClick={clickDeleteHandler} name="Delete Your Profile" />
                     </div>
                 </div>
             </section>

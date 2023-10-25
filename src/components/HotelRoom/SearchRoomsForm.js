@@ -19,7 +19,7 @@ export function SearchRoomsForm({
     const dateValidator = useDateValidator(initCheckInDate, initCheckOutDate);
     const navigate = useNavigate();
 
-    const onSearchSubmit = (e) => {
+    const searchSubmitHandler = (e) => {
         e.preventDefault();
 
         navigate('/search-result?' +
@@ -29,24 +29,23 @@ export function SearchRoomsForm({
         );
     };
 
-    const onCityChange = (e) => setCityId(e.target.value);
+    const cityChangeHandler = (e) => setCityId(e.target.value);
 
     return (
         <form
             className={styles.roomsForm}
-            onSubmit={onSearchSubmit}
+            onSubmit={searchSubmitHandler}
         >
             <Dropdown
                 labelName={'Choose a city:'}
                 paramName={'cityId'}
                 items={cities}
                 value={cityId}
-                onSelectChange={onCityChange}
+                onSelectChange={cityChangeHandler}
             />
             <div>
                 <label htmlFor="checkInLocal">From:</label>
                 <input
-                    id="checkInLocal"
                     name="checkInLocal"
                     type="date"
                     onChange={dateValidator.onDateChange}
@@ -59,7 +58,6 @@ export function SearchRoomsForm({
             <div>
                 <label htmlFor="checkOutLocal">To:</label>
                 <input
-                    id="checkOutLocal"
                     name="checkOutLocal"
                     type="date"
                     onChange={dateValidator.onDateChange}

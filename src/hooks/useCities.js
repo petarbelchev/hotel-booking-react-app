@@ -6,7 +6,7 @@ export function useCities() {
     const [cities, setCities] = useState([]);
     
     useEffect(() => {
-        getCities().then(cities => setCities(cities));
+        getCities().then(setCities);
     }, []);
 
     return cities;

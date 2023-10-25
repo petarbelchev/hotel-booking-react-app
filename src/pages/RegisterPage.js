@@ -8,7 +8,7 @@ import { useForm } from "../hooks/useForm";
 
 export function RegisterPage() {
     const navigate = useNavigate();
-    const { form, changeHandler } = useForm({
+    const { form, formChangeHandler } = useForm({
         email: '',
         firstName: '',
         lastName: '',
@@ -17,16 +17,15 @@ export function RegisterPage() {
         phoneNumber: '',
     });
 
-    const onRegisterSubmit = (e) => {
+    const registerSubmitHandler = async (e) => {
         e.preventDefault();
 
-        if (Object.values(form).includes('')) {
-            alert('Please fill out all fields!');
-        } else {
-            register(form)
-                .then(navigate('/login'))
-                // TODO: Render the validation errors in the register form.
-                .catch(error => alert(`${error.status} ${error.title}`));
+        try {
+            await register(form);
+            navigate('/login');
+        } catch (error) {
+            // TODO: Render the validation errors in the register form.
+            alert(`${error.status} ${error.title}`);
         }
     };
 
@@ -35,13 +34,13 @@ export function RegisterPage() {
             <section>
                 <h1>Register Page</h1>
 
-                <form onSubmit={onRegisterSubmit} style={{ border: "solid", display: "inline-block" }}>
+                <form onSubmit={registerSubmitHandler} style={{ border: "solid", display: "inline-block" }}>
                     <InputField
                         labelName="Email"
                         paramName="email"
                         type="email"
                         value={form.email}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
                     <InputField
@@ -49,7 +48,7 @@ export function RegisterPage() {
                         paramName="firstName"
                         type="text"
                         value={form.firstName}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
                     <InputField
@@ -57,7 +56,7 @@ export function RegisterPage() {
                         paramName="lastName"
                         type="text"
                         value={form.lastName}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
                     <InputField
@@ -65,7 +64,7 @@ export function RegisterPage() {
                         paramName="password"
                         type="password"
                         value={form.password}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
                     <InputField
@@ -73,7 +72,7 @@ export function RegisterPage() {
                         paramName="confirmPassword"
                         type="password"
                         value={form.confirmPassword}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
                     <InputField
@@ -81,7 +80,7 @@ export function RegisterPage() {
                         paramName="phoneNumber"
                         type="text"
                         value={form.phoneNumber}
-                        onChange={changeHandler}
+                        onChange={formChangeHandler}
                         required={true}
                     />
 
