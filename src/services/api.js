@@ -28,6 +28,9 @@ async function responseHandler(response) {
     if (responseWithoutBody) {
         if (response.ok) {
             return responseWithoutBody;
+        } else if (response.status === 401) {
+            localStorage.clear();
+            window.location.href = '/';
         }
 
         throw responseWithoutBody;
