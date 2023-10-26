@@ -8,10 +8,7 @@
 
 .hotelDiv {
     display: flex;
+    flex-wrap: wrap;
     grid-template-columns: auto auto;
     margin: 10px;
-}
-
-.hotelDiv span {
-    font-size: large;
 }

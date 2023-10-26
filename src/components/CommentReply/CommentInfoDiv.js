@@ -83,7 +83,7 @@ export function CommentInfoDiv({
                 </div>}
 
                 <div>
-                    {showAddReplyBtn && <PrimaryButton onClick={addReplyClickHandler} name="Add Reply" />}
+                    {showAddReplyBtn && userId && <PrimaryButton onClick={addReplyClickHandler} name="Add Reply" />}
                     {showRepliesBtn && <PrimaryButton onClick={repliesClickHandler} name="Replies" />}
                     <span>{comment.repliesCount} replies</span>
                     {isOwner && <DangerButton onClick={deleteCommentClickHandler} name="Delete Comment" />}

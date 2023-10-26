@@ -17,3 +17,7 @@ export async function updateHotel(hotelId, data, token) {
 export async function removeHotel(hotelId, token) {
     return await remove(`${path}/${hotelId}`, { token });
 };
+
+export async function markAsFavorite(hotelId, token) {
+    return await put(`${path}/${hotelId}/favorites`, { token });
+};

@@ -9,7 +9,7 @@ import {
 } from "../services/commentsService";
 
 export function useComments() {
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState(null);
 
     const loadComments = async (hotelId) => {
         try {

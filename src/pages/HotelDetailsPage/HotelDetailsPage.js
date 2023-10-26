@@ -4,10 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { DangerButton } from "../../components/Buttons/DangerButton";
 import { Image } from "../../components/Image";
+import { TextArea } from "../../components/TextArea";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
+import { HotelInfoDiv } from "../../components/HotelRoom/HotelInfoDiv";
 import { CommentInfoDiv } from "../../components/CommentReply/CommentInfoDiv";
-import { TextArea } from "../../components/TextArea";
 
 import { useImage } from "../../hooks/useImage";
 import { useForm } from "../../hooks/useForm";
@@ -15,7 +16,7 @@ import { useRoomForms } from "../../hooks/useRoomForms";
 import { useCities } from "../../hooks/useCities";
 import { useComments } from "../../hooks/useComments";
 
-import { getHotel, updateHotel, removeHotel } from "../../services/hotelsService";
+import { getHotel, updateHotel, removeHotel, markAsFavorite } from "../../services/hotelsService";
 import { getHotelRooms, createRoom, updateRoom, removeRoom } from "../../services/roomsService";
 
 import { AuthContext } from "../../contexts/AuthContext";
@@ -45,14 +46,14 @@ export function HotelDetailsPage() {
     const isOwner = hotel.owner?.id === user?.id;
 
     useEffect(() => {
-        hotelId && getHotel(hotelId)
+        hotelId && getHotel(hotelId, user?.token)
             .then(hotelData => {
                 setHotel(state => ({ ...state, ...hotelData }));
                 hotelData.roomsCount > 0 && setShowEditRoomsBtn(true);
                 hotelData.commentsCount > 0 && setShowCommentsBtn(true);
             })
             .catch(error => alert(`${error.status} ${error.title}`));
-    }, [hotelId, setHotel]);
+    }, [hotelId, user?.token, setHotel]);
 
     const editHotelClickHandler = () => {
         hooks.hotelForm.setForm({
@@ -187,7 +188,21 @@ export function HotelDetailsPage() {
                 navigate('/');
             } catch (error) {
                 alert(`${error.status} ${error.title}`);
-            }            
+            }
+        }
+    };
+
+    const favoriteClickHandler = async () => {
+        try {
+            const response = await markAsFavorite(hotelId, user.token);
+
+            setHotel({
+                ...hotel,
+                isUserFavoriteHotel: response.isFavorite,
+                usersWhoFavoritedCount: hotel.usersWhoFavoritedCount + (response.isFavorite ? 1 : - 1),
+            });
+        } catch (error) {
+            alert(`${error.status} ${error.title}`);
         }
     };
 
@@ -196,127 +211,114 @@ export function HotelDetailsPage() {
             <section>
                 <h1>Hotel Details</h1>
 
-                {hotel && (
-                    <div className={styles.mainDiv}>
-                        <div className={styles.hotelDiv}>
-                            {hooks.mainImage && <div><Image src={hooks.mainImage} alt={hotel.name} /></div>}
+                <div className={styles.mainDiv}>
+                    <div className={styles.hotelDiv}>
+                        {hooks.mainImage && <div><Image src={hooks.mainImage} alt={hotel.name} /></div>}
+
+                        <div>
+                            {hideEditHotelForm
+                                ? <HotelInfoDiv
+                                    hotel={hotel}
+                                    onFavoriteClickHandler={favoriteClickHandler}
+                                />
+                                : <AddEditHotelForm
+                                    hotel={hooks.hotelForm.form}
+                                    onChange={hooks.hotelForm.formChangeHandler}
+                                    onSubmit={updateHotelSubmitHandler}
+                                    cities={hooks.cities}
+                                >
+                                    <div>
+                                        <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
+                                        <PrimaryButton type="submit" name="Update Hotel" />
+                                    </div>
+                                </AddEditHotelForm>
+                            }
+
+                            {hooks.commentsActions.comments && <div>
+                                <h3>Comments:</h3>
+
+                                {hooks.commentsActions.comments.map(comment =>
+                                    <CommentInfoDiv
+                                        key={comment.id}
+                                        comment={comment}
+                                        onSendReplySubmitHandler={sendReplySubmitHandler}
+                                        onRepliesClickHandler={repliesClickHandler}
+                                        onDeleteCommentClickHandler={deleteCommentClickHandler}
+                                        onDeleteReplyClickHandler={deleteReplyClickHandler}
+                                        userId={user?.id}
+                                    />
+                                )}
+                            </div>}
 
                             <div>
-                                {hideEditHotelForm
-                                    ? <div>
-                                        <h2>{hotel.name}</h2>
-
-                                        <div>
-                                            <p>{hotel.description}</p>
-                                            <span>Rating: {hotel.ratings?.rating} from {hotel.ratings?.ratingsCount} votes</span>
-                                            <span> | Favorited from {hotel.usersWhoFavoritedCount} people</span>
-                                            {hotel.isUserFavoriteHotel && <p>You mark this hotel as favorite.</p>}
-                                        </div>
-
-                                        <div>
-                                            <span>{hotel.city?.name}, {hotel.address}</span>
-                                            <span> | Owner: {hotel.owner?.firstName} {hotel.owner?.lastName}</span>
-                                            <span> | Rooms: {hotel.roomsCount}</span>
-                                        </div>
-                                    </div>
-                                    : <AddEditHotelForm
-                                        hotel={hooks.hotelForm.form}
-                                        onChange={hooks.hotelForm.formChangeHandler}
-                                        onSubmit={updateHotelSubmitHandler}
-                                        cities={hooks.cities}
-                                    >
-                                        <div>
-                                            <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
-                                            <PrimaryButton type="submit" name="Update Hotel" />
-                                        </div>
-                                    </AddEditHotelForm>
-                                }
-
-                                {hooks.commentsActions.comments && <div>
-                                    <h3>Comments:</h3>
-
-                                    {hooks.commentsActions.comments.map(comment =>
-                                        <CommentInfoDiv
-                                            key={comment.id}
-                                            comment={comment}
-                                            onSendReplySubmitHandler={sendReplySubmitHandler}
-                                            onRepliesClickHandler={repliesClickHandler}
-                                            onDeleteCommentClickHandler={deleteCommentClickHandler}
-                                            onDeleteReplyClickHandler={deleteReplyClickHandler}
-                                            userId={user.id}
-                                        />
-                                    )}
-                                </div>}
-
-                                <div>
-                                    {showAddCommentBtn && <PrimaryButton
-                                        onClick={addCommentClickHandler}
-                                        name="Add Comment"
-                                    />}
-                                    {showCommentsBtn && <PrimaryButton
-                                        onClick={commentsClickHandler}
-                                        name="Comments"
-                                    />}
-                                    <span>{hotel.commentsCount} comments</span>
-                                </div>
-
-                                {!showAddCommentBtn && <form onSubmit={sendCommentSubmitHandler}>
-                                    <div>
-                                        <TextArea
-                                            placeHolder="Write your comment here..."
-                                            paramName="content"
-                                            value={hooks.commentForm.form.content}
-                                            onChange={hooks.commentForm.formChangeHandler}
-                                            rows="5"
-                                            cols="50"
-                                            required={true}
-                                        />
-                                    </div>
-                                    <PrimaryButton type="submit" name="Send Comment" />
-                                </form>}
+                                {showAddCommentBtn && user && <PrimaryButton
+                                    onClick={addCommentClickHandler}
+                                    name="Add Comment"
+                                />}
+                                {showCommentsBtn && <PrimaryButton
+                                    onClick={commentsClickHandler}
+                                    name="Comments"
+                                />}
+                                <span>{hotel.commentsCount} comments</span>
                             </div>
+
+                            {!showAddCommentBtn && <form onSubmit={sendCommentSubmitHandler}>
+                                <div>
+                                    <TextArea
+                                        placeHolder="Write your comment here..."
+                                        paramName="content"
+                                        value={hooks.commentForm.form.content}
+                                        onChange={hooks.commentForm.formChangeHandler}
+                                        rows="5"
+                                        cols="50"
+                                        required={true}
+                                    />
+                                </div>
+                                <PrimaryButton type="submit" name="Send Comment" />
+                            </form>}
                         </div>
-
-                        <div className={styles.roomsDiv}>
-                            {hooks.roomForms.forms.map((room, roomIdx) =>
-                                <form
-                                    key={roomIdx}
-                                    onSubmit={(e) => createUpdateRoomSubmitHandler(e, roomIdx)}
-                                >
-                                    <AddEditRoomDiv
-                                        key={roomIdx}
-                                        roomIdx={roomIdx}
-                                        room={room}
-                                        onChange={(e) => hooks.roomForms.formsChangeHandler(e, roomIdx)}
-                                    >
-                                        <PrimaryButton
-                                            type="submit"
-                                            name={room.id ? "Update Room" : "Create Room"}
-                                        />
-
-                                        {room.id && <DangerButton
-                                            onClick={() => deleteRoomClickHandler(room.id)}
-                                            name="Delete Room"
-                                        />}
-                                    </AddEditRoomDiv>
-                                </form>
-                            )}
-                        </div>
-
-                        {isOwner && <div>
-                            {showEditHotelBtn && <PrimaryButton
-                                onClick={editHotelClickHandler}
-                                name="Edit Hotel"
-                            />}
-                            {hotel.roomsCount > 0 && showEditRoomsBtn && <PrimaryButton
-                                onClick={editRoomsClickHandler}
-                                name="Edit Rooms"
-                            />}
-                            <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
-                            <DangerButton onClick={deleteHotelClickHandler} name="Delete Hotel" />
-                        </div>}
                     </div>
-                )}
+
+                    <div className={styles.roomsDiv}>
+                        {hooks.roomForms.forms.map((room, roomIdx) =>
+                            <form
+                                key={roomIdx}
+                                onSubmit={(e) => createUpdateRoomSubmitHandler(e, roomIdx)}
+                            >
+                                <AddEditRoomDiv
+                                    key={roomIdx}
+                                    roomIdx={roomIdx}
+                                    room={room}
+                                    onChange={(e) => hooks.roomForms.formsChangeHandler(e, roomIdx)}
+                                >
+                                    <PrimaryButton
+                                        type="submit"
+                                        name={room.id ? "Update Room" : "Create Room"}
+                                    />
+
+                                    {room.id && <DangerButton
+                                        onClick={() => deleteRoomClickHandler(room.id)}
+                                        name="Delete Room"
+                                    />}
+                                </AddEditRoomDiv>
+                            </form>
+                        )}
+                    </div>
+
+                    {isOwner && <div>
+                        <hr />
+                        {showEditHotelBtn && <PrimaryButton
+                            onClick={editHotelClickHandler}
+                            name="Edit Hotel"
+                        />}
+                        {hotel.roomsCount > 0 && showEditRoomsBtn && <PrimaryButton
+                            onClick={editRoomsClickHandler}
+                            name="Edit Rooms"
+                        />}
+                        <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
+                        <DangerButton onClick={deleteHotelClickHandler} name="Delete Hotel" />
+                    </div>}
+                </div>
             </section>
         </main>
     );
