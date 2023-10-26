@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { DangerButton } from "../../components/Buttons/DangerButton";
@@ -15,7 +15,7 @@ import { useRoomForms } from "../../hooks/useRoomForms";
 import { useCities } from "../../hooks/useCities";
 import { useComments } from "../../hooks/useComments";
 
-import { getHotel, updateHotel } from "../../services/hotelsService";
+import { getHotel, updateHotel, removeHotel } from "../../services/hotelsService";
 import { getHotelRooms, createRoom, updateRoom, removeRoom } from "../../services/roomsService";
 
 import { AuthContext } from "../../contexts/AuthContext";
@@ -31,7 +31,8 @@ export function HotelDetailsPage() {
 
     const { user } = useContext(AuthContext);
     const { hotelId } = useParams();
-    
+    const navigate = useNavigate();
+
     const hooks = {
         cities: useCities(),
         mainImage: useImage(hotel.mainImageId),
@@ -135,7 +136,7 @@ export function HotelDetailsPage() {
                 setHotel({ ...hotel, roomsCount: hotel.roomsCount - 1 });
             } catch (error) {
                 alert(`${error.status} ${error.title}!`);
-            }            
+            }
         }
     };
 
@@ -175,6 +176,19 @@ export function HotelDetailsPage() {
 
     const deleteReplyClickHandler = async (replyId, commentId) => {
         await hooks.commentsActions.deleteReply(replyId, commentId, user.token);
+    };
+
+    const deleteHotelClickHandler = async () => {
+        // TODO: Use modal window instead of 'confirm()'.
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm('Are you sure you want to delete your hotel?')) {
+            try {
+                await removeHotel(hotelId, user.token);
+                navigate('/');
+            } catch (error) {
+                alert(`${error.status} ${error.title}`);
+            }            
+        }
     };
 
     return (
@@ -299,6 +313,7 @@ export function HotelDetailsPage() {
                                 name="Edit Rooms"
                             />}
                             <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
+                            <DangerButton onClick={deleteHotelClickHandler} name="Delete Hotel" />
                         </div>}
                     </div>
                 )}
