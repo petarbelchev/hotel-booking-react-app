@@ -55,6 +55,7 @@ export function SearchRoomsForm({
                     required
                 />
             </div>
+
             <div>
                 <label htmlFor="checkOutLocal">To:</label>
                 <input
@@ -66,6 +67,7 @@ export function SearchRoomsForm({
                     required
                 />
             </div>
+            
             <PrimaryButton type="submit" name="Search" />
         </form>
     );

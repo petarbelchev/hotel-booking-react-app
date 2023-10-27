@@ -1,27 +1,9 @@
-.mainDiv {
+.solidBorder {
     border-style: solid;
+    padding: 10px;
 }
 
-.hotelDiv {
-    display: flex;
-    flex-wrap: wrap;
-    grid-template-columns: auto auto;
-    margin: 10px;
-}
-
-.hotelDiv h3 {
-    margin-bottom: 0px;
-}
-
-.hotelDiv span {
-    font-style: italic;
-}
-
-.hotelDiv textarea {
-    margin-top: 1rem;
-}
-
-.roomsDiv {
+.flexWrap {
     display: flex;
     flex-wrap: wrap;
 }

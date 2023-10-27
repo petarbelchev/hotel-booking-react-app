@@ -18,29 +18,42 @@ export function HotelInfoDiv({
         <div>
             <div className={styles.title}>
                 <h2>{hotel.name}</h2>
-                {user && <span onClick={clickHandler} className={styles.favoriteBtn}>
-                    <Image
-                        src={process.env.PUBLIC_URL + (hotel.isUserFavoriteHotel ? '/full-heart.png' : '/empty-heart.png')}
-                        alt="Favorite hotel icon"
-                    />
-                </span>}
+
+                {user &&
+                    <span onClick={clickHandler} className={styles.favoriteBtn}>
+                        <Image
+                            src={process.env.PUBLIC_URL + (hotel.isUserFavoriteHotel ? '/full-heart.png' : '/empty-heart.png')}
+                            alt="Favorite hotel icon"
+                        />
+                    </span>
+                }
             </div>
+
             {RatingDiv}
 
             <div>
                 <p>{hotel.description}</p>
                 <span>Rating: {hotel.ratings?.rating} from {hotel.ratings?.ratingsCount} votes</span>
-                {hotel.usersWhoFavoritedCount > 0 && <span> | Favorited from {hotel.usersWhoFavoritedCount} people</span>}
+
+                {hotel.usersWhoFavoritedCount > 0 &&
+                    <span> | Favorited from {hotel.usersWhoFavoritedCount} people</span>
+                }
             </div>
 
             <div>
-                <span>{hotel.city?.name}{hotel.address && `, ${hotel.address}`}</span>
+                <span>
+                    {hotel.city?.name}
+                    {hotel.address && `, ${hotel.address}`}
+                </span>
 
-                {hotel.owner && <>
-                    <span> | Owner: {hotel.owner?.firstName} {hotel.owner?.lastName}</span>
-                    <span> | Rooms: {hotel.roomsCount}</span>
-                </>}
+                {hotel.owner &&
+                    <>
+                        <span> | Owner: {hotel.owner?.firstName} {hotel.owner?.lastName}</span>
+                        <span> | Rooms: {hotel.roomsCount}</span>
+                    </>
+                }
             </div>
+
             {children}
         </div>
     );

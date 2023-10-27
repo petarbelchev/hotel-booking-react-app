@@ -99,7 +99,7 @@ export function CommentsDiv({
     };
 
     return (
-        <>
+        <div>
             {comments.length > 0 &&
                 <div>
                     <h3>Comments:</h3>
@@ -155,6 +155,6 @@ export function CommentsDiv({
                     <PrimaryButton type="submit" name="Send Comment" />
                 </form>
             }
-        </>
+        </div>
     );
 };
