@@ -30,6 +30,13 @@ export function CommentInfoDiv({
 
     const isOwner = userId === comment.author.id;
 
+    const addReplyClickHandler = () => setShowAddReplyBtn(false);
+
+    const repliesClickHandler = () => {
+        setShowRepliesBtn(false);
+        onRepliesClickHandler(comment.id);
+    };
+
     const sendReplySubmitHandler = async (e) => {
         e.preventDefault();
 
@@ -43,11 +50,6 @@ export function CommentInfoDiv({
         }
     };
 
-    const repliesClickHandler = () => {
-        setShowRepliesBtn(false);
-        onRepliesClickHandler(comment.id);
-    };
-
     const deleteCommentClickHandler = async () => {
         // TODO: Use modal window instead of 'confirm()'.
         // eslint-disable-next-line no-restricted-globals
@@ -55,8 +57,6 @@ export function CommentInfoDiv({
             await onDeleteCommentClickHandler(comment.id);
         }
     };
-
-    const addReplyClickHandler = () => setShowAddReplyBtn(false);
 
     const deleteReplyClickHandler = async (replyId, setIsDeleting) => {
         // TODO: Use modal window instead of 'confirm()'.
@@ -78,25 +78,36 @@ export function CommentInfoDiv({
                 content={comment}
                 onRatingClickHandler={onCommentRatingClickHandler}
             >
-                {comment.replies && <div>
-                    <h4>Replies:</h4>
+                {comment.replies &&
+                    <div>
+                        <h4>Replies:</h4>
 
-                    {comment.replies.map(reply =>
-                        <ReplyInfoDiv
-                            key={reply.id}
-                            reply={reply}
-                            onDeleteClickHandler={deleteReplyClickHandler}
-                            onRatingClickHandler={replyRatingClickHandler}
-                            userId={userId}
-                        />
-                    )}
-                </div>}
+                        {comment.replies.map(reply =>
+                            <ReplyInfoDiv
+                                key={reply.id}
+                                reply={reply}
+                                onDeleteClickHandler={deleteReplyClickHandler}
+                                onRatingClickHandler={replyRatingClickHandler}
+                                userId={userId}
+                            />
+                        )}
+                    </div>
+                }
 
                 <div>
-                    {showAddReplyBtn && userId && <PrimaryButton onClick={addReplyClickHandler} name="Add Reply" />}
-                    {showRepliesBtn && <PrimaryButton onClick={repliesClickHandler} name="Replies" />}
+                    {showAddReplyBtn && userId &&
+                        <PrimaryButton onClick={addReplyClickHandler} name="Add Reply" />
+                    }
+                    
+                    {showRepliesBtn &&
+                        <PrimaryButton onClick={repliesClickHandler} name="Replies" />
+                    }
+                    
                     <span>{comment.repliesCount} replies</span>
-                    {isOwner && <DangerButton onClick={deleteCommentClickHandler} name="Delete Comment" />}
+                    
+                    {isOwner &&
+                        <DangerButton onClick={deleteCommentClickHandler} name="Delete Comment" />
+                    }
                 </div>
 
                 {!showAddReplyBtn &&

@@ -4,22 +4,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { DangerButton } from "../../components/Buttons/DangerButton";
 import { Image } from "../../components/Image";
-import { TextArea } from "../../components/TextArea";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 import { HotelInfoDiv } from "../../components/HotelRoom/HotelInfoDiv";
-import { CommentInfoDiv } from "../../components/CommentReply/CommentInfoDiv";
 import { RatingDiv } from "../../components/RatingDiv";
+import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
 
 import { useImage } from "../../hooks/useImage";
 import { useForm } from "../../hooks/useForm";
 import { useRoomForms } from "../../hooks/useRoomForms";
 import { useCities } from "../../hooks/useCities";
-import { useComments } from "../../hooks/useComments";
 
 import { getHotel, updateHotel, removeHotel, markAsFavorite } from "../../services/hotelsService";
 import { getHotelRooms, createRoom, updateRoom, removeRoom } from "../../services/roomsService";
-import { setCommentRating, setHotelRating, setReplyRating } from "../../services/ratingsService";
+import { setHotelRating } from "../../services/ratingsService";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./HotelDetailsPage.module.css";
@@ -29,8 +27,6 @@ export function HotelDetailsPage() {
     const [hideEditHotelForm, setHideEditHotelForm] = useState(true);
     const [showEditHotelBtn, setShowEditHotelBtn] = useState(true);
     const [showEditRoomsBtn, setShowEditRoomsBtn] = useState(false);
-    const [showCommentsBtn, setShowCommentsBtn] = useState(false);
-    const [showAddCommentBtn, setShowAddCommentBtn] = useState(true);
 
     const { user } = useContext(AuthContext);
     const { hotelId } = useParams();
@@ -41,8 +37,6 @@ export function HotelDetailsPage() {
         mainImage: useImage(hotel.mainImageId),
         hotelForm: useForm({}),
         roomForms: useRoomForms([]),
-        commentsActions: useComments(hotelId),
-        commentForm: useForm({ content: '' }),
     };
 
     const isOwner = hotel.owner?.id === user?.id;
@@ -52,7 +46,6 @@ export function HotelDetailsPage() {
             .then(hotelData => {
                 setHotel(state => ({ ...state, ...hotelData }));
                 hotelData.roomsCount > 0 && setShowEditRoomsBtn(true);
-                hotelData.commentsCount > 0 && setShowCommentsBtn(true);
             })
             .catch(error => alert(`${error.status} ${error.title}`));
     }, [hotelId, user?.token, setHotel]);
@@ -88,6 +81,14 @@ export function HotelDetailsPage() {
                 alert(`${error.status} ${error.title}!`);
             }
         }
+    };
+
+    const increaseCommentsCountHandler = () => {
+        setHotel({ ...hotel, commentsCount: hotel.commentsCount + 1 });
+    };
+
+    const decreaseCommentsCountHandler = () => {
+        setHotel({ ...hotel, commentsCount: hotel.commentsCount - 1 });
     };
 
     const addRoomClickHandler = () => hooks.roomForms.addRoomToForm();
@@ -143,44 +144,6 @@ export function HotelDetailsPage() {
         }
     };
 
-    const commentsClickHandler = () => {
-        hooks.commentsActions.loadComments(hotelId, user?.token);
-        setShowCommentsBtn(false);
-    };
-
-    const addCommentClickHandler = () => setShowAddCommentBtn(false);
-
-    const sendCommentSubmitHandler = async (e) => {
-        e.preventDefault();
-
-        try {
-            await hooks.commentsActions.sendComment(hotelId, hooks.commentForm.form, user.token);
-            hooks.commentForm.setForm({ content: '' });
-            setHotel({ ...hotel, commentsCount: hotel.commentsCount + 1 });
-            setShowAddCommentBtn(true);
-        } catch (error) {
-            // TODO: Render validation errors.
-            alert(`${error.status} ${error.title}`);
-        }
-    };
-
-    const deleteCommentClickHandler = async (commentId) => {
-        await hooks.commentsActions.deleteComment(commentId, user.token);
-        setHotel({ ...hotel, commentsCount: hotel.commentsCount - 1 });
-    };
-
-    const sendReplySubmitHandler = async (commentId, reply) => {
-        await hooks.commentsActions.sendReply(commentId, reply, user.token);
-    };
-
-    const repliesClickHandler = async (commendId) => {
-        await hooks.commentsActions.loadReplies(commendId, user?.token);
-    };
-
-    const deleteReplyClickHandler = async (replyId, commentId) => {
-        await hooks.commentsActions.deleteReply(replyId, commentId, user.token);
-    };
-
     const deleteHotelClickHandler = async () => {
         // TODO: Use modal window instead of 'confirm()'.
         // eslint-disable-next-line no-restricted-globals
@@ -217,24 +180,6 @@ export function HotelDetailsPage() {
         }
     };
 
-    const commentRatingClickHandler = async (commentId, ratingValue) => {
-        try {
-            const response = await setCommentRating(commentId, ratingValue, user.token);
-            hooks.commentsActions.setCommentRatings(commentId, response);
-        } catch (error) {
-            alert(`${error.status} ${error.title}`);
-        }
-    };
-
-    const replyRatingClickHandler = async (commentId, replyId, ratingValue) => {
-        try {
-            const response = await setReplyRating(replyId, ratingValue, user.token);
-            hooks.commentsActions.setReplyRatings(commentId, replyId, response);
-        } catch (error) {
-            alert(`${error.status} ${error.title}`);
-        }
-    };
-
     return (
         <main>
             <section>
@@ -242,7 +187,9 @@ export function HotelDetailsPage() {
 
                 <div className={styles.mainDiv}>
                     <div className={styles.hotelDiv}>
-                        {hooks.mainImage && <div><Image src={hooks.mainImage} alt={hotel.name} /></div>}
+                        {hooks.mainImage &&
+                            <div><Image src={hooks.mainImage} alt={hotel.name} /></div>
+                        }
 
                         <div>
                             {hideEditHotelForm
@@ -267,50 +214,12 @@ export function HotelDetailsPage() {
                                 </AddEditHotelForm>
                             }
 
-                            {hooks.commentsActions.comments && <div>
-                                <h3>Comments:</h3>
-
-                                {hooks.commentsActions.comments.map(comment =>
-                                    <CommentInfoDiv
-                                        key={comment.id}
-                                        comment={comment}
-                                        onSendReplySubmitHandler={sendReplySubmitHandler}
-                                        onRepliesClickHandler={repliesClickHandler}
-                                        onDeleteCommentClickHandler={deleteCommentClickHandler}
-                                        onDeleteReplyClickHandler={deleteReplyClickHandler}
-                                        onCommentRatingClickHandler={commentRatingClickHandler}
-                                        onReplyRatingClickHandler={replyRatingClickHandler}
-                                        userId={user?.id}
-                                    />
-                                )}
-                            </div>}
-
-                            <div>
-                                {showAddCommentBtn && user && <PrimaryButton
-                                    onClick={addCommentClickHandler}
-                                    name="Add Comment"
-                                />}
-                                {showCommentsBtn && <PrimaryButton
-                                    onClick={commentsClickHandler}
-                                    name="Comments"
-                                />}
-                                <span>{hotel.commentsCount} comments</span>
-                            </div>
-
-                            {!showAddCommentBtn && <form onSubmit={sendCommentSubmitHandler}>
-                                <div>
-                                    <TextArea
-                                        placeHolder="Write your comment here..."
-                                        paramName="content"
-                                        value={hooks.commentForm.form.content}
-                                        onChange={hooks.commentForm.formChangeHandler}
-                                        rows="5"
-                                        cols="50"
-                                        required={true}
-                                    />
-                                </div>
-                                <PrimaryButton type="submit" name="Send Comment" />
-                            </form>}
+                            <CommentsDiv
+                                hotelId={hotelId}
+                                commentsCount={hotel.commentsCount}
+                                increaseCommentsCountHandler={increaseCommentsCountHandler}
+                                decreaseCommentsCountHandler={decreaseCommentsCountHandler}
+                            />
                         </div>
                     </div>
 
@@ -331,28 +240,39 @@ export function HotelDetailsPage() {
                                         name={room.id ? "Update Room" : "Create Room"}
                                     />
 
-                                    {room.id && <DangerButton
-                                        onClick={() => deleteRoomClickHandler(room.id)}
-                                        name="Delete Room"
-                                    />}
+                                    {room.id &&
+                                        <DangerButton
+                                            onClick={() => deleteRoomClickHandler(room.id)}
+                                            name="Delete Room"
+                                        />
+                                    }
                                 </AddEditRoomDiv>
                             </form>
                         )}
                     </div>
 
-                    {isOwner && <div>
-                        <hr />
-                        {showEditHotelBtn && <PrimaryButton
-                            onClick={editHotelClickHandler}
-                            name="Edit Hotel"
-                        />}
-                        {hotel.roomsCount > 0 && showEditRoomsBtn && <PrimaryButton
-                            onClick={editRoomsClickHandler}
-                            name="Edit Rooms"
-                        />}
-                        <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
-                        <DangerButton onClick={deleteHotelClickHandler} name="Delete Hotel" />
-                    </div>}
+                    {isOwner &&
+                        <div>
+                            <hr />
+
+                            {showEditHotelBtn &&
+                                <PrimaryButton
+                                    onClick={editHotelClickHandler}
+                                    name="Edit Hotel"
+                                />
+                            }
+
+                            {hotel.roomsCount > 0 && showEditRoomsBtn &&
+                                <PrimaryButton
+                                    onClick={editRoomsClickHandler}
+                                    name="Edit Rooms"
+                                />
+                            }
+
+                            <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
+                            <DangerButton onClick={deleteHotelClickHandler} name="Delete Hotel" />
+                        </div>
+                    }
                 </div>
             </section>
         </main>

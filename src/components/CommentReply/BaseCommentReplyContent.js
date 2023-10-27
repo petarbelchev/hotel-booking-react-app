@@ -22,11 +22,16 @@ export function BaseCommentReplyContent({
             <p><b>{author.firstName} {author.lastName}:</b></p>
             <p>{textContent}</p>
             <span>{new Date(createdOnLocal).toLocaleString()}</span>
-            {ratings.rating > 0 && <span> | Rating: {ratings.rating} from {ratings.ratingsCount} votes</span>}
+
+            {ratings.rating > 0 &&
+                <span> | Rating: {ratings.rating} from {ratings.ratingsCount} votes</span>
+            }
+
             <RatingDiv
                 userRating={ratings.userRating}
                 onRatingClickHandler={ratingClickHandler}
             />
+
             {children}
         </>
     );

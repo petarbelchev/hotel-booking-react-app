@@ -9,7 +9,7 @@ import {
 } from "../services/commentsService";
 
 export function useComments() {
-    const [comments, setComments] = useState(null);
+    const [comments, setComments] = useState([]);
 
     const loadComments = async (hotelId, token) => {
         try {
@@ -18,16 +18,6 @@ export function useComments() {
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
         }
-    };
-
-    const sendComment = async (hotelId, comment, token) => {
-        const commentData = await createComment(hotelId, comment, token);
-        setComments([...comments, commentData]);
-    };
-
-    const deleteComment = async (commentId, token) => {
-        await removeComment(commentId, token);
-        setComments(comments.filter(comment => comment.id !== commentId));
     };
 
     const loadReplies = async (commentId, token) => {
@@ -42,6 +32,11 @@ export function useComments() {
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
         }
+    };
+
+    const sendComment = async (hotelId, comment, token) => {
+        const commentData = await createComment(hotelId, comment, token);
+        setComments([...comments, commentData]);
     };
 
     const sendReply = async (commentId, reply, token) => {
@@ -60,6 +55,11 @@ export function useComments() {
             
             return newState;
         });
+    };
+
+    const deleteComment = async (commentId, token) => {
+        await removeComment(commentId, token);
+        setComments(comments.filter(comment => comment.id !== commentId));
     };
 
     const deleteReply = async (replyId, commentId, token) => {
