@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { DangerButton } from "../Buttons/DangerButton";
 import { BaseCommentReplyContent } from "./BaseCommentReplyContent";
 
@@ -7,6 +8,7 @@ import styles from "./ReplyInfoDiv.module.css";
 export function ReplyInfoDiv({
     reply,
     onDeleteClickHandler,
+    onRatingClickHandler,
     userId,
 }) {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -23,7 +25,10 @@ export function ReplyInfoDiv({
 
     return (
         <div className={styles.reply}>
-            <BaseCommentReplyContent content={reply}>
+            <BaseCommentReplyContent
+                content={reply}
+                onRatingClickHandler={onRatingClickHandler}
+            >
                 <div>
                     {showDeleteBtn &&
                         <DangerButton

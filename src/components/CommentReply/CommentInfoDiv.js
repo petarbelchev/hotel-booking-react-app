@@ -15,6 +15,8 @@ export function CommentInfoDiv({
     onRepliesClickHandler,
     onDeleteCommentClickHandler,
     onDeleteReplyClickHandler,
+    onCommentRatingClickHandler,
+    onReplyRatingClickHandler,
     userId,
 }) {
     const [showRepliesBtn, setShowRepliesBtn] = useState(
@@ -66,9 +68,16 @@ export function CommentInfoDiv({
         }
     };
 
+    const replyRatingClickHandler = (replyId, ratingValue) => {
+        onReplyRatingClickHandler(comment.id, replyId, ratingValue);
+    };
+
     return (
         <div className={styles.comment}>
-            <BaseCommentReplyContent content={comment}>
+            <BaseCommentReplyContent
+                content={comment}
+                onRatingClickHandler={onCommentRatingClickHandler}
+            >
                 {comment.replies && <div>
                     <h4>Replies:</h4>
 
@@ -77,6 +86,7 @@ export function CommentInfoDiv({
                             key={reply.id}
                             reply={reply}
                             onDeleteClickHandler={deleteReplyClickHandler}
+                            onRatingClickHandler={replyRatingClickHandler}
                             userId={userId}
                         />
                     )}

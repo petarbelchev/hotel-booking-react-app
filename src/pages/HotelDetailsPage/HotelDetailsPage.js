@@ -9,6 +9,7 @@ import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 import { HotelInfoDiv } from "../../components/HotelRoom/HotelInfoDiv";
 import { CommentInfoDiv } from "../../components/CommentReply/CommentInfoDiv";
+import { RatingDiv } from "../../components/RatingDiv";
 
 import { useImage } from "../../hooks/useImage";
 import { useForm } from "../../hooks/useForm";
@@ -18,6 +19,7 @@ import { useComments } from "../../hooks/useComments";
 
 import { getHotel, updateHotel, removeHotel, markAsFavorite } from "../../services/hotelsService";
 import { getHotelRooms, createRoom, updateRoom, removeRoom } from "../../services/roomsService";
+import { setCommentRating, setHotelRating, setReplyRating } from "../../services/ratingsService";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./HotelDetailsPage.module.css";
@@ -142,7 +144,7 @@ export function HotelDetailsPage() {
     };
 
     const commentsClickHandler = () => {
-        hooks.commentsActions.loadComments(hotelId);
+        hooks.commentsActions.loadComments(hotelId, user?.token);
         setShowCommentsBtn(false);
     };
 
@@ -172,7 +174,7 @@ export function HotelDetailsPage() {
     };
 
     const repliesClickHandler = async (commendId) => {
-        await hooks.commentsActions.loadReplies(commendId);
+        await hooks.commentsActions.loadReplies(commendId, user?.token);
     };
 
     const deleteReplyClickHandler = async (replyId, commentId) => {
@@ -206,6 +208,33 @@ export function HotelDetailsPage() {
         }
     };
 
+    const hotelRatingClickHandler = async (ratingValue) => {
+        try {
+            const response = await setHotelRating(hotelId, ratingValue, user.token);
+            setHotel({ ...hotel, ratings: response });
+        } catch (error) {
+            alert(`${error.status} ${error.title}`);
+        }
+    };
+
+    const commentRatingClickHandler = async (commentId, ratingValue) => {
+        try {
+            const response = await setCommentRating(commentId, ratingValue, user.token);
+            hooks.commentsActions.setCommentRatings(commentId, response);
+        } catch (error) {
+            alert(`${error.status} ${error.title}`);
+        }
+    };
+
+    const replyRatingClickHandler = async (commentId, replyId, ratingValue) => {
+        try {
+            const response = await setReplyRating(replyId, ratingValue, user.token);
+            hooks.commentsActions.setReplyRatings(commentId, replyId, response);
+        } catch (error) {
+            alert(`${error.status} ${error.title}`);
+        }
+    };
+
     return (
         <main>
             <section>
@@ -220,6 +249,10 @@ export function HotelDetailsPage() {
                                 ? <HotelInfoDiv
                                     hotel={hotel}
                                     onFavoriteClickHandler={favoriteClickHandler}
+                                    RatingDiv={user && <RatingDiv
+                                        userRating={hotel.ratings?.userRating}
+                                        onRatingClickHandler={hotelRatingClickHandler}
+                                    />}
                                 />
                                 : <AddEditHotelForm
                                     hotel={hooks.hotelForm.form}
@@ -245,6 +278,8 @@ export function HotelDetailsPage() {
                                         onRepliesClickHandler={repliesClickHandler}
                                         onDeleteCommentClickHandler={deleteCommentClickHandler}
                                         onDeleteReplyClickHandler={deleteReplyClickHandler}
+                                        onCommentRatingClickHandler={commentRatingClickHandler}
+                                        onReplyRatingClickHandler={replyRatingClickHandler}
                                         userId={user?.id}
                                     />
                                 )}

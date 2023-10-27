@@ -7,6 +7,7 @@ import styles from "./HotelInfoDiv.module.css";
 export function HotelInfoDiv({
     hotel,
     onFavoriteClickHandler,
+    RatingDiv,
     children,
 }) {
     const { user } = useContext(AuthContext);
@@ -24,6 +25,7 @@ export function HotelInfoDiv({
                     />
                 </span>}
             </div>
+            {RatingDiv}
 
             <div>
                 <p>{hotel.description}</p>
