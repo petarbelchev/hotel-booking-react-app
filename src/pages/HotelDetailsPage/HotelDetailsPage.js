@@ -188,7 +188,7 @@ export function HotelDetailsPage() {
                             <RoomsDiv
                                 hotelId={hotelId}
                                 roomsCount={hotel?.roomsCount}
-                                token={user.token}
+                                token={user?.token}
                                 increaseRoomsCountHandler={increaseRoomsCountHandler}
                                 decreaseRoomsCountHandler={decreaseRoomsCountHandler}
                             />
