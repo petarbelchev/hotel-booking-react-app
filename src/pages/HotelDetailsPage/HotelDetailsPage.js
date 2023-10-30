@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
-import { DangerButton } from "../../components/Buttons/DangerButton";
 import { Image } from "../../components/Image";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { HotelInfoDiv } from "../../components/HotelRoom/HotelInfoDiv";
@@ -18,24 +17,18 @@ import { getHotel, updateHotel, removeHotel, markAsFavorite } from "../../servic
 import { setHotelRating } from "../../services/ratingsService";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import styles from "./HotelDetailsPage.module.css";
 
 export function HotelDetailsPage() {
     const [hotel, setHotel] = useState({});
-    const [hideEditHotelForm, setHideEditHotelForm] = useState(true);
-    const [showEditHotelBtn, setShowEditHotelBtn] = useState(true);
+    const [showEditHotelForm, setShowEditHotelForm] = useState(false);
+    const [showHotelRooms, setShowHotelRooms] = useState(false);
 
     const { user } = useContext(AuthContext);
     const { hotelId } = useParams();
+    const cities = useCities();
+    const mainImage = useImage(hotel.mainImageId);
+    const hotelForm = useForm({});
     const navigate = useNavigate();
-
-    const hooks = {
-        cities: useCities(),
-        mainImage: useImage(hotel.mainImageId),
-        hotelForm: useForm({}),
-    };
-
-    const isOwner = hotel.owner?.id === user?.id;
 
     useEffect(() => {
         hotelId && getHotel(hotelId, user?.token)
@@ -44,20 +37,18 @@ export function HotelDetailsPage() {
     }, [hotelId, user?.token, setHotel]);
 
     const editHotelClickHandler = () => {
-        hooks.hotelForm.setForm({
+        hotelForm.setForm({
             name: hotel.name,
             address: hotel.address,
             cityId: hotel.city.id,
             description: hotel.description,
         });
-        setHideEditHotelForm(false);
-        setShowEditHotelBtn(false);
+        setShowEditHotelForm(true);
     };
 
-    const cancelClickHandler = () => {
-        setHideEditHotelForm(true);
-        setShowEditHotelBtn(true);
-    };
+    const manageRoomsClickHandler = () => setShowHotelRooms(true);
+    const cancelClickHandler = () => setShowEditHotelForm(false);
+    const doneClickHandler = () => setShowHotelRooms(false);
 
     const updateHotelSubmitHandler = async (e) => {
         e.preventDefault();
@@ -66,10 +57,9 @@ export function HotelDetailsPage() {
         // eslint-disable-next-line no-restricted-globals
         if (confirm('Are you sure you want to update the hotel?')) {
             try {
-                const data = await updateHotel(hotelId, hooks.hotelForm.form, user.token);
+                const data = await updateHotel(hotelId, hotelForm.form, user.token);
                 setHotel(state => ({ ...state, ...data }));
-                setHideEditHotelForm(true);
-                setShowEditHotelBtn(true);
+                setShowEditHotelForm(false);
             } catch (error) {
                 alert(`${error.status} ${error.title}!`);
             }
@@ -128,74 +118,64 @@ export function HotelDetailsPage() {
         }
     };
 
+    const addImageClickHandler = () => { };
+
     return (
         <main>
-            <section>
-                <h1>Hotel Details</h1>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {mainImage &&
+                    <div><Image src={mainImage} alt={hotel.name} /></div>
+                }
 
-                <div className={styles.solidBorder}>
-                    <div className={styles.flexWrap}>
-                        {hooks.mainImage &&
-                            <div><Image src={hooks.mainImage} alt={hotel.name} /></div>
-                        }
-
-                        <div>
-                            <div className={styles.flexWrap}>
-                                {hideEditHotelForm
-                                    ? <HotelInfoDiv
-                                        hotel={hotel}
-                                        onFavoriteClickHandler={favoriteClickHandler}
-                                        RatingDiv={user && <RatingDiv
-                                            userRating={hotel.ratings?.userRating}
-                                            onRatingClickHandler={hotelRatingClickHandler}
-                                        />}
-                                    />
-                                    : <AddEditHotelForm
-                                        hotel={hooks.hotelForm.form}
-                                        onChange={hooks.hotelForm.formChangeHandler}
-                                        onSubmit={updateHotelSubmitHandler}
-                                        cities={hooks.cities}
-                                    >
-                                        <div>
-                                            <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
-                                            <PrimaryButton type="submit" name="Update Hotel" />
-                                        </div>
-                                    </AddEditHotelForm>
-                                }
-
-                                {isOwner &&
-                                    <div>
-                                        {showEditHotelBtn &&
-                                            <PrimaryButton onClick={editHotelClickHandler} name="Edit Hotel" />
-                                        }
-                                        <DangerButton onClick={deleteHotelClickHandler} name="Delete Hotel" />
-                                    </div>
-                                }
+                <div style={{ display: "inline-block" }}>
+                    {showEditHotelForm
+                        ? <AddEditHotelForm
+                            hotel={hotelForm.form}
+                            onChange={hotelForm.formChangeHandler}
+                            onSubmit={updateHotelSubmitHandler}
+                            cities={cities}
+                        >
+                            <div>
+                                <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
+                                <PrimaryButton type="submit" name="Update Hotel" />
                             </div>
-
-                            <CommentsDiv
-                                hotelId={hotelId}
-                                commentsCount={hotel.commentsCount}
-                                increaseCommentsCountHandler={increaseCommentsCountHandler}
-                                decreaseCommentsCountHandler={decreaseCommentsCountHandler}
-                            />
-                        </div>
-                    </div>
-
-                    {isOwner &&
-                        <div>
-                            <hr />
-                            <RoomsDiv
-                                hotelId={hotelId}
-                                roomsCount={hotel?.roomsCount}
-                                token={user.token}
-                                increaseRoomsCountHandler={increaseRoomsCountHandler}
-                                decreaseRoomsCountHandler={decreaseRoomsCountHandler}
-                            />
-                        </div>
+                        </AddEditHotelForm>
+                        : <HotelInfoDiv
+                            hotel={hotel}
+                            onFavoriteClickHandler={favoriteClickHandler}
+                            onEditHotelClickHandler={editHotelClickHandler}
+                            onDeleteHotelClickHandler={deleteHotelClickHandler}
+                            onAddImageClickHandler={addImageClickHandler}
+                            onManageRoomsClickHandler={manageRoomsClickHandler}
+                            RatingDiv={user &&
+                                <RatingDiv
+                                    userRating={hotel.ratings?.userRating}
+                                    onRatingClickHandler={hotelRatingClickHandler}
+                                />
+                            }
+                            userId={user.id}
+                        />
                     }
+
+                    <CommentsDiv
+                        hotelId={hotelId}
+                        commentsCount={hotel.commentsCount}
+                        increaseCommentsCountHandler={increaseCommentsCountHandler}
+                        decreaseCommentsCountHandler={decreaseCommentsCountHandler}
+                    />
                 </div>
-            </section>
-        </main>
+            </div>
+
+            {showHotelRooms &&
+                <RoomsDiv
+                    hotelId={hotelId}
+                    roomsCount={hotel.roomsCount}
+                    onDoneClickHandler={doneClickHandler}
+                    increaseRoomsCountHandler={increaseRoomsCountHandler}
+                    decreaseRoomsCountHandler={decreaseRoomsCountHandler}
+                    token={user.token}
+                />
+            }
+        </main >
     );
 };

@@ -1,9 +1,0 @@
-.solidBorder {
-    border-style: solid;
-    padding: 10px;
-}
-
-.flexWrap {
-    display: flex;
-    flex-wrap: wrap;
-}

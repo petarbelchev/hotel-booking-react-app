@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../Dropdowns/Dropdown";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
 
 import { useDateValidator } from "../../hooks/useDateValidator";

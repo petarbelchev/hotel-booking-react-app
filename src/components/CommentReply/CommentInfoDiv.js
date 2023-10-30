@@ -77,6 +77,7 @@ export function CommentInfoDiv({
             <BaseCommentReplyContent
                 content={comment}
                 onRatingClickHandler={onCommentRatingClickHandler}
+                userId={userId}
             >
                 {comment.replies &&
                     <div>

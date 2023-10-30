@@ -6,16 +6,23 @@ export function Dropdown({
     onSelectChange,
 }) {
     return (
-        <div style={{margin: "5px"}}>
+        <div style={{ margin: "5px" }}>
             <label htmlFor={paramName}>{labelName}</label>
+
             <select
                 id={paramName}
                 name={paramName}
                 value={value}
                 onChange={onSelectChange}
             >
-                {items.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+                {items.map(item =>
+                    <option
+                        key={item.id}
+                        value={item.id}>
+                        {item.name}
+                    </option>
+                )}
             </select>
         </div>
     );
-}
+};

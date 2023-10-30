@@ -1,5 +1,5 @@
 import { CheckBox } from "../CheckBox";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../Dropdowns/Dropdown";
 import { InputField } from "../InputField";
 
 import styles from "./AddEditRoomDiv.module.css";

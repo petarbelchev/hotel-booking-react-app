@@ -1,5 +1,5 @@
 import { InputField } from "../InputField";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../Dropdowns/Dropdown";
 
 import styles from "./AddEditHotelForm.module.css";
 

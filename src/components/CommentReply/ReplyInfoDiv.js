@@ -28,6 +28,7 @@ export function ReplyInfoDiv({
             <BaseCommentReplyContent
                 content={reply}
                 onRatingClickHandler={onRatingClickHandler}
+                userId={userId}
             >
                 <div>
                     {showDeleteBtn &&
