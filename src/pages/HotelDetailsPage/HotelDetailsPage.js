@@ -2,14 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
-import { Image } from "../../components/Image";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { HotelInfoDiv } from "../../components/HotelRoom/HotelInfoDiv";
 import { RatingDiv } from "../../components/RatingDiv";
 import { RoomsDiv } from "../../components/HotelRoom/RoomsDiv";
 import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
+import { UploadHotelImagesForm } from "../../components/UploadHotelImagesForm";
 
-import { useImage } from "../../hooks/useImage";
+import { useImages } from "../../hooks/useImages";
 import { useForm } from "../../hooks/useForm";
 import { useCities } from "../../hooks/useCities";
 
@@ -22,11 +22,12 @@ export function HotelDetailsPage() {
     const [hotel, setHotel] = useState({});
     const [showEditHotelForm, setShowEditHotelForm] = useState(false);
     const [showHotelRooms, setShowHotelRooms] = useState(false);
+    const [showUploadImageForm, setShowUploadImageForm] = useState(false);
 
     const { user } = useContext(AuthContext);
     const { hotelId } = useParams();
     const cities = useCities();
-    const mainImage = useImage(hotel.mainImageId);
+    const { mainImage, images } = useImages(hotel);
     const hotelForm = useForm({});
     const navigate = useNavigate();
 
@@ -118,13 +119,37 @@ export function HotelDetailsPage() {
         }
     };
 
-    const addImageClickHandler = () => { };
+    const addImageClickHandler = () => { setShowUploadImageForm(true) };
+
+    const uploadHotelImagesSubmitHandler = async (newImageIds) => {
+        setHotel(state => {
+            const newState = { ...state };
+            if (!newState.mainImageId) {
+                newState.mainImageId = newImageIds.shift();
+            }
+            newState.imageIds = [...state.imageIds, ...newImageIds];
+            return newState;
+        });
+        setShowUploadImageForm(false);
+    };
 
     return (
         <main>
             <div style={{ display: "flex", flexWrap: "wrap" }}>
                 {mainImage &&
-                    <div><Image src={mainImage} alt={hotel.name} /></div>
+                    <div style={{ width: "20rem", textAlign: "center", marginRight: "1rem" }}>
+                        <div><img src={mainImage} alt={hotel.name} style={{width: "19.5rem"}} /></div>
+                        <div>
+                            {images.map((image, i) =>
+                                <img
+                                    key={i}
+                                    src={image}
+                                    alt={hotel.name}
+                                    style={{ width: "100px", margin: "3px" }}
+                                />)
+                            }
+                        </div>
+                    </div>
                 }
 
                 <div style={{ display: "inline-block" }}>
@@ -153,7 +178,7 @@ export function HotelDetailsPage() {
                                     onRatingClickHandler={hotelRatingClickHandler}
                                 />
                             }
-                            userId={user.id}
+                            userId={user?.id}
                         />
                     }
 
@@ -165,6 +190,18 @@ export function HotelDetailsPage() {
                     />
                 </div>
             </div>
+
+            {showUploadImageForm &&
+                <div>
+                    <hr />
+                    <UploadHotelImagesForm
+                        hotelId={hotelId}
+                        token={user.token}
+                        onSubmitHandler={uploadHotelImagesSubmitHandler}
+                    />
+                    <hr />
+                </div>
+            }
 
             {showHotelRooms &&
                 <RoomsDiv

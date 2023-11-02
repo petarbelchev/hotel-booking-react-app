@@ -1,9 +1,9 @@
-import { useImage } from "../../hooks/useImage";
+import { useImages } from "../../hooks/useImages";
 import { Image } from "../Image";
 import styles from "./RoomInfoDiv.module.css";
 
 export function RoomInfoDiv({ room, children }) {
-    const mainImage = useImage(room.mainImageId);
+    const mainImage = useImages(room.mainImageId);
 
     return (
         <div className={styles.container}>

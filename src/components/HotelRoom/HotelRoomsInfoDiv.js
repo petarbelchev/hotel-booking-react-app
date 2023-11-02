@@ -5,7 +5,7 @@ import { Image } from "../Image";
 import { RoomInfoDiv } from "./RoomInfoDiv";
 import { HotelInfoDiv } from "./HotelInfoDiv";
 
-import { useImage } from "../../hooks/useImage";
+import { useImages } from "../../hooks/useImages";
 
 import styles from "./HotelRoomsInfoDiv.module.css";
 
@@ -13,7 +13,7 @@ export function HotelRoomsInfoDiv({
     hotel,
     onFavoriteClickHandler,
 }) {
-    const mainImage = useImage(hotel.mainImageId);
+    const mainImage = useImages(hotel.mainImageId);
     const navigate = useNavigate();
 
     const moreDetailsClickHandler = () => navigate(`/hotels/${hotel.id}`);
