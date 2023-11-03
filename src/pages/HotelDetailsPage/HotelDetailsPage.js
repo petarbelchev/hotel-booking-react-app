@@ -10,6 +10,7 @@ import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
 import { UploadHotelImagesForm } from "../../components/UploadHotelImagesForm";
 
 import { useImages } from "../../hooks/useImages";
+import { useImagesModal } from "../../hooks/useImagesModal";
 import { useForm } from "../../hooks/useForm";
 import { useCities } from "../../hooks/useCities";
 
@@ -29,6 +30,7 @@ export function HotelDetailsPage() {
     const cities = useCities();
     const { mainImage, images } = useImages(hotel);
     const hotelForm = useForm({});
+    const { modal, showModal, onImageClickHandler } = useImagesModal();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -119,9 +121,10 @@ export function HotelDetailsPage() {
         }
     };
 
-    const addImageClickHandler = () => { setShowUploadImageForm(true) };
+    const addImageClickHandler = () => setShowUploadImageForm(true);
 
     const uploadHotelImagesSubmitHandler = async (newImageIds) => {
+        // TODO: If the images are 7 do not change the state!
         setHotel(state => {
             const newState = { ...state };
             if (!newState.mainImageId) {
@@ -130,22 +133,38 @@ export function HotelDetailsPage() {
             newState.imageIds = [...state.imageIds, ...newImageIds];
             return newState;
         });
+
         setShowUploadImageForm(false);
+    };
+
+    const imageClickHandler = (imgIdx) => {
+        onImageClickHandler(imgIdx, [mainImage, ...images], hotel.name);
     };
 
     return (
         <main>
+            {showModal && modal}
+
             <div style={{ display: "flex", flexWrap: "wrap" }}>
                 {mainImage &&
-                    <div style={{ width: "20rem", textAlign: "center", marginRight: "1rem" }}>
-                        <div><img src={mainImage} alt={hotel.name} style={{width: "19.5rem"}} /></div>
+                    <div style={{ width: "20rem", textAlign: "left", marginRight: "1rem" }}>
+                        <div>
+                            <img
+                                src={mainImage}
+                                alt={hotel.name}
+                                style={{ width: "19.5rem", cursor: "pointer" }}
+                                onClick={() => imageClickHandler(0)}
+                            />
+                        </div>
+
                         <div>
                             {images.map((image, i) =>
                                 <img
                                     key={i}
                                     src={image}
                                     alt={hotel.name}
-                                    style={{ width: "100px", margin: "3px" }}
+                                    style={{ width: "100px", marginRight: "6px", cursor: "pointer" }}
+                                    onClick={() => imageClickHandler(i + 1)}
                                 />)
                             }
                         </div>
