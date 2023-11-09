@@ -10,7 +10,6 @@ import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
 import { UploadHotelImagesForm } from "../../components/UploadHotelImagesForm";
 
 import { useImages } from "../../hooks/useImages";
-import { useImagesModal } from "../../hooks/useImagesModal";
 import { useForm } from "../../hooks/useForm";
 import { useCities } from "../../hooks/useCities";
 
@@ -18,6 +17,7 @@ import { getHotel, updateHotel, removeHotel, markAsFavorite } from "../../servic
 import { setHotelRating } from "../../services/ratingsService";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import styles from "./HotelDetailsPage.module.css";
 
 export function HotelDetailsPage() {
     const [hotel, setHotel] = useState({});
@@ -28,9 +28,12 @@ export function HotelDetailsPage() {
     const { user } = useContext(AuthContext);
     const { hotelId } = useParams();
     const cities = useCities();
-    const { mainImage, images } = useImages(hotel);
+    const { imageGallery, imagesModal, showModal } = useImages(
+        hotel,
+        hotel.owner?.id === user.id,
+        user.token,
+    );
     const hotelForm = useForm({});
-    const { modal, showModal, onImageClickHandler } = useImagesModal();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -137,41 +140,14 @@ export function HotelDetailsPage() {
         setShowUploadImageForm(false);
     };
 
-    const imageClickHandler = (imgIdx) => {
-        onImageClickHandler(imgIdx, [mainImage, ...images], hotel.name);
-    };
-
     return (
         <main>
-            {showModal && modal}
+            {showModal && imagesModal}
 
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {mainImage &&
-                    <div style={{ width: "20rem", textAlign: "left", marginRight: "1rem" }}>
-                        <div>
-                            <img
-                                src={mainImage}
-                                alt={hotel.name}
-                                style={{ width: "19.5rem", cursor: "pointer" }}
-                                onClick={() => imageClickHandler(0)}
-                            />
-                        </div>
+            <div className={styles.hotel}>
+                {imageGallery}
 
-                        <div>
-                            {images.map((image, i) =>
-                                <img
-                                    key={i}
-                                    src={image}
-                                    alt={hotel.name}
-                                    style={{ width: "100px", marginRight: "6px", cursor: "pointer" }}
-                                    onClick={() => imageClickHandler(i + 1)}
-                                />)
-                            }
-                        </div>
-                    </div>
-                }
-
-                <div style={{ display: "inline-block" }}>
+                <div className={styles.content} >
                     {showEditHotelForm
                         ? <AddEditHotelForm
                             hotel={hotelForm.form}

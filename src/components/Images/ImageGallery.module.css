@@ -1,0 +1,16 @@
+.images {
+    width: 20rem;
+    text-align: left;
+    margin-right: 1rem;
+}
+
+.mainImage {
+    width: 19.5rem;
+    cursor: pointer;
+}
+
+.otherImages {
+    width: 100px;
+    margin-right: 6px;
+    cursor: pointer
+}

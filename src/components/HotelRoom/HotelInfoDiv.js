@@ -1,6 +1,4 @@
-import { Image } from "../Image";
 import { DropdownMenu } from "../Dropdowns/DropdownMenu"
-
 import styles from "./HotelInfoDiv.module.css";
 
 export function HotelInfoDiv({
@@ -22,7 +20,7 @@ export function HotelInfoDiv({
                 {userId &&
                     <>
                         <span onClick={() => onFavoriteClickHandler(hotel.id)} className={styles.favoriteBtn}>
-                            <Image
+                            <img
                                 src={process.env.PUBLIC_URL + (hotel.isUserFavoriteHotel ? '/full-heart.png' : '/empty-heart.png')}
                                 alt="Favorite hotel icon"
                             />

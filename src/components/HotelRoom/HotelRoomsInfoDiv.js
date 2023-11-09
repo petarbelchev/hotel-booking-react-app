@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { Image } from "../Image";
 import { RoomInfoDiv } from "./RoomInfoDiv";
 import { HotelInfoDiv } from "./HotelInfoDiv";
 
-import { useImages } from "../../hooks/useImages";
+import { getImage } from "../../services/imagesService";
 
 import styles from "./HotelRoomsInfoDiv.module.css";
 
@@ -13,18 +13,22 @@ export function HotelRoomsInfoDiv({
     hotel,
     onFavoriteClickHandler,
 }) {
-    const mainImage = useImages(hotel.mainImageId);
+    const [mainImage, setMainImage] = useState(null);
     const navigate = useNavigate();
+
+    if (hotel.mainImageId && !mainImage) {
+        getImage(hotel.mainImageId).then(image => setMainImage(URL.createObjectURL(image)));
+    }
 
     const moreDetailsClickHandler = () => navigate(`/hotels/${hotel.id}`);
 
     return (
         <div className={styles.hotelRoomsDiv}>
             <div className={styles.hotelDiv}>
-                {mainImage && <Image src={mainImage} alt={hotel.name} />}
+                {mainImage && <img src={mainImage} alt={hotel.name} />}
 
                 <div>
-                    <HotelInfoDiv hotel={hotel} onFavoriteClickHandler={onFavoriteClickHandler}>
+                    <HotelInfoDiv hotel={hotel} onFavoriteClickHandler={onFavoriteClickHandler} >
                         <div>
                             <PrimaryButton onClick={moreDetailsClickHandler} name="More Details" />
                         </div>

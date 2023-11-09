@@ -1,15 +1,19 @@
-import { useImages } from "../../hooks/useImages";
-import { Image } from "../Image";
+import { useState } from "react";
+import { getImage } from "../../services/imagesService";
 import styles from "./RoomInfoDiv.module.css";
 
 export function RoomInfoDiv({ room, children }) {
-    const mainImage = useImages(room.mainImageId);
+    const [mainImage, setMainImage] = useState(null);
+
+    if (room.mainImageId && !mainImage) {
+        getImage(room.mainImageId).then(image => setMainImage(URL.createObjectURL(image)));
+    }
 
     return (
         <div className={styles.container}>
             {mainImage &&
                 <div>
-                    <Image src={mainImage} alt={'Room ' + room.number} />
+                    <img src={mainImage} alt={'Room ' + room.number} />
                 </div>
             }
 
@@ -20,23 +24,23 @@ export function RoomInfoDiv({ room, children }) {
                     <span>Price: </span>
                     <span>{room.pricePerNight} BGN</span>
                 </div>
-                
+
                 <div>
                     <span>Capacity: </span>
                     <span>{room.capacity}</span>
                 </div>
-                
+
                 <div>
                     <span>Number: </span>
                     <span>{room.number}</span>
                 </div>
-                
+
                 {room.hasAirConditioner && <p>- Has AC.</p>}
                 {room.hasBalcony && <p>- Has Balcony.</p>}
                 {room.hasKitchen && <p>- Has Kitchen.</p>}
                 {room.isSmokingAllowed && <p>- Smoking Allowed.</p>}
             </div>
-            
+
             {children}
         </div>
     );

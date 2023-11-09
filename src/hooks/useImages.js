@@ -1,40 +1,96 @@
 import { useState, useEffect } from "react";
 
-import { getImage } from "../services/imagesService";
+import { ImageSlide } from "../components/Images/ImageSlide";
+import { ImageThumbnail } from "../components/Images/ImageThumbnail";
+import { ImagesModal } from "../components/Images/ImagesModal";
+import { ImageGallery } from "../components/Images/ImageGallery";
 
-export function useImages({ mainImageId, imageIds }) {
-    const [mainImage, setMainImage] = useState(null);
+import { getImage, deleteImage } from "../services/imagesService";
+
+export function useImages(entity, isOwner, token) {
+    const { name, mainImageId, imageIds } = entity;
     const [images, setImages] = useState([]);
+    const [slides, setSlides] = useState([]);
+    const [thumbnails, setThumbnails] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [currIdx, setCurrIdx] = useState(null);
 
     useEffect(() => {
-        const fetchImages = async () => {
-            if (mainImageId) {
+        const imagesToFetch = [];
+        mainImageId && imagesToFetch.push(mainImageId);
+        imageIds && imagesToFetch.push(...imageIds.slice(0, 6));
+
+        if (imagesToFetch.length > 0) {
+            const promises = imagesToFetch.map(async (imageId) => {
                 try {
-                    const image = await getImage(mainImageId);
-                    setMainImage(URL.createObjectURL(image));
+                    const image = await getImage(imageId);
+                    return {
+                        id: imageId,
+                        blob: URL.createObjectURL(image),
+                    };
                 } catch (error) {
-                    alert(`${error.status} ${error.title}`);
+                    // Do nothing...
                 }
-            }
+            });
 
-            if (imageIds) {
-                const imagesToFetch = imageIds.slice(0, 6);
-                const promises = imagesToFetch.map(async (imageId) => {
-                    try {
-                        const image = await getImage(imageId);
-                        return URL.createObjectURL(image);
-                    } catch (error) {
-                        alert(`${error.status} ${error.title}`);
-                    }
-                });
-
-                const fetchedImages = await Promise.all(promises);
-                setImages(fetchedImages);
-            }
-        };
-
-        fetchImages();
+            Promise.all(promises).then(setImages);
+        }
     }, [mainImageId, imageIds]);
 
-    return { mainImage, images };
+    const imageClickHandler = (imgIdx) => {
+        setCurrIdx(imgIdx);
+
+        setSlides(images.map((img, i) => <ImageSlide
+            key={i}
+            img={img.blob}
+            imgNum={i + 1}
+            imgsCount={images.length}
+            alt={name}
+        />));
+
+        setThumbnails(images.map((img, i) => <ImageThumbnail
+            key={i}
+            img={img.blob}
+            alt={name}
+            onClickHandler={() => setCurrIdx(i)}
+        />));
+
+        setShowModal(true);
+    };
+
+    const deleteClickHandler = async () => {
+        const imageId = images[currIdx].id;
+
+        try {
+            await deleteImage(imageId, token);
+            setImages(images.filter(image => image.id !== imageId));
+            setShowModal(false);
+        } catch (error) {
+            alert(`${error.status} ${error.title}`);
+        }
+    };
+
+    const imageGallery = images.length > 0 && <ImageGallery
+        entityName={name}
+        images={images}
+        onImageClickHandler={imageClickHandler}
+    />;
+
+    const imagesModal = <ImagesModal
+        slide={slides[currIdx]}
+        thumbnails={thumbnails}
+        onCloseClickHandler={() => setShowModal(false)}
+        onDeleteClickHandler={deleteClickHandler}
+        onPreviousClickHandler={() => setCurrIdx(state => state - 1)}
+        onNextClickHandler={() => setCurrIdx(state => state + 1)}
+        isFirstSlide={currIdx === 0}
+        isLastSlide={currIdx === slides.length - 1}
+        showDeleteBtn={isOwner}
+    />;
+
+    return {
+        imageGallery,
+        imagesModal,
+        showModal,
+    };
 };
