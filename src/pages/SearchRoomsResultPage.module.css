@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        text-align: center;
+        display: block;
+    }
+}
+
+.search {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.search h1 {
+    margin-bottom: 5px;
+}
+
+.results {
+    display: inline-block;
+    text-align: center;
+}
+
+.resultsContainer {
+    border: solid;
+}

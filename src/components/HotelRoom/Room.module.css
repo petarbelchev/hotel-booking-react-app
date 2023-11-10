@@ -1,0 +1,13 @@
+.container {
+    padding: 10px;
+    border-style: double;
+}
+
+.content {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.image {
+    margin-right: 10px;
+}

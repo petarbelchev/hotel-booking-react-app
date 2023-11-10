@@ -1,7 +1,8 @@
-import { DropdownMenu } from "../Dropdowns/DropdownMenu"
-import styles from "./HotelInfoDiv.module.css";
+import { FavoriteButton } from "../Buttons/FavoriteButton";
+import { Dropdown } from "../Dropdown"
+import styles from "./Hotel.module.css";
 
-export function HotelInfoDiv({
+export function Hotel({
     hotel,
     onFavoriteClickHandler,
     onEditHotelClickHandler,
@@ -12,6 +13,8 @@ export function HotelInfoDiv({
     userId,
     children,
 }) {
+    const isOWner = userId === hotel.owner?.id;
+
     return (
         <div>
             <div className={styles.title}>
@@ -19,15 +22,14 @@ export function HotelInfoDiv({
 
                 {userId &&
                     <>
-                        <span onClick={() => onFavoriteClickHandler(hotel.id)} className={styles.favoriteBtn}>
-                            <img
-                                src={process.env.PUBLIC_URL + (hotel.isUserFavoriteHotel ? '/full-heart.png' : '/empty-heart.png')}
-                                alt="Favorite hotel icon"
-                            />
-                        </span>
+                        <FavoriteButton
+                            hotelId={hotel.id}
+                            onClick={onFavoriteClickHandler}
+                            isPressed={hotel.isUserFavoriteHotel}
+                        />
 
-                        {userId === hotel.owner?.id &&
-                            <DropdownMenu
+                        {isOWner &&
+                            <Dropdown
                                 menuImage={<img
                                     src={process.env.PUBLIC_URL + "/edit.png"}
                                     style={{ width: "25px" }}

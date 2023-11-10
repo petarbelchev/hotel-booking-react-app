@@ -1,31 +1,35 @@
-.topNav {
+.container {
+    text-align: center;
+}
+
+.navigation {
     background-color: royalblue;
     overflow: hidden;
 }
 
-.topNav ul {
+.navigation ul {
     list-style-type: none;
     display: inline-flex;
     padding: 0%;
 }
 
-.topNav a {
+.navigation a {
     margin: 20px;
     text-decoration: none;
     font-size: 20px;
     color: white;
 }
 
+.navigation a:hover {
+    background-color: cornflowerblue;
+}
+
 .active {
     border: double;
 }
 
-.topNav a:hover {
-    background-color: cornflowerblue;
-}
-
 @media screen and (max-width: 600px) {
-    .topNav ul {
+    .navigation ul {
         display: flow;
     }
 }

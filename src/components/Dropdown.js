@@ -1,7 +1,7 @@
 import { useState } from "react";
-import styles from "./DropdownMenu.module.css"
+import styles from "./Dropdown.module.css"
 
-export function DropdownMenu({ menuImage, buttons }) {
+export function Dropdown({ menuImage, buttons }) {
     const [showMenu, setShowMenu] = useState(false);
 
     const menuClickHandler = (btnClickHandler) => {

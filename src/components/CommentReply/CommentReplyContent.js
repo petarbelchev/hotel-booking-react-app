@@ -1,6 +1,6 @@
 import { RatingDiv } from "../RatingDiv";
 
-export function BaseCommentReplyContent({
+export function CommentReplyContent({
     content,
     onRatingClickHandler,
     userId,

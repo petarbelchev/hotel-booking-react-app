@@ -1,4 +1,4 @@
-export function Dropdown({
+export function Select({
     labelName,
     paramName,
     items,
@@ -6,7 +6,7 @@ export function Dropdown({
     onSelectChange,
 }) {
     return (
-        <div style={{ margin: "5px" }}>
+        <div>
             <label htmlFor={paramName}>{labelName}</label>
 
             <select

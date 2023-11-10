@@ -3,10 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
-import { HotelInfoDiv } from "../../components/HotelRoom/HotelInfoDiv";
+import { Hotel } from "../../components/HotelRoom/Hotel";
 import { RatingDiv } from "../../components/RatingDiv";
-import { RoomsDiv } from "../../components/HotelRoom/RoomsDiv";
-import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
+import { Rooms } from "../../components/HotelRoom/Rooms";
+import { Comments } from "../../components/CommentReply/Comments";
 import { UploadHotelImagesForm } from "../../components/UploadHotelImagesForm";
 
 import { useImages } from "../../hooks/useImages";
@@ -160,7 +160,7 @@ export function HotelDetailsPage() {
                                 <PrimaryButton type="submit" name="Update Hotel" />
                             </div>
                         </AddEditHotelForm>
-                        : <HotelInfoDiv
+                        : <Hotel
                             hotel={hotel}
                             onFavoriteClickHandler={favoriteClickHandler}
                             onEditHotelClickHandler={editHotelClickHandler}
@@ -177,7 +177,7 @@ export function HotelDetailsPage() {
                         />
                     }
 
-                    <CommentsDiv
+                    <Comments
                         hotelId={hotelId}
                         commentsCount={hotel.commentsCount}
                         increaseCommentsCountHandler={increaseCommentsCountHandler}
@@ -199,7 +199,7 @@ export function HotelDetailsPage() {
             }
 
             {showHotelRooms &&
-                <RoomsDiv
+                <Rooms
                     hotelId={hotelId}
                     roomsCount={hotel.roomsCount}
                     onDoneClickHandler={doneClickHandler}

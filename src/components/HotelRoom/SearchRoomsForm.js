@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Dropdown } from "../Dropdowns/Dropdown";
+import { Select } from "../Select";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
 
 import { useDateValidator } from "../../hooks/useDateValidator";
@@ -36,13 +36,14 @@ export function SearchRoomsForm({
             className={styles.roomsForm}
             onSubmit={searchSubmitHandler}
         >
-            <Dropdown
+            <Select
                 labelName={'Choose a city:'}
                 paramName={'cityId'}
                 items={cities}
                 value={cityId}
                 onSelectChange={cityChangeHandler}
             />
+            
             <div>
                 <label htmlFor="checkInLocal">From:</label>
                 <input

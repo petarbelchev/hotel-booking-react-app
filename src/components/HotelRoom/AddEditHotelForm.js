@@ -1,5 +1,5 @@
 import { InputField } from "../InputField";
-import { Dropdown } from "../Dropdowns/Dropdown";
+import { Select } from "../Select";
 
 import styles from "./AddEditHotelForm.module.css";
 
@@ -31,7 +31,7 @@ export function AddEditHotelForm({
                 onChange={onChange}
                 required={true}
             />
-            <Dropdown
+            <Select
                 labelName={"City:"}
                 items={cities}
                 paramName={"cityId"}
@@ -39,7 +39,7 @@ export function AddEditHotelForm({
                 onSelectChange={onChange}
             />
             <InputField
-                type="text"
+                type="textarea"
                 labelName="Description"
                 paramName="description"
                 value={hotel.description}

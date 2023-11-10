@@ -8,9 +8,9 @@ import { WarningButton } from "../Buttons/WarningButton";
 import { DangerButton } from "../Buttons/DangerButton";
 import { AddEditRoomDiv } from "./AddEditRoomDiv";
 
-import styles from "./RoomsDiv.module.css";
+import styles from "./Rooms.module.css";
 
-export function RoomsDiv({
+export function Rooms({
     hotelId,
     roomsCount,
     onDoneClickHandler,
