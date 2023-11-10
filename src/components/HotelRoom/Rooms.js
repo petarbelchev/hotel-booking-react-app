@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import { useRoomForms } from "../../hooks/useRoomForms";
 import { createRoom, updateRoom, removeRoom, getHotelRooms } from "../../services/roomsService";
 
-import { DangerButton } from "../Buttons/DangerButton";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
+import { WarningButton } from "../Buttons/WarningButton";
+import { DangerButton } from "../Buttons/DangerButton";
 import { AddEditRoomDiv } from "./AddEditRoomDiv";
 
-import styles from "./RoomsDiv.module.css";
+import styles from "./Rooms.module.css";
 
-export function RoomsDiv({
+export function Rooms({
     hotelId,
     roomsCount,
+    onDoneClickHandler,
     increaseRoomsCountHandler,
     decreaseRoomsCountHandler,
     token,
@@ -81,6 +83,7 @@ export function RoomsDiv({
 
     return (
         <div>
+            <hr />
             <div className={styles.flexWrap}>
                 {forms.map((room, roomIdx) =>
                     <form
@@ -111,14 +114,16 @@ export function RoomsDiv({
 
             <div>
                 {showEditRoomsBtn &&
-                    <PrimaryButton
+                    <WarningButton
                         onClick={editRoomsClickHandler}
                         name="Edit Rooms"
                     />
                 }
 
                 <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
+                <PrimaryButton onClick={onDoneClickHandler} name="Done" />
             </div>
+            <hr />
         </div>
     );
 };

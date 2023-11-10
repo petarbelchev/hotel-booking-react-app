@@ -1,21 +1,40 @@
-export function Dropdown({
-    labelName,
-    paramName,
-    items,
-    value,
-    onSelectChange,
-}) {
+import { useState } from "react";
+import styles from "./Dropdown.module.css"
+
+export function Dropdown({ menuImage, buttons }) {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const menuClickHandler = (btnClickHandler) => {
+        setShowMenu(!showMenu);
+
+        if (btnClickHandler) {
+            btnClickHandler();
+        }
+    };
+
     return (
-        <div style={{margin: "5px"}}>
-            <label htmlFor={paramName}>{labelName}</label>
-            <select
-                id={paramName}
-                name={paramName}
-                value={value}
-                onChange={onSelectChange}
+        <div>
+            <button
+                className={styles.button}
+                onClick={() => menuClickHandler()}
             >
-                {items.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
-            </select>
+                {menuImage}
+            </button>
+
+            {showMenu &&
+                <div className={styles.container}>
+                    {buttons.map((btn, i) =>
+                        <div key={i}>
+                            <button
+                                className={styles.button}
+                                onClick={() => menuClickHandler(btn.onClick)}
+                            >
+                                {btn.name}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            }
         </div>
     );
-}
+};

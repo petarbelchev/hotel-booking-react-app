@@ -18,7 +18,7 @@ export function AddHotelPage() {
 
     const cities = useCities();
     const roomForms = useRoomForms();
-    
+
     const {
         form: hotelForm,
         setForm: setHotelForm,
@@ -28,7 +28,7 @@ export function AddHotelPage() {
         address: '',
         cityId: 0,
         description: '',
-    });    
+    });
 
     useEffect(() => {
         setHotelForm(state => ({
@@ -60,7 +60,7 @@ export function AddHotelPage() {
 
     return (
         <main>
-            <section>
+            <section style={{ textAlign: "center" }}>
                 <h1>Add a Hotel</h1>
 
                 <AddEditHotelForm

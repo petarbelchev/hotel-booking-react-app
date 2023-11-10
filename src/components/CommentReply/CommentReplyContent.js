@@ -1,8 +1,9 @@
 import { RatingDiv } from "../RatingDiv";
 
-export function BaseCommentReplyContent({
+export function CommentReplyContent({
     content,
     onRatingClickHandler,
+    userId,
     children,
 }) {
     const {
@@ -27,10 +28,12 @@ export function BaseCommentReplyContent({
                 <span> | Rating: {ratings.rating} from {ratings.ratingsCount} votes</span>
             }
 
-            <RatingDiv
-                userRating={ratings.userRating}
-                onRatingClickHandler={ratingClickHandler}
-            />
+            {userId &&
+                <RatingDiv
+                    userRating={ratings.userRating}
+                    onRatingClickHandler={ratingClickHandler}
+                />
+            }
 
             {children}
         </>

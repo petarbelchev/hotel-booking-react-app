@@ -1,5 +1,5 @@
 import { CheckBox } from "../CheckBox";
-import { Dropdown } from "../Dropdown";
+import { Select } from "../Select";
 import { InputField } from "../InputField";
 
 import styles from "./AddEditRoomDiv.module.css";
@@ -36,7 +36,7 @@ export function AddEditRoomDiv({
                 onChange={(e) => onChange(e, roomIdx)}
                 required={true}
             />
-            <Dropdown
+            <Select
                 labelName="Room Type"
                 paramName="roomType"
                 items={[

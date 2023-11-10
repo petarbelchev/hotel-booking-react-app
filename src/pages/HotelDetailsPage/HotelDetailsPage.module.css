@@ -1,9 +1,8 @@
-.solidBorder {
-    border-style: solid;
-    padding: 10px;
-}
-
-.flexWrap {
+.hotel {
     display: flex;
     flex-wrap: wrap;
+}
+
+.content {
+    display: inline-block;
 }

@@ -1,11 +1,11 @@
 .roomsForm {
-    display: inline-flex;
-    border-style: solid;
     padding: 10px;
 }
 
+.roomsForm label {
+    display: block;
+}
+
 .roomsForm div {
-    margin: 5px;
-    display: flex;
-    align-items: center;
+    margin-bottom: 10px;
 }

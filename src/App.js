@@ -4,8 +4,8 @@ import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 
 import { HomePage } from "./pages/HomePage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage/RegisterPage";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserProfilePage } from "./pages/UserProfilePage/UserProfilePage";
 import { AddHotelPage } from "./pages/AddHotelPage";

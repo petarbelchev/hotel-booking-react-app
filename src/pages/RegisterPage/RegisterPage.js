@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
-import { InputField } from "../components/InputField";
-import { PrimaryButton } from "../components/Buttons/PrimaryButton";
+import { InputField } from "../../components/InputField";
+import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 
-import { register } from "../services/authService";
-import { useForm } from "../hooks/useForm";
+import { register } from "../../services/authService";
+import { useForm } from "../../hooks/useForm";
+import styles from "./RegisterPage.module.css";
 
 export function RegisterPage() {
     const navigate = useNavigate();
@@ -31,10 +32,10 @@ export function RegisterPage() {
 
     return (
         <main>
-            <section>
+            <section className={styles.container}>
                 <h1>Register Page</h1>
 
-                <form onSubmit={registerSubmitHandler} style={{ border: "solid", display: "inline-block" }}>
+                <form className={styles.form} onSubmit={registerSubmitHandler}>
                     <InputField
                         labelName="Email"
                         paramName="email"

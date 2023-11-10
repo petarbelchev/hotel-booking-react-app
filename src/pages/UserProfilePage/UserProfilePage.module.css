@@ -1,10 +1,14 @@
-.userProfileDiv {
+.container {
+    text-align: center;
+}
+
+.content {
     display: inline-block;
     border: solid;
     padding: 15px;
 }
 
-.userProfileDiv div {
+.content div {
     display: flex;
     justify-content: space-between;
 }

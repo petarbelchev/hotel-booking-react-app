@@ -1,11 +1,3 @@
-.favoriteBtn {
-    cursor: pointer;
-}
-
-.favoriteBtn img {
-    width: 25px;
-}
-
 .title {
     display: flex;
     align-items: center;

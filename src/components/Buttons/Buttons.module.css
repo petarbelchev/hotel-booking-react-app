@@ -20,12 +20,20 @@
     background-color: royalblue;
 }
 
+.warning {
+    background-color: goldenrod;
+}
+
 .danger {
     background-color: crimson;
 }
 
 .button.primary:hover {
     background-color: cornflowerblue;
+}
+
+.button.warning:hover {
+    background-color: gold;
 }
 
 .button.danger:hover {

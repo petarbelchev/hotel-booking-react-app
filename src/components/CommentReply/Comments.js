@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 
-import { CommentInfoDiv } from "./CommentInfoDiv";
+import { Comment } from "./Comment";
 import { TextArea } from "../TextArea";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
 
@@ -10,7 +10,7 @@ import { useForm } from "../../hooks/useForm";
 import { setCommentRating, setReplyRating } from "../../services/ratingsService";
 import { AuthContext } from "../../contexts/AuthContext";
 
-export function CommentsDiv({
+export function Comments({
     hotelId,
     commentsCount,
     increaseCommentsCountHandler,
@@ -105,7 +105,7 @@ export function CommentsDiv({
                     <h3>Comments:</h3>
 
                     {comments.map(comment =>
-                        <CommentInfoDiv
+                        <Comment
                             key={comment.id}
                             comment={comment}
                             onSendReplySubmitHandler={sendReplySubmitHandler}

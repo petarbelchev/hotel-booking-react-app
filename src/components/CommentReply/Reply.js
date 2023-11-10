@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import { DangerButton } from "../Buttons/DangerButton";
-import { BaseCommentReplyContent } from "./BaseCommentReplyContent";
+import { CommentReplyContent } from "./CommentReplyContent";
 
-import styles from "./ReplyInfoDiv.module.css";
+import styles from "./Reply.module.css";
 
-export function ReplyInfoDiv({
+export function Reply({
     reply,
     onDeleteClickHandler,
     onRatingClickHandler,
@@ -25,9 +25,10 @@ export function ReplyInfoDiv({
 
     return (
         <div className={styles.reply}>
-            <BaseCommentReplyContent
+            <CommentReplyContent
                 content={reply}
                 onRatingClickHandler={onRatingClickHandler}
+                userId={userId}
             >
                 <div>
                     {showDeleteBtn &&
@@ -37,7 +38,7 @@ export function ReplyInfoDiv({
                         />
                     }
                 </div>
-            </BaseCommentReplyContent>
+            </CommentReplyContent>
         </div>
     );
 };

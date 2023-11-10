@@ -10,8 +10,8 @@ export function Header() {
     const setActiveClass = ({ isActive }) => isActive ? styles.active : "";
 
     return (
-        <header>
-            <nav className={styles.topNav}>
+        <header className={styles.container}>
+            <nav className={styles.navigation}>
                 <ul>
                     <li><NavLink to={"/"} className={setActiveClass}>Home</NavLink></li>
                     {

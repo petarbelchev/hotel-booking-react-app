@@ -3,13 +3,13 @@ import { useState } from "react";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
 import { DangerButton } from "../Buttons/DangerButton";
 import { TextArea } from "../TextArea";
-import { ReplyInfoDiv } from "./ReplyInfoDiv";
-import { BaseCommentReplyContent } from "./BaseCommentReplyContent";
+import { Reply } from "./Reply";
+import { CommentReplyContent } from "./CommentReplyContent";
 
 import { useForm } from "../../hooks/useForm";
-import styles from "./CommentInfoDiv.module.css";
+import styles from "./Comment.module.css";
 
-export function CommentInfoDiv({
+export function Comment({
     comment,
     onSendReplySubmitHandler,
     onRepliesClickHandler,
@@ -74,16 +74,17 @@ export function CommentInfoDiv({
 
     return (
         <div className={styles.comment}>
-            <BaseCommentReplyContent
+            <CommentReplyContent
                 content={comment}
                 onRatingClickHandler={onCommentRatingClickHandler}
+                userId={userId}
             >
                 {comment.replies &&
                     <div>
                         <h4>Replies:</h4>
 
                         {comment.replies.map(reply =>
-                            <ReplyInfoDiv
+                            <Reply
                                 key={reply.id}
                                 reply={reply}
                                 onDeleteClickHandler={deleteReplyClickHandler}
@@ -127,7 +128,7 @@ export function CommentInfoDiv({
                         <PrimaryButton type="submit" name="Send Reply" />
                     </form>
                 }
-            </BaseCommentReplyContent>
+            </CommentReplyContent>
         </div>
     );
 };
