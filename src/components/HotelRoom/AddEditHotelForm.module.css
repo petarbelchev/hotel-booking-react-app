@@ -1,5 +1,22 @@
-.hotelForm {
-    display: inline-block;
-    padding: 10px;
-    margin-top: 10px;
+.hotelContent input {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 225px;
+}
+
+.hotelContent select {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 225px;
+}
+
+.hotelContent textarea {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    width: 225px;
 }

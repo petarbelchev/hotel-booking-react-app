@@ -11,6 +11,7 @@ import { useRoomForms } from "../hooks/useRoomForms";
 
 import { addHotel } from "../services/hotelsService";
 import { AuthContext } from "../contexts/AuthContext";
+import styles from "./AddHotelPage.module.css";
 
 export function AddHotelPage() {
     const { user } = useContext(AuthContext);
@@ -59,13 +60,13 @@ export function AddHotelPage() {
     };
 
     return (
-        <main>
-            <section style={{ textAlign: "center" }}>
-                <h1>Add a Hotel</h1>
+        <section>
+            <h1 id={styles.heading}>Add a Hotel</h1>
 
+            <div className={styles.content}>
                 <AddEditHotelForm
                     hotel={hotelForm}
-                    onChange={hotelFormChangeHandler}
+                    onChangeHandler={hotelFormChangeHandler}
                     onSubmit={addHotelSubmitHandler}
                     cities={cities}
                 >
@@ -75,7 +76,7 @@ export function AddHotelPage() {
                                 key={index}
                                 roomIdx={index}
                                 room={room}
-                                onChange={roomForms.formsChangeHandler}
+                                onChangeHandler={roomForms.formsChangeHandler}
                             />
                         )}
                     </div>
@@ -85,7 +86,7 @@ export function AddHotelPage() {
                         <PrimaryButton type="submit" name="Add Hotel" />
                     </div>
                 </AddEditHotelForm>
-            </section>
-        </main>
+            </div>
+        </section>
     );
 };

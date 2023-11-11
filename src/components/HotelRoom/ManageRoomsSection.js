@@ -8,9 +8,9 @@ import { WarningButton } from "../Buttons/WarningButton";
 import { DangerButton } from "../Buttons/DangerButton";
 import { AddEditRoomDiv } from "./AddEditRoomDiv";
 
-import styles from "./Rooms.module.css";
+import styles from "./ManageRoomsSection.module.css";
 
-export function Rooms({
+export function ManageRoomsSection({
     hotelId,
     roomsCount,
     onDoneClickHandler,
@@ -82,8 +82,7 @@ export function Rooms({
     };
 
     return (
-        <div>
-            <hr />
+        <section>
             <div className={styles.flexWrap}>
                 {forms.map((room, roomIdx) =>
                     <form
@@ -94,7 +93,7 @@ export function Rooms({
                             key={roomIdx}
                             roomIdx={roomIdx}
                             room={room}
-                            onChange={(e) => formsChangeHandler(e, roomIdx)}
+                            onChangeHandler={formsChangeHandler}
                         >
                             <PrimaryButton
                                 type="submit"
@@ -123,7 +122,6 @@ export function Rooms({
                 <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
                 <PrimaryButton onClick={onDoneClickHandler} name="Done" />
             </div>
-            <hr />
-        </div>
+        </section>
     );
 };

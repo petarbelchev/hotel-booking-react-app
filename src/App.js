@@ -12,13 +12,15 @@ import { AddHotelPage } from "./pages/AddHotelPage";
 import { HotelDetailsPage } from "./pages/HotelDetailsPage/HotelDetailsPage";
 import { SearchRoomsResultPage } from "./pages/SearchRoomsResultPage";
 
+import styles from "./App.module.css";
+
 export default function App() {
     return (
-        <div style={{ position: "relative", minHeight: "100vh" }}>
-            <div style={{ paddingBottom: "2.5rem" }}>
+        <>
+            <div id={styles.contentWindow}>
                 <AuthProvider>
                     <Header />
-                    <div style={{margin: "30px"}}>
+                    <main>
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/register" element={<RegisterPage />} />
@@ -28,10 +30,10 @@ export default function App() {
                             <Route path="/add-hotel" element={<AddHotelPage />} />
                             <Route path="/hotels/:hotelId" element={<HotelDetailsPage />} />
                         </Routes>
-                    </div>
+                    </main>
                 </AuthProvider>
             </div>
             <Footer />
-        </div>
+        </>
     );
 };

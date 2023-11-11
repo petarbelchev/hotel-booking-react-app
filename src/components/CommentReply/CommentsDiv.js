@@ -10,7 +10,7 @@ import { useForm } from "../../hooks/useForm";
 import { setCommentRating, setReplyRating } from "../../services/ratingsService";
 import { AuthContext } from "../../contexts/AuthContext";
 
-export function Comments({
+export function CommentsDiv({
     hotelId,
     commentsCount,
     increaseCommentsCountHandler,
