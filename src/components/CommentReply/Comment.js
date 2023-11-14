@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { PrimaryButton } from "../Buttons/PrimaryButton";
 import { DangerButton } from "../Buttons/DangerButton";
-import { TextArea } from "../TextArea";
 import { Reply } from "./Reply";
 import { CommentReplyContent } from "./CommentReplyContent";
 
@@ -114,9 +113,9 @@ export function Comment({
                 {!showAddReplyBtn &&
                     <form onSubmit={sendReplySubmitHandler}>
                         <div>
-                            <TextArea
+                            <textarea
                                 placeHolder="Write your reply here..."
-                                paramName="content"
+                                name="content"
                                 value={form.content}
                                 onChange={formChangeHandler}
                                 rows="5"

@@ -83,11 +83,12 @@ export function ManageRoomsSection({
 
     return (
         <section>
-            <div className={styles.flexWrap}>
+            <div className={styles.forms}>
                 {forms.map((room, roomIdx) =>
                     <form
                         key={roomIdx}
                         onSubmit={(e) => createUpdateRoomSubmitHandler(e, roomIdx)}
+                        className={styles.form}
                     >
                         <AddEditRoomDiv
                             key={roomIdx}
@@ -111,7 +112,7 @@ export function ManageRoomsSection({
                 )}
             </div>
 
-            <div>
+            <div className={styles.buttons}>
                 {showEditRoomsBtn &&
                     <WarningButton
                         onClick={editRoomsClickHandler}

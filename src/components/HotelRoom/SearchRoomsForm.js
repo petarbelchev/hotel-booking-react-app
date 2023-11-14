@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Select } from "../Select";
-import { PrimaryButton } from "../Buttons/PrimaryButton";
-
 import { useDateValidator } from "../../hooks/useDateValidator";
 import { useCities } from "../../hooks/useCities";
 
+import { PrimaryButton } from "../Buttons/PrimaryButton";
 import styles from "./SearchRoomsForm.module.css";
 
 export function SearchRoomsForm({
@@ -32,43 +30,33 @@ export function SearchRoomsForm({
     const cityChangeHandler = (e) => setCityId(e.target.value);
 
     return (
-        <form
-            className={styles.roomsForm}
-            onSubmit={searchSubmitHandler}
-        >
-            <Select
-                labelName={'Choose a city:'}
-                paramName={'cityId'}
-                items={cities}
-                value={cityId}
-                onSelectChange={cityChangeHandler}
-            />
-            
-            <div>
-                <label htmlFor="checkInLocal">From:</label>
-                <input
-                    name="checkInLocal"
-                    type="date"
-                    onChange={dateValidator.onDateChange}
-                    min={dateValidator.checkInMinDate.toISOString().split("T")[0]}
-                    max={dateValidator.checkInMaxDate?.toISOString().split("T")[0]}
-                    value={dateValidator.checkInDate}
-                    required
-                />
-            </div>
+        <form className={styles.form} onSubmit={searchSubmitHandler}>
+            <label htmlFor="cityId">Choose a city:</label>
+            <select id="cityId" name="cityId" value={cityId} onChange={cityChangeHandler}>
+                {cities.map(city => <option key={city.id} value={city.id}>{city.name}</option>)}
+            </select>
 
-            <div>
-                <label htmlFor="checkOutLocal">To:</label>
-                <input
-                    name="checkOutLocal"
-                    type="date"
-                    onChange={dateValidator.onDateChange}
-                    min={dateValidator.checkOutMinDate.toISOString().split("T")[0]}
-                    value={dateValidator.checkOutDate}
-                    required
-                />
-            </div>
-            
+            <label htmlFor="checkInLocal">From:</label>
+            <input
+                name="checkInLocal"
+                type="date"
+                onChange={dateValidator.onDateChange}
+                min={dateValidator.checkInMinDate.toISOString().split("T")[0]}
+                max={dateValidator.checkInMaxDate?.toISOString().split("T")[0]}
+                value={dateValidator.checkInDate}
+                required
+            />
+
+            <label htmlFor="checkOutLocal">To:</label>
+            <input
+                name="checkOutLocal"
+                type="date"
+                onChange={dateValidator.onDateChange}
+                min={dateValidator.checkOutMinDate.toISOString().split("T")[0]}
+                value={dateValidator.checkOutDate}
+                required
+            />
+
             <PrimaryButton type="submit" name="Search" />
         </form>
     );

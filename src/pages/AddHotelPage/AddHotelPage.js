@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { PrimaryButton } from "../components/Buttons/PrimaryButton";
-import { AddEditHotelForm } from "../components/HotelRoom/AddEditHotelForm";
-import { AddEditRoomDiv } from "../components/HotelRoom/AddEditRoomDiv";
+import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
+import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
+import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 
-import { useForm } from "../hooks/useForm";
-import { useCities } from "../hooks/useCities";
-import { useRoomForms } from "../hooks/useRoomForms";
+import { useForm } from "../../hooks/useForm";
+import { useCities } from "../../hooks/useCities";
+import { useRoomForms } from "../../hooks/useRoomForms";
 
-import { addHotel } from "../services/hotelsService";
-import { AuthContext } from "../contexts/AuthContext";
+import { addHotel } from "../../services/hotelsService";
+import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./AddHotelPage.module.css";
 
 export function AddHotelPage() {
@@ -63,14 +63,14 @@ export function AddHotelPage() {
         <section>
             <h1 id={styles.heading}>Add a Hotel</h1>
 
-            <div className={styles.content}>
+            <div>
                 <AddEditHotelForm
                     hotel={hotelForm}
                     onChangeHandler={hotelFormChangeHandler}
                     onSubmit={addHotelSubmitHandler}
                     cities={cities}
                 >
-                    <div>
+                    <div className={styles.rooms}>
                         {roomForms.forms.map((room, index) =>
                             <AddEditRoomDiv
                                 key={index}
@@ -81,7 +81,7 @@ export function AddHotelPage() {
                         )}
                     </div>
 
-                    <div>
+                    <div className={styles.buttons}>
                         <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
                         <PrimaryButton type="submit" name="Add Hotel" />
                     </div>

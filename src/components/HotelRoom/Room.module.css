@@ -1,11 +1,16 @@
 .container {
     padding: 10px;
-    border-style: double;
+    border: 1px solid;
+    margin-bottom: 10px;
 }
 
 .content {
     display: inline-block;
     vertical-align: top;
+}
+
+.content h3 {
+    margin: 10px 0px;
 }
 
 .image {

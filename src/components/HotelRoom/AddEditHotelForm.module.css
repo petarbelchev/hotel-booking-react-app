@@ -1,3 +1,8 @@
+.hotelContent {
+    margin: 0 auto;
+    width: 225px;
+}
+
 .hotelContent input {
     display: block;
     box-sizing: border-box;

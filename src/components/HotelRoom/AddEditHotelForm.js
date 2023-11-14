@@ -41,7 +41,7 @@ export function AddEditHotelForm({ hotel, onChangeHandler, onSubmit, cities, chi
                 />
             </div>
 
-            <div>{children}</div>
+            {children}
         </form>
     );
 };

@@ -7,7 +7,7 @@ import { Hotel } from "../../components/HotelRoom/Hotel";
 import { RatingDiv } from "../../components/RatingDiv";
 import { ManageRoomsSection } from "../../components/HotelRoom/ManageRoomsSection";
 import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
-import { UploadHotelImagesForm } from "../../components/UploadHotelImagesForm";
+import { UploadHotelImagesForm } from "../../components/Forms/UploadHotelImagesForm";
 
 import { useImages } from "../../hooks/useImages";
 import { useForm } from "../../hooks/useForm";
@@ -148,7 +148,7 @@ export function HotelDetailsPage() {
                 <div className={styles.hotel}>
                     {imageGallery}
 
-                    <div className={styles.content} >
+                    <div className={styles.hotelContent} >
                         {showEditHotelForm
                             ? <AddEditHotelForm
                                 hotel={hotelForm.form}
@@ -156,7 +156,7 @@ export function HotelDetailsPage() {
                                 onSubmit={updateHotelSubmitHandler}
                                 cities={cities}
                             >
-                                <div>
+                                <div className={styles.editButtons}>
                                     <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
                                     <PrimaryButton type="submit" name="Update Hotel" />
                                 </div>
