@@ -1,11 +1,13 @@
-.roomsForm {
-    padding: 10px;
-}
-
-.roomsForm label {
+.form input,
+.form select {
+    box-sizing: border-box;
     display: block;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 170px;
 }
 
-.roomsForm div {
-    margin-bottom: 10px;
+.form button {
+    display: block;
+    margin: 0 auto;
 }

@@ -5,9 +5,9 @@ import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
 import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
 import { Hotel } from "../../components/HotelRoom/Hotel";
 import { RatingDiv } from "../../components/RatingDiv";
-import { Rooms } from "../../components/HotelRoom/Rooms";
-import { Comments } from "../../components/CommentReply/Comments";
-import { UploadHotelImagesForm } from "../../components/UploadHotelImagesForm";
+import { ManageRoomsSection } from "../../components/HotelRoom/ManageRoomsSection";
+import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
+import { UploadHotelImagesForm } from "../../components/Forms/UploadHotelImagesForm";
 
 import { useImages } from "../../hooks/useImages";
 import { useForm } from "../../hooks/useForm";
@@ -22,7 +22,7 @@ import styles from "./HotelDetailsPage.module.css";
 export function HotelDetailsPage() {
     const [hotel, setHotel] = useState({});
     const [showEditHotelForm, setShowEditHotelForm] = useState(false);
-    const [showHotelRooms, setShowHotelRooms] = useState(false);
+    const [showRoomsSection, setShowRoomsSection] = useState(false);
     const [showUploadImageForm, setShowUploadImageForm] = useState(false);
 
     const { user } = useContext(AuthContext);
@@ -52,9 +52,9 @@ export function HotelDetailsPage() {
         setShowEditHotelForm(true);
     };
 
-    const manageRoomsClickHandler = () => setShowHotelRooms(true);
+    const manageRoomsClickHandler = () => setShowRoomsSection(true);
     const cancelClickHandler = () => setShowEditHotelForm(false);
-    const doneClickHandler = () => setShowHotelRooms(false);
+    const doneClickHandler = () => setShowRoomsSection(false);
 
     const updateHotelSubmitHandler = async (e) => {
         e.preventDefault();
@@ -141,73 +141,79 @@ export function HotelDetailsPage() {
     };
 
     return (
-        <main>
-            {showModal && imagesModal}
+        <>
+            <section>
+                {showModal && imagesModal}
 
-            <div className={styles.hotel}>
-                {imageGallery}
+                <div className={styles.hotel}>
+                    {imageGallery}
 
-                <div className={styles.content} >
-                    {showEditHotelForm
-                        ? <AddEditHotelForm
-                            hotel={hotelForm.form}
-                            onChange={hotelForm.formChangeHandler}
-                            onSubmit={updateHotelSubmitHandler}
-                            cities={cities}
-                        >
-                            <div>
-                                <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
-                                <PrimaryButton type="submit" name="Update Hotel" />
-                            </div>
-                        </AddEditHotelForm>
-                        : <Hotel
-                            hotel={hotel}
-                            onFavoriteClickHandler={favoriteClickHandler}
-                            onEditHotelClickHandler={editHotelClickHandler}
-                            onDeleteHotelClickHandler={deleteHotelClickHandler}
-                            onAddImageClickHandler={addImageClickHandler}
-                            onManageRoomsClickHandler={manageRoomsClickHandler}
-                            RatingDiv={user &&
-                                <RatingDiv
-                                    userRating={hotel.ratings?.userRating}
-                                    onRatingClickHandler={hotelRatingClickHandler}
-                                />
-                            }
-                            userId={user?.id}
+                    <div className={styles.hotelContent} >
+                        {showEditHotelForm
+                            ? <AddEditHotelForm
+                                hotel={hotelForm.form}
+                                onChangeHandler={hotelForm.formChangeHandler}
+                                onSubmit={updateHotelSubmitHandler}
+                                cities={cities}
+                            >
+                                <div className={styles.editButtons}>
+                                    <PrimaryButton onClick={cancelClickHandler} name="Cancel" />
+                                    <PrimaryButton type="submit" name="Update Hotel" />
+                                </div>
+                            </AddEditHotelForm>
+                            : <Hotel
+                                hotel={hotel}
+                                onFavoriteClickHandler={favoriteClickHandler}
+                                onEditHotelClickHandler={editHotelClickHandler}
+                                onDeleteHotelClickHandler={deleteHotelClickHandler}
+                                onAddImageClickHandler={addImageClickHandler}
+                                onManageRoomsClickHandler={manageRoomsClickHandler}
+                                RatingDiv={user &&
+                                    <RatingDiv
+                                        userRating={hotel.ratings?.userRating}
+                                        onRatingClickHandler={hotelRatingClickHandler}
+                                    />
+                                }
+                                userId={user?.id}
+                            />
+                        }
+
+                        <CommentsDiv
+                            hotelId={hotelId}
+                            commentsCount={hotel.commentsCount}
+                            increaseCommentsCountHandler={increaseCommentsCountHandler}
+                            decreaseCommentsCountHandler={decreaseCommentsCountHandler}
                         />
-                    }
-
-                    <Comments
-                        hotelId={hotelId}
-                        commentsCount={hotel.commentsCount}
-                        increaseCommentsCountHandler={increaseCommentsCountHandler}
-                        decreaseCommentsCountHandler={decreaseCommentsCountHandler}
-                    />
+                    </div>
                 </div>
-            </div>
+            </section >
 
             {showUploadImageForm &&
-                <div>
+                <> {/* TODO: Use modal. */}
                     <hr />
-                    <UploadHotelImagesForm
-                        hotelId={hotelId}
-                        token={user.token}
-                        onSubmitHandler={uploadHotelImagesSubmitHandler}
-                    />
-                    <hr />
-                </div>
+                    <section>
+                        <UploadHotelImagesForm
+                            hotelId={hotelId}
+                            token={user.token}
+                            onSubmitHandler={uploadHotelImagesSubmitHandler}
+                        />
+                    </section>
+                </>
             }
 
-            {showHotelRooms &&
-                <Rooms
-                    hotelId={hotelId}
-                    roomsCount={hotel.roomsCount}
-                    onDoneClickHandler={doneClickHandler}
-                    increaseRoomsCountHandler={increaseRoomsCountHandler}
-                    decreaseRoomsCountHandler={decreaseRoomsCountHandler}
-                    token={user.token}
-                />
+            {showRoomsSection &&
+                <>
+                    <hr />
+                    <ManageRoomsSection
+                        hotelId={hotelId}
+                        roomsCount={hotel.roomsCount}
+                        onDoneClickHandler={doneClickHandler}
+                        increaseRoomsCountHandler={increaseRoomsCountHandler}
+                        decreaseRoomsCountHandler={decreaseRoomsCountHandler}
+                        token={user.token}
+                    />
+                </>
             }
-        </main >
+        </>
     );
 };

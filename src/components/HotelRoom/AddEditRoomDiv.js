@@ -1,76 +1,94 @@
-import { CheckBox } from "../CheckBox";
-import { Select } from "../Select";
-import { InputField } from "../InputField";
-
 import styles from "./AddEditRoomDiv.module.css";
 
-export function AddEditRoomDiv({
-    roomIdx,
-    room,
-    onChange,
-    children,
-}) {
+export function AddEditRoomDiv({ roomIdx, room, onChangeHandler, children }) {
+    const changeHandler = (e) => onChangeHandler(e, roomIdx);
+
     return (
-        <div className={styles.container}>
-            <InputField
+        <div className={styles.roomContent}>
+            <label htmlFor={"number" + roomIdx}>Room Number:</label>
+            <input
+                id={"number" + roomIdx}
+                name="number"
                 type="text"
-                labelName="Room Number"
-                paramName="number"
                 value={room.number}
-                onChange={(e) => onChange(e, roomIdx)}
-                required={true}
+                onChange={changeHandler}
+                required
             />
-            <InputField
+
+            <label htmlFor={"capacity" + roomIdx}>Capacity:</label>
+            <input
+                id={"capacity" + roomIdx}
+                name="capacity"
                 type="number"
-                labelName="Capacity"
-                paramName="capacity"
+                min="1"
                 value={room.capacity}
-                onChange={(e) => onChange(e, roomIdx)}
-                required={true}
+                onChange={changeHandler}
+                required
             />
-            <InputField
+
+            <label htmlFor={"pricePerNight" + roomIdx}>Price Per Night:</label>
+            <input
+                id={"pricePerNight" + roomIdx}
+                name="pricePerNight"
                 type="number"
-                labelName="Price Per Night"
-                paramName="pricePerNight"
+                min="0"
                 value={room.pricePerNight}
-                onChange={(e) => onChange(e, roomIdx)}
-                required={true}
+                onChange={changeHandler}
+                required
             />
-            <Select
-                labelName="Room Type"
-                paramName="roomType"
-                items={[
-                    { id: 0, name: "Single" },
-                    { id: 1, name: "Double" },
-                    { id: 2, name: "Apartment" }
-                ]}
+
+            <label htmlFor={"roomType" + roomIdx}>Room Type:</label>
+            <select
+                id={"roomType" + roomIdx}
+                name="roomType"
                 value={room.roomType}
-                onSelectChange={(e) => onChange(e, roomIdx)}
-            />
-            <CheckBox
-                labelName="Has Air Conditioner"
-                paramName="hasAirConditioner"
+                onChange={changeHandler}
+            >
+                <option value="0" key="0">Single</option>
+                <option value="1" key="1">Double</option>
+                <option value="2" key="2">Apartment</option>
+            </select>
+
+            <input
+                id={"hasAirConditioner" + roomIdx}
+                name="hasAirConditioner"
+                type="checkbox"
+                className={styles.checkBox}
                 checked={room.hasAirConditioner}
-                onChange={(e) => onChange(e, roomIdx)}
+                onChange={changeHandler}
             />
-            <CheckBox
-                labelName="Has Balcony"
-                paramName="hasBalcony"
+            <label htmlFor={"hasAirConditioner" + roomIdx}>AC</label><br />
+
+            <input
+                id={"hasBalcony" + roomIdx}
+                name="hasBalcony"
+                type="checkbox"
+                className={styles.checkBox}
                 checked={room.hasBalcony}
-                onChange={(e) => onChange(e, roomIdx)}
+                onChange={changeHandler}
             />
-            <CheckBox
-                labelName="Has Kitchen"
-                paramName="hasKitchen"
+            <label htmlFor={"hasBalcony" + roomIdx}>Balcony</label><br />
+
+            <input
+                id={"hasKitchen" + roomIdx}
+                name="hasKitchen"
+                type="checkbox"
+                className={styles.checkBox}
                 checked={room.hasKitchen}
-                onChange={(e) => onChange(e, roomIdx)}
+                onChange={changeHandler}
             />
-            <CheckBox
-                labelName="Is Smoking Allowed"
-                paramName="isSmokingAllowed"
+            <label htmlFor={"hasKitchen" + roomIdx}>Kitchen</label><br />
+
+            <input
+                id={"isSmokingAllowed" + roomIdx}
+                name="isSmokingAllowed"
+                type="checkbox"
+                className={styles.checkBox}
                 checked={room.isSmokingAllowed}
-                onChange={(e) => onChange(e, roomIdx)}
+                onChange={changeHandler}
             />
+            <label htmlFor={"isSmokingAllowed" + roomIdx}>Smoking Allowed</label><br />
+
             {children}
         </div>
     );

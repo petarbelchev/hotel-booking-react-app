@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
-import { InputField } from "../../components/InputField";
-
 import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../contexts/AuthContext";
 import { getUserProfile, updateUserProfile, deleteUserProfile } from "../../services/usersService";
@@ -109,30 +107,42 @@ export function UserProfilePage() {
                     </>
                     : <>
                         <form onSubmit={updateSubmitHandler}>
-                            <InputField
-                                labelName="First Name"
-                                type="text"
-                                paramName="firstName"
-                                value={form.firstName}
-                                onChange={formChangeHandler}
-                                required={true}
-                            />
-                            <InputField
-                                labelName="Last Name"
-                                type="text"
-                                paramName="lastName"
-                                value={form.lastName}
-                                onChange={formChangeHandler}
-                                required={true}
-                            />
-                            <InputField
-                                labelName="Phone Number"
-                                type="text"
-                                paramName="phoneNumber"
-                                value={form.phoneNumber}
-                                onChange={formChangeHandler}
-                                required={true}
-                            />
+                            <div>
+                                <label htmlFor="firstName">First Name:</label>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    value={form.firstName}
+                                    onChange={formChangeHandler}
+                                    required={true}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="lastName">Last Name:</label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    value={form.lastName}
+                                    onChange={formChangeHandler}
+                                    required={true}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="phoneNumber">Phone Number:</label>
+                                <input
+                                    type="text"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    value={form.phoneNumber}
+                                    onChange={formChangeHandler}
+                                    required={true}
+                                />
+                            </div>
+
                             <div>
                                 <PrimaryButton type="submit" name="Update" />
                                 <PrimaryButton onClick={cancelClickHandler} name="Cancel" />

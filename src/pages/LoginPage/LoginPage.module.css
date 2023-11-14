@@ -3,6 +3,15 @@
 }
 
 .form {
-    border: solid;
     display: inline-block;
+}
+
+.form label {
+    display: block;
+    text-align: left;
+}
+
+.form input {
+    display: block;
+    margin-bottom: 10px;
 }

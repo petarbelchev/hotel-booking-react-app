@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 
 import { Comment } from "./Comment";
-import { TextArea } from "../TextArea";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
 
 import { useComments } from "../../hooks/useComments";
@@ -10,7 +9,7 @@ import { useForm } from "../../hooks/useForm";
 import { setCommentRating, setReplyRating } from "../../services/ratingsService";
 import { AuthContext } from "../../contexts/AuthContext";
 
-export function Comments({
+export function CommentsDiv({
     hotelId,
     commentsCount,
     increaseCommentsCountHandler,
@@ -141,9 +140,9 @@ export function Comments({
             {!showAddCommentBtn &&
                 <form onSubmit={sendCommentSubmitHandler}>
                     <div>
-                        <TextArea
+                        <textarea
                             placeHolder="Write your comment here..."
-                            paramName="content"
+                            name="content"
                             value={commentForm.form.content}
                             onChange={commentForm.formChangeHandler}
                             rows="5"

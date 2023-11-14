@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { getHotelsWithAvailableRooms } from "../services/searchService";
-import { markAsFavorite } from "../services/hotelsService";
+import { getHotelsWithAvailableRooms } from "../../services/searchService";
+import { markAsFavorite } from "../../services/hotelsService";
 
-import { HotelWithAvailableRooms } from "../components/HotelRoom/HotelWithAvailableRooms";
-import { SearchRoomsForm } from "../components/HotelRoom/SearchRoomsForm";
+import { HotelWithAvailableRooms } from "../../components/HotelRoom/HotelWithAvailableRooms";
+import { SearchRoomsForm } from "../../components/HotelRoom/SearchRoomsForm";
 
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./SearchRoomsResultPage.module.css";
 
 export function SearchRoomsResultPage() {
@@ -51,7 +51,7 @@ export function SearchRoomsResultPage() {
             <section className={styles.results}>
                 <h1>Here what we have</h1>
                 
-                <div className={styles.resultsContainer}>
+                <div>
                     {hotelsWithAvailableRooms.length > 0
                         ? hotelsWithAvailableRooms.map(hotel => <HotelWithAvailableRooms
                             key={hotel.id}

@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { uploadHotelImages } from "../services/imagesService";
+import { uploadHotelImages } from "../../services/imagesService";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
+import styles from "./UploadHotelImagesForm.module.css";
 
 export function UploadHotelImagesForm({
     hotelId,
@@ -27,7 +29,7 @@ export function UploadHotelImagesForm({
     };
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className={styles.form} onSubmit={onSubmit}>
             <input
                 type="file"
                 onChange={onChange}
@@ -36,7 +38,7 @@ export function UploadHotelImagesForm({
                 required
             />
 
-            <button type="submit">Upload Images</button>
+            <PrimaryButton type="submit" name="Upload Images" />
         </form>
     );
 };

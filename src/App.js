@@ -3,22 +3,24 @@ import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 
-import { HomePage } from "./pages/HomePage";
+import { HomePage } from "./pages/HomePage/HomePage";
 import { RegisterPage } from "./pages/RegisterPage/RegisterPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserProfilePage } from "./pages/UserProfilePage/UserProfilePage";
-import { AddHotelPage } from "./pages/AddHotelPage";
+import { AddHotelPage } from "./pages/AddHotelPage/AddHotelPage";
 import { HotelDetailsPage } from "./pages/HotelDetailsPage/HotelDetailsPage";
-import { SearchRoomsResultPage } from "./pages/SearchRoomsResultPage";
+import { SearchRoomsResultPage } from "./pages/SearchRoomsResultPage/SearchRoomsResultPage";
+
+import styles from "./App.module.css";
 
 export default function App() {
     return (
-        <div style={{ position: "relative", minHeight: "100vh" }}>
-            <div style={{ paddingBottom: "2.5rem" }}>
+        <>
+            <div id={styles.contentWindow}>
                 <AuthProvider>
                     <Header />
-                    <div style={{margin: "30px"}}>
+                    <main>
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/register" element={<RegisterPage />} />
@@ -28,10 +30,10 @@ export default function App() {
                             <Route path="/add-hotel" element={<AddHotelPage />} />
                             <Route path="/hotels/:hotelId" element={<HotelDetailsPage />} />
                         </Routes>
-                    </div>
+                    </main>
                 </AuthProvider>
             </div>
             <Footer />
-        </div>
+        </>
     );
 };

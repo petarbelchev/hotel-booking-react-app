@@ -1,8 +1,14 @@
 .hotel {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.content {
+.hotelContent {
     display: inline-block;
+}
+
+.editButtons {
+    display: flex;
+    justify-content: center;
 }

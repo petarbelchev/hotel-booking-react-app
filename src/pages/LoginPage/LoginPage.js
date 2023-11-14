@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { InputField } from "../../components/InputField";
 import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
-
 import { AuthContext } from "../../contexts/AuthContext";
 import { useForm } from "../../hooks/useForm";
 import { login } from "../../services/authService";
@@ -33,18 +31,21 @@ export function LoginPage() {
             <h1>Login Page</h1>
 
             <form className={styles.form} onSubmit={loginSubmitHandler}>
-                <InputField
-                    labelName="Email"
-                    paramName="email"
+                <label htmlFor="email">Email:</label>
+                <input
                     type="email"
+                    id="email"
+                    name="email"
                     value={form.email}
                     onChange={formChangeHandler}
                     required={true}
                 />
-                <InputField
-                    labelName="Password"
-                    paramName="password"
+
+                <label htmlFor="password">Password:</label>
+                <input
                     type="password"
+                    id="password"
+                    name="password"
                     value={form.password}
                     onChange={formChangeHandler}
                     required={true}

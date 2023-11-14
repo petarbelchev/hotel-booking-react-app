@@ -1,51 +1,46 @@
-import { InputField } from "../InputField";
-import { Select } from "../Select";
-
 import styles from "./AddEditHotelForm.module.css";
 
-export function AddEditHotelForm({
-    hotel,
-    onChange,
-    onSubmit,
-    cities,
-    children,
-}) {
+export function AddEditHotelForm({ hotel, onChangeHandler, onSubmit, cities, children }) {
     return (
-        <form
-            className={styles.hotelForm}
-            onSubmit={onSubmit}
-        >
-            <InputField
-                type="text"
-                labelName="Hotel Name"
-                paramName="name"
-                value={hotel.name}
-                onChange={onChange}
-                required={true}
-            />
-            <InputField
-                type="text"
-                labelName="Address"
-                paramName="address"
-                value={hotel.address}
-                onChange={onChange}
-                required={true}
-            />
-            <Select
-                labelName={"City:"}
-                items={cities}
-                paramName={"cityId"}
-                value={hotel.cityId}
-                onSelectChange={onChange}
-            />
-            <InputField
-                type="textarea"
-                labelName="Description"
-                paramName="description"
-                value={hotel.description}
-                onChange={onChange}
-                required={true}
-            />
+        <form onSubmit={onSubmit}>
+            <div className={styles.hotelContent}>
+                <label htmlFor="name">Hotel Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={hotel.name}
+                    onChange={onChangeHandler}
+                    required
+                />
+
+                <label htmlFor="address">Address:</label>
+                <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={hotel.address}
+                    onChange={onChangeHandler}
+                    required
+                />
+
+                <label htmlFor="cityId">City:</label>
+                <select id="cityId" name="cityId" value={hotel.cityId} onChange={onChangeHandler}>
+                    {cities.map(city => <option key={city.id} value={city.id}> {city.name}</option>)}
+                </select>
+
+                <label htmlFor="description">Description:</label>
+                <textarea
+                    type="textarea"
+                    id="description"
+                    name="description"
+                    value={hotel.description}
+                    onChange={onChangeHandler}
+                    rows="5"
+                    required
+                />
+            </div>
+
             {children}
         </form>
     );

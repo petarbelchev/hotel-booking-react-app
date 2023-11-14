@@ -1,16 +1,17 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { PrimaryButton } from "../components/Buttons/PrimaryButton";
-import { AddEditHotelForm } from "../components/HotelRoom/AddEditHotelForm";
-import { AddEditRoomDiv } from "../components/HotelRoom/AddEditRoomDiv";
+import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
+import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
+import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
 
-import { useForm } from "../hooks/useForm";
-import { useCities } from "../hooks/useCities";
-import { useRoomForms } from "../hooks/useRoomForms";
+import { useForm } from "../../hooks/useForm";
+import { useCities } from "../../hooks/useCities";
+import { useRoomForms } from "../../hooks/useRoomForms";
 
-import { addHotel } from "../services/hotelsService";
-import { AuthContext } from "../contexts/AuthContext";
+import { addHotel } from "../../services/hotelsService";
+import { AuthContext } from "../../contexts/AuthContext";
+import styles from "./AddHotelPage.module.css";
 
 export function AddHotelPage() {
     const { user } = useContext(AuthContext);
@@ -59,33 +60,33 @@ export function AddHotelPage() {
     };
 
     return (
-        <main>
-            <section style={{ textAlign: "center" }}>
-                <h1>Add a Hotel</h1>
+        <section>
+            <h1 id={styles.heading}>Add a Hotel</h1>
 
+            <div>
                 <AddEditHotelForm
                     hotel={hotelForm}
-                    onChange={hotelFormChangeHandler}
+                    onChangeHandler={hotelFormChangeHandler}
                     onSubmit={addHotelSubmitHandler}
                     cities={cities}
                 >
-                    <div>
+                    <div className={styles.rooms}>
                         {roomForms.forms.map((room, index) =>
                             <AddEditRoomDiv
                                 key={index}
                                 roomIdx={index}
                                 room={room}
-                                onChange={roomForms.formsChangeHandler}
+                                onChangeHandler={roomForms.formsChangeHandler}
                             />
                         )}
                     </div>
 
-                    <div>
+                    <div className={styles.buttons}>
                         <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
                         <PrimaryButton type="submit" name="Add Hotel" />
                     </div>
                 </AddEditHotelForm>
-            </section>
-        </main>
+            </div>
+        </section>
     );
 };

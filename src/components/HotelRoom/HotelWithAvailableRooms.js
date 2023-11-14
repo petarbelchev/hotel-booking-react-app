@@ -45,7 +45,6 @@ export function HotelWithAvailableRooms({ hotel, onFavoriteClickHandler }) {
                     {hotel.availableRooms.map(room => <Room key={room.id} room={room} />)}
                 </div>
             </div>
-            <hr />
         </div>
     );
 }

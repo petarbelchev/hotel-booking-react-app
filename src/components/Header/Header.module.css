@@ -25,7 +25,7 @@
 }
 
 .active {
-    border: double;
+    border: 1px solid;
 }
 
 @media screen and (max-width: 600px) {
