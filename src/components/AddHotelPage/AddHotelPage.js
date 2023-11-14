@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
-import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
-import { AddEditRoomDiv } from "../../components/HotelRoom/AddEditRoomDiv";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
+import { AddEditHotelForm } from "../Forms/AddEditHotelForm";
+import { AddEditRoomDiv } from "../Forms/AddEditRoomDiv";
 
 import { useForm } from "../../hooks/useForm";
 import { useCities } from "../../hooks/useCities";

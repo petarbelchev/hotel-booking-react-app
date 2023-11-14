@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 
-import { Comment } from "./Comment";
-import { PrimaryButton } from "../Buttons/PrimaryButton";
+import { Comment } from "./Comment/Comment";
+import { PrimaryButton } from "../../Buttons/PrimaryButton";
 
-import { useComments } from "../../hooks/useComments";
-import { useForm } from "../../hooks/useForm";
+import { useComments } from "../../../hooks/useComments";
+import { useForm } from "../../../hooks/useForm";
 
-import { setCommentRating, setReplyRating } from "../../services/ratingsService";
-import { AuthContext } from "../../contexts/AuthContext";
+import { setCommentRating, setReplyRating } from "../../../services/ratingsService";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export function CommentsDiv({
     hotelId,

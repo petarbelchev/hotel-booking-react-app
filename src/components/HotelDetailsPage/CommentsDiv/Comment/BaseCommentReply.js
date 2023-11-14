@@ -1,4 +1,4 @@
-import { RatingDiv } from "../RatingDiv";
+import { RatingDiv } from "../../../Ratings/RatingDiv";
 
 export function CommentReplyContent({
     content,

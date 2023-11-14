@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { DangerButton } from "../Buttons/DangerButton";
-import { CommentReplyContent } from "./CommentReplyContent";
+import { DangerButton } from "../../../../Buttons/DangerButton";
+import { CommentReplyContent } from "../BaseCommentReply";
 
 import styles from "./Reply.module.css";
 

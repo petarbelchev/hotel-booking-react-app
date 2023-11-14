@@ -14,9 +14,9 @@ export function RatingDiv({
             style={{ cursor: "pointer" }}
         >
             <img
-                style={{ width: "20px" }}
                 src={process.env.PUBLIC_URL + imageName}
                 alt="Rating star icon"
+                width="20px"
             />
         </span>;
     }

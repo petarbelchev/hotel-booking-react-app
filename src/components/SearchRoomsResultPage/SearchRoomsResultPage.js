@@ -4,8 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import { getHotelsWithAvailableRooms } from "../../services/searchService";
 import { markAsFavorite } from "../../services/hotelsService";
 
-import { HotelWithAvailableRooms } from "../../components/HotelRoom/HotelWithAvailableRooms";
-import { SearchRoomsForm } from "../../components/HotelRoom/SearchRoomsForm";
+import { HotelWithAvailableRooms } from "./HotelWithAvailableRooms/HotelWithAvailableRooms";
+import { SearchRoomsForm } from "../Forms/SearchRoomsForm";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./SearchRoomsResultPage.module.css";

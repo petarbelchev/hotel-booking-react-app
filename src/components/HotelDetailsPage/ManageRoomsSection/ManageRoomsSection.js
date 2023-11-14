@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { useRoomForms } from "../../hooks/useRoomForms";
-import { createRoom, updateRoom, removeRoom, getHotelRooms } from "../../services/roomsService";
+import { useRoomForms } from "../../../hooks/useRoomForms";
+import { createRoom, updateRoom, removeRoom, getHotelRooms } from "../../../services/roomsService";
 
-import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { WarningButton } from "../Buttons/WarningButton";
-import { DangerButton } from "../Buttons/DangerButton";
-import { AddEditRoomDiv } from "./AddEditRoomDiv";
+import { PrimaryButton } from "../../Buttons/PrimaryButton";
+import { WarningButton } from "../../Buttons/WarningButton";
+import { DangerButton } from "../../Buttons/DangerButton";
+import { AddEditRoomDiv } from "../../Forms/AddEditRoomDiv";
 
 import styles from "./ManageRoomsSection.module.css";
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
 import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../contexts/AuthContext";
 import { getUserProfile, updateUserProfile, deleteUserProfile } from "../../services/usersService";

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
 import { register } from "../../services/authService";
 import { useForm } from "../../hooks/useForm";
 
