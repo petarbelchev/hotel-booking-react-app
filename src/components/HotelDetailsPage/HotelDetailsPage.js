@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { PrimaryButton } from "../../components/Buttons/PrimaryButton";
-import { AddEditHotelForm } from "../../components/HotelRoom/AddEditHotelForm";
-import { Hotel } from "../../components/HotelRoom/Hotel";
-import { RatingDiv } from "../../components/RatingDiv";
-import { ManageRoomsSection } from "../../components/HotelRoom/ManageRoomsSection";
-import { CommentsDiv } from "../../components/CommentReply/CommentsDiv";
-import { UploadHotelImagesForm } from "../../components/Forms/UploadHotelImagesForm";
+import { PrimaryButton } from "../Buttons/PrimaryButton";
+import { AddEditHotelForm } from "../Forms/AddEditHotelForm";
+import { Hotel } from "./Hotel/Hotel";
+import { RatingDiv } from "../Ratings/RatingDiv";
+import { ManageRoomsSection } from "./ManageRoomsSection/ManageRoomsSection";
+import { CommentsDiv } from "./CommentsDiv/CommentsDiv";
+import { UploadHotelImagesForm } from "../Forms/UploadHotelImagesForm";
 
 import { useImages } from "../../hooks/useImages";
 import { useForm } from "../../hooks/useForm";
@@ -30,8 +30,8 @@ export function HotelDetailsPage() {
     const cities = useCities();
     const { imageGallery, imagesModal, showModal } = useImages(
         hotel,
-        hotel.owner?.id === user.id,
-        user.token,
+        hotel.owner?.id === user?.id,
+        user?.token,
     );
     const hotelForm = useForm({});
     const navigate = useNavigate();

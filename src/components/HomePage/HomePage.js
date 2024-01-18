@@ -1,4 +1,4 @@
-import { SearchRoomsForm } from "../../components/HotelRoom/SearchRoomsForm";
+import { SearchRoomsForm } from "../Forms/SearchRoomsForm";
 import styles from "./HomePage.module.css";
 
 export function HomePage() {

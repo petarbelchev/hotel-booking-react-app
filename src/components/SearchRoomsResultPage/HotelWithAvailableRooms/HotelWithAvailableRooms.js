@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { FavoriteButton } from "../Buttons/FavoriteButton";
-import { Room } from "./Room";
+import { PrimaryButton } from "../../Buttons/PrimaryButton";
+import { FavoriteButton } from "../../Buttons/FavoriteButton";
+import { Room } from "./Room/Room";
 
-import { getImage } from "../../services/imagesService";
+import { getImage } from "../../../services/imagesService";
 import styles from "./HotelWithAvailableRooms.module.css";
 
 export function HotelWithAvailableRooms({ hotel, onFavoriteClickHandler }) {

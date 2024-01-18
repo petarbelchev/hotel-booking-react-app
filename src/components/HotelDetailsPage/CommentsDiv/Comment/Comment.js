@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { DangerButton } from "../Buttons/DangerButton";
-import { Reply } from "./Reply";
-import { CommentReplyContent } from "./CommentReplyContent";
+import { PrimaryButton } from "../../../Buttons/PrimaryButton";
+import { DangerButton } from "../../../Buttons/DangerButton";
+import { Reply } from "./Reply/Reply";
+import { CommentReplyContent } from "./BaseCommentReply";
 
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../../hooks/useForm";
 import styles from "./Comment.module.css";
 
 export function Comment({

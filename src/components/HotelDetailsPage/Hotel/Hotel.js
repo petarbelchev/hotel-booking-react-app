@@ -1,5 +1,5 @@
-import { FavoriteButton } from "../Buttons/FavoriteButton";
-import { Dropdown } from "../Dropdown"
+import { FavoriteButton } from "../../Buttons/FavoriteButton";
+import { Dropdown } from "../../Dropdown/Dropdown"
 import styles from "./Hotel.module.css";
 
 export function Hotel({
