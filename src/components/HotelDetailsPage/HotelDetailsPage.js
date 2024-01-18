@@ -30,8 +30,8 @@ export function HotelDetailsPage() {
     const cities = useCities();
     const { imageGallery, imagesModal, showModal } = useImages(
         hotel,
-        hotel.owner?.id === user.id,
-        user.token,
+        hotel.owner?.id === user?.id,
+        user?.token,
     );
     const hotelForm = useForm({});
     const navigate = useNavigate();
