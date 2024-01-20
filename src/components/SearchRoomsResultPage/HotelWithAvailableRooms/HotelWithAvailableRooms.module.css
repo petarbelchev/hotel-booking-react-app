@@ -11,6 +11,10 @@
     justify-content: space-between;
 }
 
+.hotelImage {
+    width: 250px;
+}
+
 .content {
     display: inline-block;
     vertical-align: top;

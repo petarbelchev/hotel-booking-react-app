@@ -20,7 +20,7 @@ export function HotelWithAvailableRooms({ hotel, onFavoriteClickHandler }) {
         <div className={styles.container}>
             <div className={styles.hotel}>
                 <div className={styles.content}>
-                    {mainImage && <img src={mainImage} alt={hotel.name} />}
+                    {mainImage && <img className={styles.hotelImage} src={mainImage} alt={hotel.name} />}
 
                     <div className={styles.title}>
                         <h2>{hotel.name}</h2>
