@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDateValidator } from "../../hooks/useDateValidator";
@@ -13,9 +13,13 @@ export function SearchRoomsForm({
     initCheckOutDate,
 }) {
     const cities = useCities();
-    const [cityId, setCityId] = useState(initCityId || '0');
+    const [cityId, setCityId] = useState(initCityId);
     const dateValidator = useDateValidator(initCheckInDate, initCheckOutDate);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        !initCityId && cities.length > 0 && setCityId(cities[0].id);
+    }, [initCityId, cities]);
 
     const searchSubmitHandler = (e) => {
         e.preventDefault();
