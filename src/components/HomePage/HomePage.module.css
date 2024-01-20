@@ -5,4 +5,5 @@
 #formContainer {
     display: inline-block;
     text-align: left;
+    width: 250px;
 }
