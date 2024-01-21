@@ -12,13 +12,12 @@ export function ImagesModal({
     showDeleteBtn,
 }) {
     return (
-        <div className={styles.modal}>
-            <div className={styles.buttonsDiv}>
-                {showDeleteBtn && <button className={styles.delete} onClick={onDeleteClickHandler}>Delete</button>}
-                <span className={styles.close} onClick={onCloseClickHandler}>&times;</span>
-            </div>
-
+        <section className={styles.modal}>
             <div className={styles.modalContent}>
+                <div className={styles.buttonsDiv}>
+                    {showDeleteBtn && <button className={styles.delete} onClick={onDeleteClickHandler}>Delete</button>}
+                    <span className={styles.close} onClick={onCloseClickHandler}>&times;</span>
+                </div>
                 {slide}
 
                 {!isFirstSlide && <button className={styles.prev} onClick={onPreviousClickHandler}>&#10094;</button>}
@@ -26,6 +25,6 @@ export function ImagesModal({
 
                 {thumbnails}
             </div>
-        </div>
+        </section>
     );
 };

@@ -142,9 +142,9 @@ export function HotelDetailsPage() {
 
     return (
         <>
+            {showModal && imagesModal}
+            
             <section>
-                {showModal && imagesModal}
-
                 <div className={styles.hotel}>
                     {imageGallery}
 
