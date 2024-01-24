@@ -1,6 +1,8 @@
 import styles from "./AddEditRoomDiv.module.css";
+import { PrimaryButton } from "../../../../../components/Buttons/PrimaryButton";
+import { DangerButton } from "../../../../../components/Buttons/DangerButton";
 
-export function AddEditRoomDiv({ roomIdx, room, onChangeHandler, children }) {
+export function AddEditRoomDiv({ roomIdx, room, onChangeHandler, onDeleteRoomClickHandler }) {
     const changeHandler = (e) => onChangeHandler(e, roomIdx);
 
     return (
@@ -89,7 +91,8 @@ export function AddEditRoomDiv({ roomIdx, room, onChangeHandler, children }) {
             />
             <label htmlFor={"isSmokingAllowed" + roomIdx}>Smoking Allowed</label><br />
 
-            {children}
+            <PrimaryButton type="submit" name={room.id ? "Update Room" : "Create Room"} />
+            {room.id && <DangerButton onClick={onDeleteRoomClickHandler} name="Delete Room" />}
         </div>
     );
 };

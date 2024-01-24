@@ -1,4 +1,4 @@
-import { get, post, put, remove } from "./api";
+import { get, post, put, remove } from "../../../../../services/api";
 
 export async function getHotelRooms(hotelId, token) {
     const path = `/api/hotels/${hotelId}/rooms`;

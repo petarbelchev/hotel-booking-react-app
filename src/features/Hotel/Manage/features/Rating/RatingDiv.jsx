@@ -1,7 +1,4 @@
-export function RatingDiv({
-    userRating,
-    onRatingClickHandler,
-}) {
+export function RatingDiv({ userRating, onRatingClickHandler }) {
     const content = [];
 
     for (let i = 0; i < 10; i++) {
@@ -21,9 +18,5 @@ export function RatingDiv({
         </span>;
     }
 
-    return (
-        <div>
-            {content}
-        </div>
-    );
+    return <div>{content}</div>;
 };

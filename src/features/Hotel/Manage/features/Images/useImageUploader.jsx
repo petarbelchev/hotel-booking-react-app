@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UploadHotelImagesForm } from "../../../../components/Forms/UploadHotelImagesForm";
+import { UploadHotelImagesForm } from "./components/UploadHotelImagesForm";
 
 export function useImageUploader(hotelId, setHotel) {
     const [showUploadImageForm, setShowUploadImageForm] = useState(false);

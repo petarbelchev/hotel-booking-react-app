@@ -1,4 +1,4 @@
-import { get } from "./api";
+import { get } from "../../../services/api";
 
 const path = '/api/hotels';
 

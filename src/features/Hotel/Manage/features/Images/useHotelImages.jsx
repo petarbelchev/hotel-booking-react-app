@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 
-import { ImageSlide } from "../../../../components/Images/ImageSlide";
-import { ImageThumbnail } from "../../../../components/Images/ImageThumbnail";
-import { ImagesModal } from "../../../../components/Images/ImagesModal";
-import { ImageGallery } from "../../../../components/Images/ImageGallery";
+import { ImageSlide } from "./components/ImageSlide";
+import { ImageThumbnail } from "./components/ImageThumbnail";
+import { ImagesModal } from "./components/ImagesModal";
+import { ImageGallery } from "./components/ImageGallery";
 
-import { getImage, deleteImage } from "../../../../services/imagesService";
-import { AuthContext } from "../../../../contexts/AuthContext";
+import { getImage, deleteImage } from "../../../../../services/imagesService";
+import { AuthContext } from "../../../../../contexts/AuthContext";
 
 export function useHotelImages(hotel) {
     const { user } = useContext(AuthContext);

@@ -1,4 +1,4 @@
-import { put } from "./api";
+import { put } from "../../../../../services/api";
 
 export async function setHotelRating(hotelId, data, token) {
     return await put(`/api/hotels/${hotelId}/ratings`, { data, token });

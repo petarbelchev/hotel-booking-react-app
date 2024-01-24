@@ -1,30 +1,24 @@
 import { useEffect, useState } from "react";
 
-import { useRoomForms } from "../../../../hooks/useRoomForms";
-import { createRoom, updateRoom, removeRoom, getHotelRooms } from "../../../../services/roomsService";
+import { useRoomForms } from "../../../../../hooks/useRoomForms";
+import { createRoom, updateRoom, removeRoom, getHotelRooms } from "./roomsService";
 
-import { PrimaryButton } from "../../../../components/Buttons/PrimaryButton";
-import { WarningButton } from "../../../../components/Buttons/WarningButton";
-import { DangerButton } from "../../../../components/Buttons/DangerButton";
-import { AddEditRoomDiv } from "../../../../components/Forms/AddEditRoomDiv";
+import { PrimaryButton } from "../../../../../components/Buttons/PrimaryButton";
+import { WarningButton } from "../../../../../components/Buttons/WarningButton";
+import { AddEditRoomDiv } from "./AddEditRoomDiv";
 
-import styles from "./ManageRoomsSection.module.css";
+import styles from "./RoomsSection.module.css";
 
-export function ManageRoomsSection({
+export function RoomsSection({
     hotelId,
     roomsCount,
     onDoneClickHandler,
     increaseRoomsCountHandler,
     decreaseRoomsCountHandler,
-    token,
+    token
 }) {
     const [showEditRoomsBtn, setShowEditRoomsBtn] = useState(false);
-    const {
-        forms,
-        setForms,
-        addRoomToForm,
-        formsChangeHandler,
-    } = useRoomForms([]);
+    const { forms, setForms, addRoomToForm, formsChangeHandler } = useRoomForms([]);
 
     useEffect(() => {
         roomsCount > 0 && roomsCount > forms.length && setShowEditRoomsBtn(true);
@@ -95,31 +89,14 @@ export function ManageRoomsSection({
                             roomIdx={roomIdx}
                             room={room}
                             onChangeHandler={formsChangeHandler}
-                        >
-                            <PrimaryButton
-                                type="submit"
-                                name={room.id ? "Update Room" : "Create Room"}
-                            />
-
-                            {room.id &&
-                                <DangerButton
-                                    onClick={() => deleteRoomClickHandler(room.id)}
-                                    name="Delete Room"
-                                />
-                            }
-                        </AddEditRoomDiv>
+                            onDeleteRoomClickHandler={() => deleteRoomClickHandler(room.id)}
+                        />
                     </form>
                 )}
             </div>
 
             <div className={styles.buttons}>
-                {showEditRoomsBtn &&
-                    <WarningButton
-                        onClick={editRoomsClickHandler}
-                        name="Edit Rooms"
-                    />
-                }
-
+                {showEditRoomsBtn && <WarningButton onClick={editRoomsClickHandler} name="Edit Rooms" />}
                 <PrimaryButton onClick={addRoomClickHandler} name="Add Room" />
                 <PrimaryButton onClick={onDoneClickHandler} name="Done" />
             </div>

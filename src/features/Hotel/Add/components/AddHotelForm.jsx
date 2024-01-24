@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AddRoomDiv } from "./AddRoomDiv";
 import { PrimaryButton } from "../../../../components/Buttons/PrimaryButton";
 
-import { addHotel } from "../helper";
+import { addHotel } from "../addHotelService";
 import { AuthContext } from "../../../../contexts/AuthContext";
 
 import { useCities } from "../../../Cities/useCities";

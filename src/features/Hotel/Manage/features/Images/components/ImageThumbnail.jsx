@@ -1,10 +1,6 @@
 import styles from "./ImageThumbnail.module.css";
 
-export function ImageThumbnail({
-    img,
-    alt,
-    onClickHandler,
-}) {
+export function ImageThumbnail({ img, alt, onClickHandler }) {
     return (
         <div className={styles.thumbnail}>
             <img

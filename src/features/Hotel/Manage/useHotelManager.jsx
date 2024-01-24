@@ -1,10 +1,10 @@
 import { HotelDiv } from "./components/HotelDiv";
 import { useHotel } from "./hooks/useHotel";
 import { useHotelEditor } from "./features/Edit/useHotelEditor";
-import { useImageUploader } from "./hooks/useImageUploader";
-import { useHotelRooms } from "./hooks/useHotelRooms";
-import { useHotelImages } from "./hooks/useHotelImages";
-import { useHotelRating } from "./hooks/useHotelRating";
+import { useImageUploader } from "./features/Images/useImageUploader";
+import { useHotelRooms } from "./features/Rooms/useHotelRooms";
+import { useHotelImages } from "./features/Images/useHotelImages";
+import { useHotelRating } from "./features/Rating/useHotelRating";
 import { useFavoriteButton } from "./features/Favorite/useFavoriteButton";
 import { useHotelComments } from "./features/Comment/useHotelComments";
 

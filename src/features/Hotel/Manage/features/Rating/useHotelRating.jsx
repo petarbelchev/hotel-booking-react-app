@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
-import { RatingDiv } from "../../../../components/Ratings/RatingDiv";
-import { setHotelRating } from "../../../../services/ratingsService";
-import { AuthContext } from "../../../../contexts/AuthContext";
+import { RatingDiv } from "./RatingDiv";
+import { setHotelRating } from "./ratingsService";
+import { AuthContext } from "../../../../../contexts/AuthContext";
 
 export function useHotelRating(hotel, setHotel) {
     const { user } = useContext(AuthContext);

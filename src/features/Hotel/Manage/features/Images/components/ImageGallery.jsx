@@ -1,10 +1,6 @@
 import styles from "./ImageGallery.module.css";
 
-export function ImageGallery({
-    entityName,
-    images,
-    onImageClickHandler,
-}) {
+export function ImageGallery({ entityName, images, onImageClickHandler }) {
     return (
         <div className={styles.images}>
             {images.length > 0 &&

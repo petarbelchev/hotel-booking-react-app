@@ -1,16 +1,17 @@
 import { useContext, useState, useEffect } from "react";
 
-import { setCommentRating, setReplyRating } from "../../../../../services/ratingsService";
 import commentsService from "./commentsService";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { CommentsDiv } from "./components/CommentsDiv";
 import { CommentDiv } from "./components/CommentDiv";
 import { useCommentReplyForm } from "./hooks/useCommentReplyForm";
+import { useCommentReplyRating } from "../Rating/useCommentReplyRating";
 
 export function useHotelComments(hotel, setHotel) {
     const [comments, setComments] = useState([]);
     const { user } = useContext(AuthContext);
     const [showCommentsBtn, setShowCommentsBtn] = useState(false);
+    const { commentRatingClickHandler, replyRatingClickHandler } = useCommentReplyRating(setComments);
 
     useEffect(() => {
         setShowCommentsBtn(hotel.commentsCount > 0 && hotel.commentsCount > comments.length ? true : false);
@@ -89,37 +90,6 @@ export function useHotelComments(hotel, setHotel) {
             });
         } catch (error) {
             alert(`${error.status} ${error.title}!`);
-        }
-    };
-
-    const commentRatingClickHandler = async (commentId, ratingValue) => {
-        try {
-            const response = await setCommentRating(commentId, ratingValue, user.token);
-
-            setComments(state => {
-                const newState = [...state];
-                const comment = newState.find(comment => comment.id === commentId);
-                comment.ratings = response;
-                return newState;
-            });
-        } catch (error) {
-            alert(`${error.status} ${error.title}`);
-        }
-    };
-
-    const replyRatingClickHandler = async (commentId, replyId, ratingValue) => {
-        try {
-            const response = await setReplyRating(replyId, ratingValue, user.token);
-
-            setComments(state => {
-                const newState = [...state];
-                const comment = newState.find(comment => comment.id === commentId);
-                const reply = comment.replies.find(reply => reply.id === replyId);
-                reply.ratings = response;
-                return newState;
-            });
-        } catch (error) {
-            alert(`${error.status} ${error.title}`);
         }
     };
 

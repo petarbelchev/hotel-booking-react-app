@@ -1,4 +1,4 @@
-import { RatingDiv } from "../../../../../../components/Ratings/RatingDiv";
+import { RatingDiv } from "../../Rating/RatingDiv";
 import styles from "./CommentReplyContent.module.css";
 
 export function CommentReplyContent({ content, onRatingClickHandler, userId, children }) {
