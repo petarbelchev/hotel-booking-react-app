@@ -2,13 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PrimaryButton } from "../../Buttons/PrimaryButton";
-import { FavoriteButton } from "../../Buttons/FavoriteButton";
 import { Room } from "./Room/Room";
-
 import { getImage } from "../../../services/imagesService";
+
 import styles from "./HotelWithAvailableRooms.module.css";
 
-export function HotelWithAvailableRooms({ hotel, onFavoriteClickHandler }) {
+export function HotelWithAvailableRooms({ hotel, favoriteButton }) {
     const [mainImage, setMainImage] = useState(null);
     const navigate = useNavigate();
 
@@ -24,11 +23,7 @@ export function HotelWithAvailableRooms({ hotel, onFavoriteClickHandler }) {
 
                     <div className={styles.title}>
                         <h2>{hotel.name}</h2>
-                        <FavoriteButton
-                            hotelId={hotel.id}
-                            isPressed={hotel.isUserFavoriteHotel}
-                            onClick={onFavoriteClickHandler}
-                        />
+                        {favoriteButton}
                     </div>
 
                     <p>{hotel.description}</p>

@@ -3,13 +3,13 @@ import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 
-import { HomePage } from "./components/HomePage/HomePage";
-import { RegisterPage } from "./components/RegisterPage/RegisterPage";
-import { LoginPage } from "./components/LoginPage/LoginPage";
+import { HomePage } from "./pages/Home/HomePage";
+import { RegisterPage } from "./pages/Register/RegisterPage";
+import { LoginPage } from "./pages/Login/LoginPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserProfilePage } from "./components/UserProfilePage/UserProfilePage";
-import { AddHotelPage } from "./components/AddHotelPage/AddHotelPage";
-import { HotelDetailsPage } from "./components/HotelDetailsPage/HotelDetailsPage";
+import { AddHotelPage } from "./pages/AddHotel/AddHotelPage";
+import { HotelDetailsPage } from "./pages/HotelDetails/HotelDetailsPage";
 import { SearchRoomsResultPage } from "./components/SearchRoomsResultPage/SearchRoomsResultPage";
 
 import styles from "./App.module.css";

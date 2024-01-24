@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+
 import { uploadHotelImages } from "../../services/imagesService";
 import { PrimaryButton } from "../Buttons/PrimaryButton";
+import { AuthContext } from "../../contexts/AuthContext";
+
 import styles from "./UploadHotelImagesForm.module.css";
 
-export function UploadHotelImagesForm({
-    hotelId,
-    onSubmitHandler,
-    token
-}) {
+export function UploadHotelImagesForm({ hotelId, onSubmitHandler }) {
+    const { user } = useContext(AuthContext);
     const [selectedImages, setSelectedImages] = useState(null);
 
     const onChange = (e) => setSelectedImages([...e.target.files]);
@@ -21,7 +21,7 @@ export function UploadHotelImagesForm({
         });
 
         try {
-            const { ids } = await uploadHotelImages(hotelId, formData, token);
+            const { ids } = await uploadHotelImages(hotelId, formData, user.token);
             onSubmitHandler(ids);
         } catch (error) {
             alert(`${error.status} ${error.title}`);

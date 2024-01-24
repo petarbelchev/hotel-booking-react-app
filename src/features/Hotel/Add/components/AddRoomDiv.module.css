@@ -1,0 +1,20 @@
+#roomContent {
+    display: inline-block;
+    border: 1px solid;
+    padding: 10px;
+}
+
+#roomContent input,
+#roomContent select {
+    box-sizing: border-box;
+    display: block;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 170px;
+}
+
+#roomContent .checkBox {
+    display: inline;
+    height: auto;
+    width: auto;
+}

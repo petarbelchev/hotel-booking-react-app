@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../contexts/AuthContext";
 import { getUserProfile, updateUserProfile, deleteUserProfile } from "../../services/usersService";
 
@@ -10,7 +9,7 @@ import styles from "./UserProfilePage.module.css";
 
 export function UserProfilePage() {
     const navigate = useNavigate();
-    const { form, setForm, formChangeHandler } = useForm();
+    const [form, setForm] = useState({});
     const { user, addUser, removeUser } = useContext(AuthContext);
     const [userProfile, setUserProfile] = useState({});
     const [hideEditForm, setHideEditForm] = useState(true);
@@ -36,6 +35,7 @@ export function UserProfilePage() {
         userProfile.phoneNumber,
     ]);
 
+    const formChangeHandler = (e) => setForm(state => ({ ...state, [e.target.name]: e.target.value }));
     const updateClickHandler = () => setHideEditForm(false);
     const cancelClickHandler = () => setHideEditForm(true);
 

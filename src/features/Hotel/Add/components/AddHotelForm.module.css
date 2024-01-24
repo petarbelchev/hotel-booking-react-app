@@ -1,0 +1,28 @@
+#hotelContent {
+    margin: 0 auto;
+    width: 225px;
+}
+
+#hotelContent input, select, textarea {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 225px;
+}
+
+#rooms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#rooms div {
+    margin-bottom: 10px;
+}
+
+#buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { getHotelsWithAvailableRooms } from "../../services/searchService";
-import { markAsFavorite } from "../../services/hotelsService";
+import { markAsFavorite } from "../../features/Hotel/Manage/features/Favorite/favoriteButtonService";
 
 import { HotelWithAvailableRooms } from "./HotelWithAvailableRooms/HotelWithAvailableRooms";
-import { SearchRoomsForm } from "../Forms/SearchRoomsForm";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./SearchRoomsResultPage.module.css";
+import { useSearchRooms } from "../../features/SearchRooms/useSearchRooms";
 
 export function SearchRoomsResultPage() {
     const [searchParams] = useSearchParams();
@@ -21,6 +21,12 @@ export function SearchRoomsResultPage() {
             // TODO: Render the validation errors in the search form.
             .catch(error => alert(`${error.status} ${error.title}`));
     }, [searchParams, user?.token]);
+
+    const searchRoomsForm = useSearchRooms().getSearchRoomsForm(
+        searchParams.get('cityId'),
+        searchParams.get('checkInLocal'),
+        searchParams.get('checkOutLocal')
+    );
 
     const favoriteClickHandler = async (hotelId) => {
         try {
@@ -41,16 +47,12 @@ export function SearchRoomsResultPage() {
         <main className={styles.container}>
             <section className={styles.search}>
                 <h1>Try another options</h1>
-                <SearchRoomsForm
-                    initCityId={searchParams.get('cityId')}
-                    initCheckInDate={searchParams.get('checkInLocal')}
-                    initCheckOutDate={searchParams.get('checkOutLocal')}
-                />
+                {searchRoomsForm}
             </section>
 
             <section className={styles.results}>
                 <h1>Here what we have</h1>
-                
+
                 <div>
                     {hotelsWithAvailableRooms.length > 0
                         ? hotelsWithAvailableRooms.map(hotel => <HotelWithAvailableRooms
