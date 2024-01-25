@@ -4,7 +4,7 @@ import { uploadHotelImages } from "../../../../../../services/imagesService";
 import { PrimaryButton } from "../../../../../../components/Buttons/PrimaryButton";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 
-import styles from "./UploadHotelImagesForm.module.css";
+import styles from './UploadHotelImagesForm.module.css';
 
 export function UploadHotelImagesForm({ hotelId, onSubmitHandler }) {
     const { user } = useContext(AuthContext);

@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { useContext } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from 'contexts/AuthContext';
 
-import styles from "./Header.module.css";
+import styles from './Header.module.css';
 
 export function Header() {
     const { user, removeUser } = useContext(AuthContext);

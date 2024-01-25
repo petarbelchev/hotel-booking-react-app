@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useDateValidator } from "../hooks/useDateValidator";
-import { useCities } from "../../Cities/useCities";
+import { useDateValidator } from '../hooks/useDateValidator';
+import { useCities } from 'hooks/useCities';
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
 
-import { PrimaryButton } from "../../../components/Buttons/PrimaryButton";
-import styles from "./SearchRoomsForm.module.css";
+import styles from './SearchRoomsForm.module.css';
 
 export function SearchRoomsForm({ initCityId, initCheckInDate, initCheckOutDate, }) {
     const cities = useCities();

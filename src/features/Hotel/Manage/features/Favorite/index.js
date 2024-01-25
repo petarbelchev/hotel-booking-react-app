@@ -1,0 +1,1 @@
+export { useFavoriteButton } from './hooks/useFavoriteButton';

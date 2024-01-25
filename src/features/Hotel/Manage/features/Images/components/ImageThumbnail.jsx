@@ -1,4 +1,4 @@
-import styles from "./ImageThumbnail.module.css";
+import styles from './ImageThumbnail.module.css';
 
 export function ImageThumbnail({ img, alt, onClickHandler }) {
     return (

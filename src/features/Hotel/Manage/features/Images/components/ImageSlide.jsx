@@ -1,4 +1,4 @@
-import styles from "./ImageSlide.module.css";
+import styles from './ImageSlide.module.css';
 
 export function ImageSlide({ img, imgNum, imagesCount, alt }) {
     return (

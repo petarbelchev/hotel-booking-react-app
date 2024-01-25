@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { AuthContext } from "../../contexts/AuthContext";
-import { getUserProfile, updateUserProfile, deleteUserProfile } from "../../services/usersService";
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { AuthContext } from 'contexts/AuthContext';
+import { getUserProfile, updateUserProfile, deleteUserProfile } from 'services/usersService';
 
-import styles from "./UserProfilePage.module.css";
+import styles from './UserProfilePage.module.css';
 
 export function UserProfilePage() {
     const navigate = useNavigate();

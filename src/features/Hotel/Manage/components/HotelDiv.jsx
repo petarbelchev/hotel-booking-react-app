@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import { Dropdown } from "../../../../components/Dropdown/Dropdown"
-import { AuthContext } from "../../../../contexts/AuthContext";
+import { Dropdown } from 'components/Dropdown/Dropdown'
+import { AuthContext } from 'contexts/AuthContext';
 
-import styles from "./HotelDiv.module.css";
+import styles from './HotelDiv.module.css';
 
 export function HotelDiv({
     hotel,

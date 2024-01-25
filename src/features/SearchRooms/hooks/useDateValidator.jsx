@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useDateValidator(initCheckInDate, initCheckOutDate) {
     const [checkInDate, setCheckInDate] = useState(initCheckInDate || '');

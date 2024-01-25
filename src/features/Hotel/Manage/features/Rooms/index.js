@@ -1,0 +1,1 @@
+export { useHotelRooms } from './hooks/useHotelRooms';

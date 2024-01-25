@@ -1,4 +1,4 @@
-import styles from "./ImagesModal.module.css";
+import styles from './ImagesModal.module.css';
 
 export function ImagesModal({
     slide,

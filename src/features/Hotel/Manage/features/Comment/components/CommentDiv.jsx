@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { PrimaryButton } from "../../../../../../components/Buttons/PrimaryButton";
-import { DangerButton } from "../../../../../../components/Buttons/DangerButton";
-import { CommentReplyContent } from "./CommentReplyContent";
-import { RepliesList } from "./RepliesList";
-import { useCommentReplyForm } from "../hooks/useCommentReplyForm";
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { DangerButton } from 'components/Buttons/DangerButton';
+import { CommentReplyContent } from './CommentReplyContent';
+import { RepliesList } from './RepliesList';
+import { useCommentReplyForm } from '../hooks/useCommentReplyForm';
 
-import styles from "./CommentDiv.module.css";
+import styles from './CommentDiv.module.css';
 
 export function CommentDiv({
     comment,

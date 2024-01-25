@@ -1,4 +1,4 @@
-import { ReplyDiv } from "./ReplyDiv";
+import { ReplyDiv } from './ReplyDiv';
 
 export function RepliesList({ userId, commentId, replies, onDeleteClickHandler, onRatingClickHandler }) {
     const deleteReplyClickHandler = async (replyId, setIsDeleting) => {

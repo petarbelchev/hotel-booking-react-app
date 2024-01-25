@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { DangerButton } from "../../../../../../components/Buttons/DangerButton";
-import { CommentReplyContent } from "./CommentReplyContent";
+import { DangerButton } from 'components/Buttons/DangerButton';
+import { CommentReplyContent } from './CommentReplyContent';
 
-import styles from "./ReplyDiv.module.css";
+import styles from './ReplyDiv.module.css';
 
 export function ReplyDiv({ reply, onDeleteClickHandler, onRatingClickHandler, userId }) {
     const [isDeleting, setIsDeleting] = useState(false);

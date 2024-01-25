@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import { PrimaryButton } from "../../../../../../components/Buttons/PrimaryButton";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { AuthContext } from 'contexts/AuthContext';
 
 export function CommentsDiv({
     commentsList,

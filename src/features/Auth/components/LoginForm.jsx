@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { login } from "../authService";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { PrimaryButton } from "../../../components/Buttons/PrimaryButton";
+import { login } from '../services/authService';
+import { AuthContext } from 'contexts/AuthContext';
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
 
 import styles from "./LoginForm.module.css";
 

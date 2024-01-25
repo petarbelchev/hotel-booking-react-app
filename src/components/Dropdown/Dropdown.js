@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styles from "./Dropdown.module.css"
+import { useState } from 'react';
+import styles from './Dropdown.module.css'
 
 export function Dropdown({ menuImage, buttons }) {
     const [showMenu, setShowMenu] = useState(false);

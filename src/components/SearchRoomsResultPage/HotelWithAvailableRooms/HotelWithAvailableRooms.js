@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { PrimaryButton } from "../../Buttons/PrimaryButton";
-import { Room } from "./Room/Room";
-import { getImage } from "../../../services/imagesService";
+import { Room } from './Room/Room';
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { getImage } from 'services/imagesService';
 
-import styles from "./HotelWithAvailableRooms.module.css";
+import styles from './HotelWithAvailableRooms.module.css';
 
 export function HotelWithAvailableRooms({ hotel, favoriteButton }) {
     const [mainImage, setMainImage] = useState(null);

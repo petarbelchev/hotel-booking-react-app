@@ -1,16 +1,14 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { AddRoomDiv } from "./AddRoomDiv";
-import { PrimaryButton } from "../../../../components/Buttons/PrimaryButton";
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { AuthContext } from 'contexts/AuthContext';
+import { useCities } from 'hooks/useCities';
+import { useRoomForms } from 'hooks/useRoomForms';
 
-import { addHotel } from "../addHotelService";
-import { AuthContext } from "../../../../contexts/AuthContext";
-
-import { useCities } from "../../../Cities/useCities";
-import { useRoomForms } from "../../../../hooks/useRoomForms";
-
-import styles from "./AddHotelForm.module.css";
+import { AddRoomDiv } from './AddRoomDiv';
+import { addHotel } from '../services/addHotelService';
+import styles from './AddHotelForm.module.css';
 
 export function AddHotelForm() {
     const cities = useCities();

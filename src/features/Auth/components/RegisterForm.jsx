@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { register } from "../authService";
-import { PrimaryButton } from "../../../components/Buttons/PrimaryButton";
+import { register } from '../services/authService';
+import { PrimaryButton } from 'components/Buttons/PrimaryButton';
 
-import styles from "./RegisterForm.module.css";
+import styles from './RegisterForm.module.css';
 
 export function RegisterForm() {
     const [form, setForm] = useState({

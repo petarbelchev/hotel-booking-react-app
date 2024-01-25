@@ -1,4 +1,4 @@
-import styles from "./ImageGallery.module.css";
+import styles from './ImageGallery.module.css';
 
 export function ImageGallery({ entityName, images, onImageClickHandler }) {
     return (

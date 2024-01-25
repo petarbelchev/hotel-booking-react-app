@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import { getHotel } from "../hotelService";
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from 'contexts/AuthContext';
+import { getHotel } from '../services/hotelService';
 
 export function useHotel(hotelId) {
     const { user } = useContext(AuthContext);

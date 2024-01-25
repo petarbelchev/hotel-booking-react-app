@@ -1,4 +1,4 @@
-import styles from "./Buttons.module.css";
+import styles from './Buttons.module.css';
 
 export function PrimaryButton({
     type = "button",

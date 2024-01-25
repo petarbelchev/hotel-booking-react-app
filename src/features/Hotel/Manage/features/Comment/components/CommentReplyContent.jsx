@@ -1,5 +1,5 @@
-import { RatingDiv } from "../../Rating/RatingDiv";
-import styles from "./CommentReplyContent.module.css";
+import { RatingDiv } from '../../Rating/components/RatingDiv';
+import styles from './CommentReplyContent.module.css';
 
 export function CommentReplyContent({ content, onRatingClickHandler, userId, children }) {
     const { id, content: textContent, author, ratings, createdOnLocal } = content;

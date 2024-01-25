@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { useHotelManager } from 'features/Hotel/Manage';
 
-import { useHotelManager } from "../../features/Hotel/Manage/useHotelManager";
-import styles from "./HotelDetailsPage.module.css";
+import styles from './HotelDetailsPage.module.css';
 
 export function HotelDetailsPage() {
     const { hotelId } = useParams();

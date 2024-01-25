@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { getHotelsWithAvailableRooms } from "../../services/searchService";
-import { markAsFavorite } from "../../features/Hotel/Manage/features/Favorite/favoriteButtonService";
+import { markAsFavorite } from 'features/Hotel/Manage/features/Favorite/services/favoriteButtonService';
+import { SearchRoomsForm } from 'features/SearchRooms/components/SearchRoomsForm';
+import { getHotelsWithAvailableRooms } from 'services/searchService';
+import { AuthContext } from 'contexts/AuthContext';
 
-import { HotelWithAvailableRooms } from "./HotelWithAvailableRooms/HotelWithAvailableRooms";
+import { HotelWithAvailableRooms } from './HotelWithAvailableRooms/HotelWithAvailableRooms';
 
-import { AuthContext } from "../../contexts/AuthContext";
-import styles from "./SearchRoomsResultPage.module.css";
-import { useSearchRooms } from "../../features/SearchRooms/useSearchRooms";
+import styles from './SearchRoomsResultPage.module.css';
 
 export function SearchRoomsResultPage() {
     const [searchParams] = useSearchParams();
@@ -21,12 +21,6 @@ export function SearchRoomsResultPage() {
             // TODO: Render the validation errors in the search form.
             .catch(error => alert(`${error.status} ${error.title}`));
     }, [searchParams, user?.token]);
-
-    const searchRoomsForm = useSearchRooms().getSearchRoomsForm(
-        searchParams.get('cityId'),
-        searchParams.get('checkInLocal'),
-        searchParams.get('checkOutLocal')
-    );
 
     const favoriteClickHandler = async (hotelId) => {
         try {
@@ -47,7 +41,11 @@ export function SearchRoomsResultPage() {
         <main className={styles.container}>
             <section className={styles.search}>
                 <h1>Try another options</h1>
-                {searchRoomsForm}
+                {<SearchRoomsForm
+                    initCityId={searchParams.get('cityId')}
+                    initCheckInDate={searchParams.get('checkInLocal')}
+                    initCheckOutDate={searchParams.get('checkOutLocal')}
+                />}
             </section>
 
             <section className={styles.results}>
