@@ -1,10 +1,6 @@
 import styles from './Buttons.module.css';
 
-export function PrimaryButton({
-    type = "button",
-    name,
-    onClick,
-}) {
+export function PrimaryButton({ type = "button", name, onClick }) {
     return (
         <button
             type={type}

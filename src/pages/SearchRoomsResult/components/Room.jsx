@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getImage } from 'services/imagesService';
+import { getImage } from 'features/Hotel/Manage/features/Images';
 import styles from './Room.module.css';
 
 export function Room({ room }) {

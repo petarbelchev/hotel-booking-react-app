@@ -1,5 +1,5 @@
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
-import { DangerButton } from 'components/Buttons/DangerButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
+import { DangerButton } from 'UI/Buttons/DangerButton';
 import styles from './AddEditRoomDiv.module.css';
 
 export function AddEditRoomDiv({ roomIdx, room, onChangeHandler, onDeleteRoomClickHandler }) {

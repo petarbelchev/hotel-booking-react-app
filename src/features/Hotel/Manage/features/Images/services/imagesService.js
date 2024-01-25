@@ -1,4 +1,4 @@
-import { get, post, remove } from './api';
+import { get, post, remove } from '../../../../../../services/api';
 
 export async function getImage(imageId) {
     const path = '/api/images/' + imageId;

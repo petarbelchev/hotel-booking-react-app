@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Room } from './Room/Room';
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
-import { getImage } from 'services/imagesService';
+import { Room } from './Room';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
+import { getImage } from 'features/Hotel/Manage/features/Images';
 
-import styles from './HotelWithAvailableRooms.module.css';
+import styles from './AvailableHotelRooms.module.css';
+import { useFavoriteButton } from 'features/Hotel/Manage/features/Favorite';
 
-export function HotelWithAvailableRooms({ hotel, favoriteButton }) {
+export function AvailableHotelRooms({ hotel }) {
+    const [hotelState, setHotelState] = useState(hotel);
     const [mainImage, setMainImage] = useState(null);
+    const favoriteButton = useFavoriteButton(hotelState, setHotelState);
     const navigate = useNavigate();
 
     if (hotel.mainImageId && !mainImage) {

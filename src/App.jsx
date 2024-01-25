@@ -2,15 +2,15 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Header } from 'components/Header/Header';
 import { Footer } from 'components/Footer/Footer';
-
-import { HomePage } from 'pages/Home/HomePage';
-import { RegisterPage } from 'pages/Register/RegisterPage';
-import { LoginPage } from 'pages/Login/LoginPage';
-import { AddHotelPage } from 'pages/AddHotel/AddHotelPage';
-import { HotelDetailsPage } from 'pages/HotelDetails/HotelDetailsPage';
-import { UserProfilePage } from 'components/UserProfilePage/UserProfilePage';
-import { SearchRoomsResultPage } from 'components/SearchRoomsResultPage/SearchRoomsResultPage';
 import { AuthProvider } from 'contexts/AuthContext';
+
+import { HomePage } from 'pages/Home';
+import { RegisterPage } from 'pages/Register';
+import { LoginPage } from 'pages/Login';
+import { AddHotelPage } from 'pages/AddHotel';
+import { HotelDetailsPage } from 'pages/HotelDetails';
+import { UserProfilePage } from 'pages/UserProfile';
+import { SearchRoomsResultPage } from 'pages/SearchRoomsResult';
 
 import styles from './App.module.css';
 

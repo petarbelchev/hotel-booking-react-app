@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DangerButton } from 'components/Buttons/DangerButton';
+import { DangerButton } from 'UI/Buttons/DangerButton';
 import { CommentReplyContent } from './CommentReplyContent';
 
 import styles from './ReplyDiv.module.css';

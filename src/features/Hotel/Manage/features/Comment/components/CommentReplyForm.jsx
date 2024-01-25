@@ -1,4 +1,4 @@
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
 
 export function CommentReplyForm({ content, onChangeHandler, onSubmitHandler }) {
     return (

@@ -1,4 +1,4 @@
-import { get, put, remove } from './api';
+import { get, put, remove } from '../../../services/api';
 
 const path = '/api/users';
 

@@ -1,13 +1,9 @@
-.container {
-    text-align: center;
-}
-
-.content {
+#content {
     display: inline-block;
     padding: 15px;
 }
 
-.content div {
+#content div {
     display: flex;
     justify-content: space-between;
 }

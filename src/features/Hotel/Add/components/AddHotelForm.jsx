@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
 import { AuthContext } from 'contexts/AuthContext';
 import { useCities } from 'hooks/useCities';
 import { useRoomForms } from 'hooks/useRoomForms';

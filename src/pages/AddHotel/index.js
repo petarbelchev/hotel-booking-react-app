@@ -1,0 +1,1 @@
+export { AddHotelPage } from './components/AddHotelPage';

@@ -5,7 +5,7 @@ import { ImageThumbnail } from '../components/ImageThumbnail';
 import { ImagesModal } from '../components/ImagesModal';
 import { ImageGallery } from '../components/ImageGallery';
 
-import { getImage, deleteImage } from 'services/imagesService';
+import { getImage, deleteImage } from 'features/Hotel/Manage/features/Images/services/imagesService';
 import { AuthContext } from 'contexts/AuthContext';
 
 export function useHotelImages(hotel) {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { useRoomForms } from 'hooks/useRoomForms';
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
-import { WarningButton } from 'components/Buttons/WarningButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
+import { WarningButton } from 'UI/Buttons/WarningButton';
 
 import { createRoom, updateRoom, removeRoom, getHotelRooms } from '../services/roomsService';
 import { AddEditRoomDiv } from './AddEditRoomDiv';

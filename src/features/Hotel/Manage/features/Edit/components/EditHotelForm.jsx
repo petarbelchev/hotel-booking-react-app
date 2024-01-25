@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCities } from 'hooks/useCities';
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
 
 import styles from './EditHotelForm.module.css';
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
-import { DangerButton } from 'components/Buttons/DangerButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
+import { DangerButton } from 'UI/Buttons/DangerButton';
 import { CommentReplyContent } from './CommentReplyContent';
 import { RepliesList } from './RepliesList';
 import { useCommentReplyForm } from '../hooks/useCommentReplyForm';

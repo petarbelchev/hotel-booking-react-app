@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { Dropdown } from 'components/Dropdown/Dropdown'
+import { Dropdown } from 'UI/Dropdown/Dropdown'
 import { AuthContext } from 'contexts/AuthContext';
 
 import styles from './HotelDiv.module.css';

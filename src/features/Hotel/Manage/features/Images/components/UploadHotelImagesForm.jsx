@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 
-import { uploadHotelImages } from "../../../../../../services/imagesService";
-import { PrimaryButton } from "../../../../../../components/Buttons/PrimaryButton";
+import { uploadHotelImages } from "../services/imagesService";
+import { PrimaryButton } from "../../../../../../UI/Buttons/PrimaryButton";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 
 import styles from './UploadHotelImagesForm.module.css';

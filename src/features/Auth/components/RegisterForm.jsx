@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { register } from '../services/authService';
-import { PrimaryButton } from 'components/Buttons/PrimaryButton';
+import { PrimaryButton } from 'UI/Buttons/PrimaryButton';
 
 import styles from './RegisterForm.module.css';
 
