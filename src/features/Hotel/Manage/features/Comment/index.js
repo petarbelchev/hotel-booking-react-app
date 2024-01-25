@@ -1,0 +1,1 @@
+export { useHotelComments } from './hooks/useHotelComments';

@@ -1,0 +1,1 @@
+export { AddHotelForm } from './components/AddHotelForm';

@@ -1,6 +1,3 @@
-import { get } from "./api";
+import { get } from './api';
 
-export async function getCities() {
-    const path = '/api/cities';
-    return await get(path, {});
-}
+export const getCities = async () => await get('/api/cities', {});

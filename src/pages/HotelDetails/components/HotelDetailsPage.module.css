@@ -1,0 +1,9 @@
+#hotel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#hotelContent {
+    display: inline-block;
+}

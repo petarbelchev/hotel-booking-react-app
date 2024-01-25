@@ -1,0 +1,1 @@
+export { useHotelEditor } from './hooks/useHotelEditor';

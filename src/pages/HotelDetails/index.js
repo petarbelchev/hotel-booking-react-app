@@ -1,0 +1,1 @@
+export { HotelDetailsPage } from './components/HotelDetailsPage';
